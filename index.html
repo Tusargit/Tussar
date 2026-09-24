@@ -192,10 +192,35 @@ footer span{color:var(--gold)}
   .contour{display:none}
   .two-col,.order-panel{grid-template-columns:1fr}
   .grid3,.features-row,.gal-grid,.rev-grid,.plan-row{grid-template-columns:1fr 1fr}
-  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--deep);
-    flex-direction:column;padding:1rem 6vw;border-top:1px solid var(--line)}
+
+  /* Mobile navigation: keep the menu above the page and close it after navigation. */
+  header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:100}
+  .nav-row{position:relative}
+  .nav-links{
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    right:0;
+    max-height:calc(100vh - 78px);
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    background:var(--deep);
+    flex-direction:column;
+    align-items:center;
+    gap:0;
+    padding:1rem 6vw 1.25rem;
+    border-top:1px solid var(--line);
+    box-shadow:0 12px 24px rgba(0,0,0,.22);
+  }
   .nav-links.open{display:flex}
-  .menu-btn{display:block}
+  .nav-links li{width:100%;text-align:center}
+  .nav-links a{
+    display:block;
+    padding:.9rem .5rem;
+  }
+  .nav-links .nav-order{margin:.5rem auto 0;width:max-content}
+  .menu-btn{display:block;position:relative;z-index:101}
   .trust-row{justify-content:flex-start}
 }
 @media (max-width:560px){
@@ -665,7 +690,30 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
 
 <script>
 // mobile nav
-document.getElementById('menuBtn').onclick=()=>document.getElementById('navLinks').classList.toggle('open');
+const menuBtn=document.getElementById('menuBtn');
+const navLinks=document.getElementById('navLinks');
+const closeMobileNav=()=>navLinks.classList.remove('open');
+
+menuBtn.onclick=()=>{
+  const isOpen=navLinks.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded',String(isOpen));
+};
+
+// Close the mobile menu before jumping to a section, so the destination is visible.
+navLinks.querySelectorAll('a[href^="#"]').forEach(link=>{
+  link.addEventListener('click',()=>{
+    closeMobileNav();
+    menuBtn.setAttribute('aria-expanded','false');
+  });
+});
+
+// Close when tapping outside the header.
+document.addEventListener('click',e=>{
+  if(!e.target.closest('header.nav') && navLinks.classList.contains('open')){
+    closeMobileNav();
+    menuBtn.setAttribute('aria-expanded','false');
+  }
+});
 
 // order total + whatsapp
 function calcTotal(){
