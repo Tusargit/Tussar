@@ -1,1 +1,50 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gallery - TUSSAR</title><link rel="stylesheet" href="style.css"></head><body><header class="navbar"><div class="logo">TUSSAR</div><nav><a href="index.html">Home</a><a href="products.html">Products</a><a class="active" href="gallery.html">Gallery</a><a href="booking.html">Booking</a></nav></header><section class="section"><h2>Our Gallery</h2><p class="lead">A glimpse into the TUSSAR world.</p><div class="gallery-grid"><img src="gallery1.svg"><img src="gallery2.svg"><img src="gallery3.svg"><img src="gallery4.svg"></div></section><footer>© 2025 TUSSAR Mineral Water</footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gallery - TUSSAR Mineral Water</title>
+<link rel="stylesheet" href="style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+</head>
+<body>
+<header class="navbar">
+<div class="logo">TUSSAR</div>
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="products.html">Products</a></li>
+<li><a href="gallery.html" class="active">Gallery</a></li>
+<li><a href="booking.html">Booking</a></li>
+</ul>
+<button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+</header>
+<section class="section gallery">
+<h2 data-aos="fade-down">Our Gallery</h2>
+<p class="lead" data-aos="fade-up">Take a glimpse into our world of pure water - from source to your doorstep.</p>
+<div class="gallery-container">
+<div class="gallery-item" data-aos="zoom-in" data-aos-delay="100"><img src="gallery1.svg" alt="Natural water source and spring collection" /><div class="gallery-overlay"><h3>Pure Source</h3><p>Natural spring water collection from pristine sources</p></div></div>
+<div class="gallery-item" data-aos="zoom-in" data-aos-delay="200"><img src="gallery2.svg" alt="State-of-the-art bottling plant and facility" /><div class="gallery-overlay"><h3>Modern Facility</h3><p>State-of-the-art bottling plant with advanced purification</p></div></div>
+<div class="gallery-item" data-aos="zoom-in" data-aos-delay="300"><img src="gallery3.svg" alt="Delivery trucks and distribution network" /><div class="gallery-overlay"><h3>Reliable Delivery</h3><p>Efficient delivery network ensuring fresh water reaches you</p></div></div>
+<div class="gallery-item" data-aos="zoom-in" data-aos-delay="400"><img src="gallery4.svg" alt="Happy customers and satisfied families" /><div class="gallery-overlay"><h3>Happy Customers</h3><p>Thousands of satisfied customers trust TUSSAR for pure water</p></div></div>
+</div>
+<div class="gallery-stats" data-aos="fade-up" data-aos-delay="500">
+<div class="stat-item"><h3>50,000+</h3><p>Happy Customers</p></div>
+<div class="stat-item"><h3>1M+</h3><p>Bottles Delivered</p></div>
+<div class="stat-item"><h3>99.9%</h3><p>Purity Guaranteed</p></div>
+<div class="stat-item"><h3>24/7</h3><p>Service Available</p></div>
+</div>
+</section>
+<footer>
+<p>&copy; 2025 TUSSAR Mineral Water. All rights reserved.</p>
+<p>Contact: rameswaridrinks@gmail.com | +91 9439863666</p>
+</footer>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init({ duration: 1000, once: true });
+document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+document.querySelector('.nav-links').classList.toggle('active');
+});
+</script>
+</body>
+</html>
