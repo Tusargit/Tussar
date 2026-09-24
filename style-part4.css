@@ -1,0 +1,154 @@
+  100% { opacity: 1; transform: translate(-50%, -60%) scale(1) rotateX(0deg); }
+}
+#orderModal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, var(--brand1), var(--brand2));
+  border-radius: 16px 16px 0 0;
+}
+#orderModal::-webkit-scrollbar { width: 6px; }
+#orderModal::-webkit-scrollbar-thumb { background: var(--brand1); border-radius: 3px; }
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #555;
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+.modal-close:hover { color: #000; }
+body.modal-open { overflow: hidden; }
+.success-message {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+.success-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 30px 80px rgba(8, 18, 30, 0.4);
+  margin: auto;
+}
+.success-content h3 {
+  color: var(--success);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+.success-content p { color: var(--muted); margin-bottom: 1.5rem; }
+@keyframes modalZoom {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes modalFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+footer {
+  padding: 2rem;
+  text-align: center;
+  background: linear-gradient(90deg, var(--brand2), var(--brand1));
+  color: #fff;
+  margin-top: 3rem;
+}
+footer p { margin: 0.5rem 0; opacity: 0.9; }
+@media (max-width: 900px) {
+  .hero-content { padding: 1.5rem; }
+  .product-card img { height: 180px; }
+  .form-row { grid-template-columns: 1fr; gap: 1rem; }
+  .gallery-item img { height: 220px; }
+  .review-meta { flex-direction: column; align-items: stretch; }
+  .form-actions { flex-direction: column; }
+}
+@media (max-width: 720px) {
+  .navbar { padding: 1rem; }
+  .nav-links {
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: linear-gradient(90deg, var(--brand1), var(--brand2));
+    flex-direction: column; padding: 1rem;
+    transform: translateY(-100%); opacity: 0; visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  .nav-links.active { transform: translateY(0); opacity: 1; visibility: visible; }
+  .mobile-menu-toggle { display: block; }
+  .hero { height: 80vh; }
+  .hero h1 { font-size: 2.5rem; }
+  .section { padding: 2rem 1rem; }
+  .order-section .order-form, .booking-form { padding: 1.5rem; }
+  .modal-dialog { margin: 1rem; padding: 1.5rem; }
+  .gallery-stats { grid-template-columns: repeat(2, 1fr); }
+  .stat-item h3 { font-size: 1.5rem; }
+}
+@media (max-width: 480px) {
+  .hero-cta { flex-direction: column; align-items: center; }
+  .btn, .btn-outline { width: 100%; max-width: 300px; }
+  .product-grid { grid-template-columns: 1fr; }
+  .gallery-container { grid-template-columns: 1fr; }
+  .info-grid { grid-template-columns: 1fr; }
+  .reviews-grid { grid-template-columns: 1fr; }
+}
+#orderModal form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+#orderModal h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: var(--brand2);
+}
+#orderModal .form-group { display: flex; flex-direction: column; }
+#orderModal label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--dark);
+}
+#orderModal input,
+#orderModal select,
+#orderModal textarea {
+  padding: 0.8rem;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+#orderModal textarea { resize: vertical; min-height: 60px; }
+#orderModal .total-row {
+  background: var(--bg);
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--brand2);
+}
+#orderModal .form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+#orderModal .btn-submit {
+  background: var(--brand2);
+  padding: 0.8rem 1.6rem;
+  font-size: 1rem;
+  border-radius: 50px;
+}
+#orderModal .btn-ghost {
+  padding: 0.8rem 1.6rem;
+  border-radius: 50px;
+}
