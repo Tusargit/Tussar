@@ -247,6 +247,20 @@ footer span{color:var(--gold)}
 .lang-toggle button{background:none;border:1px solid var(--line);color:#c9dad5;font-size:.75rem;
   padding:.25rem .5rem;cursor:pointer}
 .lang-toggle button.active{background:var(--gold);color:var(--deep);border-color:var(--gold)}
+.lang-toggle button{position:relative;overflow:hidden;transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+.lang-toggle button:active{transform:scale(.9)}
+.lang-toggle button.lang-selected{animation:langPop .45s ease}
+@keyframes langPop{
+  0%{transform:scale(.9)}
+  55%{transform:scale(1.12)}
+  100%{transform:scale(1)}
+}
+.nav-links a{transition:color .2s ease,transform .2s ease}
+.nav-links a:active{transform:scale(.94)}
+.nav-links a.nav-clicked{animation:navTap .35s ease}
+@keyframes navTap{
+  50%{color:var(--gold);transform:scale(1.06)}
+}
 
 /* HERO ANIMATION */
 @keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
@@ -937,10 +951,36 @@ function setLang(lang){
     const key=el.getAttribute('data-i18n');
     if(d[key])el.textContent=d[key];
   });
-  document.querySelectorAll('.lang-toggle button').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+
+  // Highlight the selected language, then return the visitor to the main hero.
+  document.querySelectorAll('.lang-toggle button').forEach(b=>{
+    b.classList.toggle('active',b.dataset.lang===lang);
+    b.classList.remove('lang-selected');
+  });
+  const selected=document.querySelector(`.lang-toggle button[data-lang="${lang}"]`);
+  if(selected){
+    void selected.offsetWidth;
+    selected.classList.add('lang-selected');
+  }
+
+  // On mobile the language selector lives inside the hamburger menu.
+  // Close it and bring the user back to the main page after choosing a language.
+  if(navLinks){
+    navLinks.classList.remove('open');
+    if(menuBtn)menuBtn.setAttribute('aria-expanded','false');
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  const hero=document.querySelector('.hero');
+  if(hero){
+    hero.classList.remove('language-updated');
+    void hero.offsetWidth;
+    hero.classList.add('language-updated');
+    setTimeout(()=>hero.classList.remove('language-updated'),650);
+  }
 }
 
-// ripple on buttons
+// Small click feedback for buttons and navigation links.
 document.querySelectorAll('.btn').forEach(btn=>{
   btn.addEventListener('click',function(e){
     const r=document.createElement('span');
@@ -951,6 +991,14 @@ document.querySelectorAll('.btn').forEach(btn=>{
     r.style.width=r.style.height='20px';
     this.appendChild(r);
     setTimeout(()=>r.remove(),550);
+  });
+});
+document.querySelectorAll('.nav-links a').forEach(link=>{
+  link.addEventListener('click',function(){
+    this.classList.remove('nav-clicked');
+    void this.offsetWidth;
+    this.classList.add('nav-clicked');
+    setTimeout(()=>this.classList.remove('nav-clicked'),400);
   });
 });
 
@@ -971,3 +1019,8 @@ if(liquidEl && 'IntersectionObserver' in window){
 </script>
 </body>
 </html>
+<style>.hero.language-updated .wrap>div:first-child>*{animation:languageRefresh .6s ease both}
+@keyframes languageRefresh{
+  0%{opacity:.35;transform:translateY(10px)}
+  100%{opacity:1;transform:translateY(0)}
+}</style>
