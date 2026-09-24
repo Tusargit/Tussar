@@ -1,1 +1,73 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Products - TUSSAR</title><link rel="stylesheet" href="style.css"></head><body><header class="navbar"><div class="logo">TUSSAR</div><nav><a href="index.html">Home</a><a class="active" href="products.html">Products</a><a href="gallery.html">Gallery</a><a href="booking.html">Booking</a></nav></header><section class="section"><h2>Our Premium Products</h2><p class="lead">Pure, fresh water for every need.</p><div class="cards"><article><img src="bottle1.svg"><h3>1L Premium Bottle</h3><p>Natural spring water, BPA-free packaging.</p><strong>₹20 per bottle</strong><br><a class="btn" href="booking.html">Order Now</a></article><article><img src="bottle2.svg"><h3>20L Water Jar</h3><p>Ideal for homes and offices.</p><strong>₹60 per jar</strong><br><a class="btn" href="booking.html">Order Now</a></article><article><img src="box_with_bottles.svg"><h3>250ML Box Pack</h3><p>24 bottles per box, perfect for events.</p><strong>₹200 per box • Minimum 2</strong><br><a class="btn" href="booking.html">Order Now</a></article></div></section><footer>© 2025 TUSSAR Mineral Water</footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products - TUSSAR Mineral Water</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+<header class="navbar">
+<div class="logo">TUSSAR</div>
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="products.html" class="active">Products</a></li>
+<li><a href="gallery.html">Gallery</a></li>
+<li><a href="booking.html">Booking</a></li>
+</ul>
+<button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+</header>
+<section class="section products">
+<h2 data-aos="fade-down">Our Premium Products</h2>
+<p class="lead" data-aos="fade-up">Choose from our range of pure, mineral-rich water products designed for every need.</p>
+<div class="product-grid">
+<div class="product-card" data-aos="fade-up" data-aos-delay="100">
+<img src="bottle1.svg" alt="1L Mineral Water Bottle">
+<h3>1L Premium Mineral Water Bottle</h3>
+<p>Perfect for home and office use. Pure, fresh, and healthy mineral water sourced from natural springs.</p>
+<div class="price">₹20 per bottle</div>
+<ul class="features"><li>✓ Natural spring water</li><li>✓ Essential minerals</li><li>✓ BPA-free packaging</li><li>✓ Home delivery available</li></ul>
+<button class="btn" onclick="window.location.href='booking.html'">Order Now</button>
+</div>
+<div class="product-card" data-aos="fade-up" data-aos-delay="200">
+<img src="bottle2.svg" alt="20L Water Jar">
+<h3>20L Water Jar</h3>
+<p>Ideal for large families and corporate needs. Convenient and economical solution for bulk water requirements.</p>
+<div class="price">₹60 per jar</div>
+<ul class="features"><li>✓ Large capacity</li><li>✓ Cost-effective</li><li>✓ Reusable container</li><li>✓ Regular delivery service</li></ul>
+<button class="btn" onclick="window.location.href='booking.html'">Order Now</button>
+</div>
+<div class="product-card" data-aos="fade-up" data-aos-delay="300">
+<img src="box_with_bottles.svg" alt="250ML Box Pack">
+<h3>250ML Box Pack</h3>
+<p>Convenient small packs perfect for events, parties, and on-the-go hydration. Sold by the box for better value.</p>
+<div class="price">₹200 per box (24 bottles)</div>
+<ul class="features"><li>✓ Convenient packaging</li><li>✓ Perfect for events</li><li>✓ Minimum 2 boxes</li><li>✓ Bulk discounts available</li></ul>
+<button class="btn" onclick="window.location.href='booking.html'">Order Now</button>
+</div>
+</div>
+<div class="product-info" data-aos="fade-up" data-aos-delay="400">
+<h3>Why Choose TUSSAR?</h3>
+<div class="info-grid">
+<div class="info-item"><h4>🏔️ Natural Source</h4><p>Our water comes from pristine natural springs, ensuring purity and freshness in every drop.</p></div>
+<div class="info-item"><h4>🧪 Quality Tested</h4><p>Every batch undergoes rigorous quality testing to meet international standards for mineral water.</p></div>
+<div class="info-item"><h4>🚚 Home Delivery</h4><p>Convenient doorstep delivery service ensures you never run out of pure, healthy water.</p></div>
+<div class="info-item"><h4>💰 Best Prices</h4><p>Competitive pricing with bulk discounts available for regular customers and large orders.</p></div>
+</div>
+</div>
+</section>
+<footer>
+<p>&copy; 2025 TUSSAR Mineral Water. All rights reserved.</p>
+<p>Contact: rameswaridrinks@gmail.com | +91 9439863666</p>
+</footer>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init({ duration: 1000, once: true });
+document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+document.querySelector('.nav-links').classList.toggle('active');
+});
+</script>
+</body>
+</html>
