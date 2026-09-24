@@ -140,6 +140,8 @@ header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backgroun
 .delivery-eta.show{display:block}
 @media(max-width:700px){.order-actions{grid-template-columns:1fr}.order-actions .btn{min-height:52px}}
 
+/* DELIVERY OPTIONS */
+.delivery-options{display:grid;gap:.65rem;margin-top:.25rem}.delivery-option{display:flex;align-items:flex-start;gap:.6rem;border:1px solid #cfd9d5;background:#fff;padding:.7rem .8rem}.delivery-option input{margin-top:.25rem}.delivery-option strong{display:block;color:var(--deep);font-size:.9rem}.delivery-option small{display:block;color:var(--stone);font-size:.75rem}.delivery-base{font-size:.78rem;color:var(--stone);margin-top:.35rem}.delivery-base a{color:var(--deep);font-weight:600}.delivery-breakdown{font-size:.82rem;color:var(--stone)}
 /* FOOTER */
 footer{background:var(--deep);color:#a9c2bc;padding:2.4rem 6vw;font-size:.85rem;
   display:flex;justify-content:space-between;flex-wrap:wrap;gap:.6rem}
@@ -648,7 +650,14 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
         <div><label>Preferred weekly refill day (optional)</label>
           <select id="oDay"><option value="">No fixed schedule</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select>
         </div>
-        <div class="total-row">Total: ₹<span id="oTotal">20</span></div>
+        <label>Delivery option</label>
+<div class="delivery-options">
+<label class="delivery-option"><input type="radio" name="deliveryMode" value="standard" checked onchange="calcTotal()"><span><strong>Standard delivery</strong><small>Same-day for the Kusupur-area zone; next-day for other supported areas.</small></span></label>
+<label class="delivery-option"><input type="radio" name="deliveryMode" value="priority" onchange="calcTotal()"><span><strong>Priority delivery <span id="priorityFeeLabel">(+₹20)</span></strong><small>Extra charge depends on order quantity and is added to the total.</small></span></label>
+</div>
+<div class="delivery-base">Delivery base: <strong>X2W5+9P5, Kusupur, Odisha 752110</strong> · <a href="https://www.google.com/maps/search/?api=1&query=X2W5%2B9P5%2C%20Kusupur%2C%20Odisha%20752110" target="_blank" rel="noopener">Open in Maps</a></div>
+<div class="delivery-breakdown">Product subtotal: ₹<span id="oSubtotal">20</span> · Priority charge: <span id="deliveryFee">₹0</span></div>
+<div class="total-row">Total: ₹<span id="oTotal">20</span></div>
         <div><label>Delivery address</label><textarea id="oAddr" rows="2" required></textarea></div>
         <div class="order-actions">
   <button class="btn btn-gold" type="submit">💬 Order via WhatsApp</button>
@@ -665,7 +674,7 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
       <a class="contact-action" href="tel:+919439863666">📞 <span><b>Call directly</b><small>+91 94398 63666</small></span></a>
       <a class="contact-action" href="mailto:rameswaridrinks@gmail.com">✉️ <span><b>Order by email</b><small>rameswaridrinks@gmail.com</small></span></a>
       <a class="contact-action" href="https://wa.me/919439863666" target="_blank" rel="noopener">💬 <span><b>Order on WhatsApp</b><small>Chat with TUSSAR</small></span></a>
-      <a href="https://www.google.com/maps/search/?api=1&query=Berhampur%2C+Odisha" target="_blank" rel="noopener">📍 View service area on Google Maps</a>
+      <a href="https://www.google.com/maps/search/?api=1&query=X2W5%2B9P5%2C%20Kusupur%2C%20Odisha%20752110" target="_blank" rel="noopener">📍 View service area on Google Maps</a>
       <p style="color:#a9c2bc;font-size:.85rem;margin-top:1.4rem">Serving homes, offices and events in and around our delivery area. FSSAI Lic. No.: <em>add your license number</em>.</p>
       <div class="pincode-check">
         <input id="pinInput" placeholder="Enter your pincode" inputmode="numeric">
