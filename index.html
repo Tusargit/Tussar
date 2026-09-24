@@ -676,7 +676,7 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
 <div class="total-row">Total: ₹<span id="oTotal">20</span></div>
         <div><label>Delivery address</label><textarea id="oAddr" rows="2" required></textarea></div>
         <div class="order-actions">
-  <button class="btn btn-gold" type="submit">💬 Order via WhatsApp</button>
+  <button class="btn btn-gold" type="submit">📦 Submit & Place Order</button>
   <button class="btn btn-mail" type="button" onclick="sendOrderByEmail()">✉️ Order by Email</button>
   <a class="btn btn-call" href="tel:+919348585599">📞 Call Directly</a>
 </div>
@@ -825,6 +825,11 @@ function calcTotal(){
  return {subtotal,priority,total:subtotal+priority};
 }
 calcTotal();
+function generateOrderId(){
+  const d=new Date();
+  const date=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');
+  return 'TUS-'+date+'-'+Math.floor(1000+Math.random()*9000);
+}
 function sendOrder(e){
   e.preventDefault();
   const name=document.getElementById('oName').value;
@@ -852,6 +857,9 @@ function sendOrder(e){
   const lines=[labels.intro,`${labels.name}: ${name}`,`${labels.phone}: ${phone}`,`${labels.product}: ${displayProduct}`,`${labels.qty}: ${qty}`,`${labels.total}: ₹${total}`];
   if(day)lines.push(`${labels.day}: ${day}`);
   lines.push(`${labels.address}: ${addr}`);
+  const orderId=generateOrderId();
+  lines.unshift('Order ID: '+orderId);
+  try{localStorage.setItem('tussar_current_order_id',orderId);}catch(err){}
   window.open('https://wa.me/919348585599?text='+encodeURIComponent(lines.join('\\n')),'_blank');
   document.getElementById('rcpDate').textContent=new Date().toLocaleString();
   document.getElementById('rcpBody').innerHTML=`${labels.name}: ${name}<br>${labels.phone}: ${phone}<br>${labels.product}: ${displayProduct}<br>${labels.qty}: ${qty}<br>${labels.total}: ₹${total}<br>${day?`${labels.day}: ${day}<br>`:''}${labels.address}: ${addr}`;
@@ -883,6 +891,8 @@ function sendOrderByEmail(){
   const day=document.getElementById('oDay').value;
   const addr=document.getElementById('oAddr').value.trim();
   const total=document.getElementById('oTotal').textContent;
+  const orderId=generateOrderId();
+  try{localStorage.setItem('tussar_current_order_id',orderId);}catch(e){}
   const productNames={
     en:{'1L':'1L Bottle','20L':'20L Jar','250ML':'250ML Box'},
     hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},
@@ -894,6 +904,7 @@ function sendOrderByEmail(){
     or:{subject:'TUSSAR ପାଣି ଅର୍ଡର',intro:'ମୁଁ ଏକ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।',name:'ନାମ',phone:'ଫୋନ୍',product:'ଉତ୍ପାଦ',qty:'ପରିମାଣ',total:'ମୋଟ',day:'ପସନ୍ଦର ଦିନ',address:'ଡେଲିଭରି ଠିକଣା'}
   }[lang];
   const lines=[
+    'Order ID: '+orderId,
     labels.intro,
     labels.name+': '+name,
     labels.phone+': '+phone,
