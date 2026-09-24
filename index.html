@@ -142,6 +142,21 @@ header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backgroun
 
 /* DELIVERY OPTIONS */
 .delivery-options{display:grid;gap:.65rem;margin-top:.25rem}.delivery-option{display:flex;align-items:flex-start;gap:.6rem;border:1px solid #cfd9d5;background:#fff;padding:.7rem .8rem}.delivery-option input{margin-top:.25rem}.delivery-option strong{display:block;color:var(--deep);font-size:.9rem}.delivery-option small{display:block;color:var(--stone);font-size:.75rem}.delivery-base{font-size:.78rem;color:var(--stone);margin-top:.35rem}.delivery-base a{color:var(--deep);font-weight:600}.delivery-breakdown{font-size:.82rem;color:var(--stone)}
+/* ORDER TRACKING */
+.tracking{background:var(--paper)}
+.track-box{max-width:760px;margin:2rem auto 0;background:#fff;border:1px solid #dfe6e2;padding:1.5rem}
+.track-form{display:grid;grid-template-columns:1fr auto;gap:.7rem}
+.track-form input{border:1px solid #cfd9d5;padding:.8rem;font-family:inherit;font-size:.95rem}
+.track-result{display:none;margin-top:1.4rem;border-top:1px solid #dfe6e2;padding-top:1.3rem}
+.track-result.show{display:block}
+.track-id{font-family:"Fraunces",serif;color:var(--deep);font-size:1.15rem;margin-bottom:1rem}
+.track-steps{display:grid;gap:.8rem}
+.track-step{display:flex;align-items:center;gap:.8rem;color:#8a9b97}
+.track-dot{width:28px;height:28px;border:2px solid #cfd9d5;border-radius:50%;display:grid;place-items:center;flex-shrink:0;font-size:.75rem}
+.track-step.active{color:var(--deep);font-weight:600}
+.track-step.active .track-dot{background:var(--gold);border-color:var(--gold);color:var(--deep)}
+.track-note{font-size:.8rem;color:var(--stone);margin-top:1rem}
+@media(max-width:560px){.track-form{grid-template-columns:1fr}.track-box{padding:1rem}}
 /* FOOTER */
 footer{background:var(--deep);color:#a9c2bc;padding:2.4rem 6vw;font-size:.85rem;
   display:flex;justify-content:space-between;flex-wrap:wrap;gap:.6rem}
@@ -413,7 +428,8 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
         <button data-lang="hi" onclick="setLang('hi')">HI</button>
         <button data-lang="or" onclick="setLang('or')">OD</button>
       </li>
-      <li><a href="#order" class="nav-order" data-i18n="navOrder">Order</a></li>
+      <li><a href="#trackOrder">Track Order</a>
+    <a href="#order" class="nav-order" data-i18n="navOrder">Order</a></li>
     </ul>
     <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
   </div>
@@ -683,6 +699,21 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
       <button class="geo-link" onclick="checkMyLocation()">📡 Or check using my current location</button>
       <p id="pincodeResult" style="color:#dfeae6"></p>
       <div id="deliveryEta" class="delivery-eta" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section tracking" id="trackOrder">
+  <div class="wrap">
+    <p class="eyebrow">Order tracking</p>
+    <h2>Track your TUSSAR order</h2>
+    <p class="body">Enter the Order ID you received after placing your order. This UI is ready for live backend tracking later.</p>
+    <div class="track-box">
+      <form class="track-form" onsubmit="return trackOrder(event)">
+        <input id="trackOrderId" placeholder="Enter Order ID (e.g. TUS-20260925-4821)" autocomplete="off" required>
+        <button class="btn btn-gold" type="submit">🔎 Track Order</button>
+      </form>
+      <div id="trackResult" class="track-result" aria-live="polite"></div>
     </div>
   </div>
 </section>
@@ -1194,6 +1225,22 @@ function initChat(){
 initChat();
 
 document.getElementById('chat-toggle').onclick=()=>document.getElementById('chat-panel').classList.toggle('open');
+
+// Order tracking UI — frontend demo until the TUSSAR backend is connected.
+function trackOrder(e){
+  e.preventDefault();
+  const id=document.getElementById('trackOrderId').value.trim().toUpperCase();
+  const result=document.getElementById('trackResult');
+  if(!/^TUS-[A-Z0-9-]+$/.test(id)){
+    result.innerHTML='<p class="track-note">Please enter a valid TUSSAR Order ID.</p>';
+    result.classList.add('show');
+    return false;
+  }
+  const steps=['Order Placed','Order Confirmed','Preparing Order','Out for Delivery','Delivered'];
+  result.innerHTML='<div class="track-id">Order ID: '+id+'</div><div class="track-steps">'+steps.map((s,i)=>'<div class="track-step '+(i===0?'active':'')+'"><span class="track-dot">'+(i===0?'✓':i+1)+'</span><span>'+s+'</span></div>').join('')+'</div><p class="track-note">Current demo status: Order Placed. Live status updates will be connected to the TUSSAR order backend.</p>';
+  result.classList.add('show');
+  return false;
+}
 
 // FAQ accordion
 function toggleFaq(btn){
