@@ -1,217 +1,925 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>TUSSAR Mineral Water - Pure, Refreshing & Healthy</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-    <link rel="icon" type="image/png" sizes="32x32" href="Tussar.png" />
-    <link rel="shortcut icon" href="Tussar.png" />
-  </head>
-  <body>
-    <header class="navbar">
-      <div class="logo">TUSSAR</div>
-      <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#products">Products</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#reviews">Reviews</a></li>
-        <li><a href="booking.html" class="btn-small">Order</a></li>
-      </ul>
-      <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
-    </header>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>TUSSAR — Water From the Source</title>
+<meta name="description" content="TUSSAR packaged drinking water — 1L bottles, 20L jars and 250ML box packs, sourced from natural springs and delivered fresh across your area. Order on WhatsApp." />
+<meta property="og:title" content="TUSSAR — Water From the Source" />
+<meta property="og:description" content="Pure, spring-sourced packaged drinking water, delivered fresh. 1L bottles ₹20, 20L jars ₹60, 250ML box packs ₹200." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="TUSSAR — Water From the Source" />
+<meta name="twitter:description" content="Spring-sourced packaged drinking water, delivered fresh to your door." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deep:#0B2E33; --teal:#124953; --mist:#EFF5F2; --paper:#F7FAF8;
+  --stone:#3C5A55; --gold:#C6A15B; --ink:#0B1F1D; --line:rgba(255,255,255,.16);
+}
+:root:not([data-theme="light"]){}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ } }
+:root[data-theme="dark"]{}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  font-family:"Work Sans",system-ui,Arial,sans-serif;background:var(--paper);color:var(--ink);
+  line-height:1.6;overflow-x:hidden;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+h1,h2,h3{font-family:"Fraunces",Georgia,serif;font-weight:500;letter-spacing:-.01em;color:var(--deep)}
+img,svg{max-width:100%}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 6vw}
+.btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--deep);color:#fff;border:none;
+  padding:.85rem 1.6rem;border-radius:2px;font-size:.95rem;font-weight:600;cursor:pointer;text-decoration:none;
+  transition:background .2s ease}
+.btn:hover{background:var(--teal)}
+.btn-ghost{background:transparent;border:1px solid var(--deep);color:var(--deep)}
+.btn-ghost:hover{background:var(--deep);color:#fff}
+.btn-gold{background:var(--gold);color:var(--deep)}
+.btn-gold:hover{background:#b18e49}
 
-    <section id="home" class="hero">
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <h1>Pure, Refreshing & Healthy</h1>
-        <p class="subtitle">
-          Packaged drinking water you can trust — delivered fresh to your door.
-        </p>
-        <div class="hero-cta">
-          <button id="orderNowBtn" class="btn" onclick="openOrderModal('')">
-            Order Now
-          </button>
-          <a href="#products" class="btn-outline">View Products</a>
-        </div>
+/* NAV */
+header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--deep);
+  border-bottom:1px solid var(--line)}
+.nav-row{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 6vw;color:#fff}
+.brand{font-family:"Fraunces",serif;font-size:1.4rem;color:#fff;letter-spacing:.02em}
+.brand span{color:var(--gold)}
+.nav-links{list-style:none;display:flex;gap:1.8rem;align-items:center}
+.nav-links a{text-decoration:none;color:#dfeae6;font-size:.92rem}
+.nav-links a:hover{color:#fff}
+.nav-order{background:var(--gold);color:var(--deep);padding:.55rem 1.1rem;border-radius:2px;font-weight:600;font-size:.88rem}
+.menu-btn{display:none;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer}
+
+/* HERO */
+.hero{background:var(--deep);color:#EFF5F2;position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center;
+  padding-top:5rem;padding-bottom:4rem;position:relative;z-index:2}
+.hero h1{color:#fff;font-size:clamp(2.3rem,4.6vw,3.6rem);line-height:1.08;max-width:14ch}
+.hero p.lead{max-width:42ch;color:#c9dad5;margin-top:1.2rem;font-size:1.05rem}
+.hero .cta-row{display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap}
+.hero .stats{display:flex;gap:2.2rem;margin-top:3rem;border-top:1px solid var(--line);padding-top:1.5rem}
+.hero .stats div b{display:block;font-family:"Fraunces",serif;font-size:1.6rem;color:var(--gold)}
+.hero .stats div span{font-size:.82rem;color:#a9c2bc}
+.contour{position:absolute;inset:0;opacity:.5;z-index:1}
+
+/* SECTION shell */
+.section{padding:5rem 0}
+.eyebrow{font-size:.85rem;color:var(--stone)}
+.section h2{font-size:clamp(1.8rem,3vw,2.4rem);max-width:16ch}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center}
+.section p.body{color:var(--stone);max-width:56ch;margin-top:1rem}
+
+/* ABOUT */
+.about{background:var(--mist)}
+.ring-art{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+
+/* PRODUCTS */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;margin-top:2.6rem}
+.card{background:var(--paper);border:1px solid #dfe6e2;padding:2rem 1.6rem;position:relative}
+.card .icon{width:64px;height:64px;margin-bottom:1.2rem}
+.card h3{font-size:1.15rem}
+.card .price{font-family:"Fraunces",serif;font-size:1.7rem;color:var(--deep);margin:.6rem 0}
+.card .price small{font-family:"Work Sans";font-size:.85rem;color:var(--stone);font-weight:400}
+.card ul{margin:.8rem 0 1.4rem;padding-left:1.1rem;color:var(--stone);font-size:.9rem}
+.card ul li{margin-bottom:.3rem}
+.card .btn{width:100%;justify-content:center}
+
+/* FEATURES */
+.features-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1.8rem;margin-top:2.6rem}
+.feat h4{font-size:1rem;margin-bottom:.4rem}
+.feat p{font-size:.88rem;color:var(--stone)}
+.feat .icon{width:38px;height:38px;margin-bottom:.9rem;color:var(--gold)}
+
+/* GALLERY */
+.gallery{background:var(--deep);color:#EFF5F2}
+.gallery h2{color:#fff}
+.gal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:2.6rem;background:var(--line)}
+.gal-tile{background:var(--teal);padding:2.2rem 1.2rem;display:flex;flex-direction:column;gap:1rem;min-height:190px}
+.gal-tile .icon{width:34px;height:34px;color:var(--gold)}
+.gal-tile h4{font-size:.95rem;color:#fff;font-weight:500;font-family:"Work Sans"}
+.gal-tile p{font-size:.82rem;color:#b9cfc9}
+
+/* REVIEWS */
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.6rem}
+.rev-card{border-left:3px solid var(--gold);padding:.2rem 0 .2rem 1.2rem}
+.rev-card p{font-style:italic;color:var(--stone)}
+.rev-card b{display:block;margin-top:.8rem;font-size:.9rem;color:var(--deep)}
+.rev-form{margin-top:2.6rem;display:grid;grid-template-columns:1fr 1fr auto;gap:.8rem}
+.rev-form textarea{grid-column:1/4}
+.rev-form input,.rev-form textarea{border:1px solid #cfd9d5;padding:.7rem;font-family:inherit;background:var(--paper)}
+
+/* ORDER */
+.order{background:var(--mist)}
+.order-panel{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.order-form{display:grid;gap:.9rem}
+.order-form input,.order-form select,.order-form textarea{
+  border:1px solid #cfd9d5;padding:.8rem;font-family:inherit;font-size:.95rem;background:#fff}
+.order-form label{font-size:.82rem;color:var(--stone);margin-bottom:-.4rem}
+.total-row{font-family:"Fraunces",serif;font-size:1.3rem;color:var(--deep)}
+.contact-card{background:var(--deep);color:#fff;padding:2.2rem}
+.contact-card h3{color:#fff;font-size:1.2rem;margin-bottom:1.2rem}
+.contact-card a{display:block;color:#dfeae6;text-decoration:none;margin-bottom:.7rem;font-size:.95rem}
+.contact-card a:hover{color:var(--gold)}
+
+/* FOOTER */
+footer{background:var(--deep);color:#a9c2bc;padding:2.4rem 6vw;font-size:.85rem;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:.6rem}
+footer span{color:var(--gold)}
+
+/* CHATBOT */
+#chat-toggle{position:fixed;bottom:22px;right:22px;z-index:80;width:58px;height:58px;border-radius:50%;
+  background:var(--gold);border:none;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.25);
+  display:flex;align-items:center;justify-content:center}
+#chat-toggle svg{width:26px;height:26px;color:var(--deep)}
+#chat-panel{position:fixed;bottom:92px;right:22px;z-index:80;width:min(340px,88vw);height:min(460px,70vh);
+  background:#fff;border:1px solid #dfe6e2;box-shadow:0 16px 40px rgba(0,0,0,.22);display:none;
+  flex-direction:column;overflow:hidden}
+#chat-panel.open{display:flex}
+.chat-head{background:var(--deep);color:#fff;padding:.9rem 1.1rem}
+.chat-head b{font-family:"Fraunces",serif;font-weight:500}
+.chat-head span{display:block;font-size:.78rem;color:#a9c2bc}
+.chat-body{flex:1;overflow-y:auto;padding:.9rem;display:flex;flex-direction:column;gap:.6rem;background:var(--mist)}
+.msg{max-width:85%;padding:.6rem .8rem;font-size:.88rem;border-radius:2px;line-height:1.45}
+.msg.bot{background:#fff;border:1px solid #dfe6e2;align-self:flex-start}
+.msg.user{background:var(--deep);color:#fff;align-self:flex-end}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;padding:.6rem .9rem;border-top:1px solid #eef1ef}
+.chip{font-size:.76rem;border:1px solid var(--gold);color:var(--stone);background:#fff;padding:.35rem .6rem;
+  border-radius:20px;cursor:pointer}
+.chip:hover{background:var(--gold);color:var(--deep)}
+.chat-input{display:flex;border-top:1px solid #eef1ef}
+.chat-input input{flex:1;border:none;padding:.8rem;font-family:inherit;font-size:.88rem}
+.chat-input button{border:none;background:var(--deep);color:#fff;padding:0 1rem;cursor:pointer}
+
+/* TRUST STRIP */
+.trust{background:var(--paper);border-bottom:1px solid #dfe6e2}
+.trust-row{display:flex;justify-content:space-between;gap:1.2rem;padding:1.4rem 0;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:.6rem;font-size:.85rem;color:var(--stone)}
+.trust-item svg{width:20px;height:20px;color:var(--gold);flex-shrink:0}
+
+/* PLANS */
+.plans{background:var(--paper)}
+.plan-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;margin-top:2.6rem}
+.plan{border:1px solid #dfe6e2;padding:1.8rem}
+.plan.pop{border-color:var(--gold);position:relative}
+.plan.pop:before{content:"Most chosen";position:absolute;top:-12px;left:1.8rem;background:var(--gold);
+  color:var(--deep);font-size:.72rem;font-weight:600;padding:.25rem .6rem}
+.plan h4{font-family:"Fraunces",serif;font-size:1.1rem;color:var(--deep);margin-bottom:.4rem}
+.plan .p{font-size:.88rem;color:var(--stone);margin-bottom:1rem}
+.plan ul{padding-left:1.1rem;color:var(--stone);font-size:.88rem}
+.plan ul li{margin-bottom:.3rem}
+
+/* PINCODE CHECK */
+.pincode-check{margin-top:1.4rem;display:flex;gap:.6rem}
+.pincode-check input{flex:1;border:1px solid #cfd9d5;padding:.7rem;font-family:inherit;background:#fff}
+#pincodeResult{margin-top:.7rem;font-size:.86rem}
+
+/* FAQ ACCORDION */
+.faq-list{margin-top:2.2rem;border-top:1px solid #dfe6e2}
+.faq-item{border-bottom:1px solid #dfe6e2}
+.faq-q{width:100%;text-align:left;background:none;border:none;padding:1.1rem 0;font-family:"Fraunces",serif;
+  font-size:1.02rem;color:var(--deep);cursor:pointer;display:flex;justify-content:space-between;
+  align-items:center;gap:1rem}
+.faq-q span{font-size:1.2rem;color:var(--gold);flex-shrink:0}
+.faq-a{max-height:0;overflow:hidden;color:var(--stone);font-size:.92rem;transition:max-height .25s ease}
+.faq-item.open .faq-a{max-height:200px;padding-bottom:1.1rem}
+
+@media (max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;padding-top:3rem}
+  .contour{display:none}
+  .two-col,.order-panel{grid-template-columns:1fr}
+  .grid3,.features-row,.gal-grid,.rev-grid,.plan-row{grid-template-columns:1fr 1fr}
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--deep);
+    flex-direction:column;padding:1rem 6vw;border-top:1px solid var(--line)}
+  .nav-links.open{display:flex}
+  .menu-btn{display:block}
+  .trust-row{justify-content:flex-start}
+}
+@media (max-width:560px){
+  .grid3,.features-row,.gal-grid,.rev-grid,.plan-row{grid-template-columns:1fr}
+  .rev-form{grid-template-columns:1fr}
+  .rev-form textarea{grid-column:auto}
+  #chat-panel{right:12px;bottom:84px;width:92vw}
+  .pincode-check{flex-direction:column}
+  footer{flex-direction:column;text-align:left}
+}
+
+/* PROGRESS BAR */
+#scrollBar{position:fixed;top:env(safe-area-inset-top,0px);left:0;height:3px;background:var(--gold);
+  width:0%;z-index:90;transition:width .1s linear}
+
+/* SEASONAL BANNER */
+#seasonBanner{background:var(--gold);color:var(--deep);text-align:center;font-size:.85rem;
+  padding:.6rem 2.5rem .6rem 1rem;position:relative}
+#seasonBanner button{position:absolute;right:.8rem;top:50%;transform:translateY(-50%);background:none;
+  border:none;font-size:1.1rem;cursor:pointer;color:var(--deep)}
+
+/* LANG TOGGLE */
+.lang-toggle{display:flex;gap:.3rem;margin-right:1rem}
+.lang-toggle button{background:none;border:1px solid var(--line);color:#c9dad5;font-size:.75rem;
+  padding:.25rem .5rem;cursor:pointer}
+.lang-toggle button.active{background:var(--gold);color:var(--deep);border-color:var(--gold)}
+
+/* HERO ANIMATION */
+@keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.hero .wrap>div:first-child>*{animation:riseIn .7s ease both}
+.hero .wrap>div:first-child>*:nth-child(2){animation-delay:.08s}
+.hero .wrap>div:first-child>*:nth-child(3){animation-delay:.16s}
+.hero .wrap>div:first-child>*:nth-child(4){animation-delay:.24s}
+.hero .wrap>div:first-child>*:nth-child(5){animation-delay:.32s}
+@media (prefers-reduced-motion:reduce){.hero .wrap>div:first-child>*{animation:none}}
+
+/* BULK TABLE */
+.bulk-table{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:.8rem}
+.bulk-table td{padding:.35rem 0;color:var(--stone);border-top:1px solid #dfe6e2}
+.bulk-table td:last-child{text-align:right;color:var(--deep);font-weight:600}
+
+/* CORPORATE FORM */
+.corp{background:var(--deep);color:#fff}
+.corp h2{color:#fff}
+.corp .body{color:#c9dad5}
+.corp-form{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-top:2rem}
+.corp-form textarea{grid-column:1/3}
+.corp-form input,.corp-form textarea{border:1px solid var(--line);background:var(--teal);color:#fff;
+  padding:.8rem;font-family:inherit}
+.corp-form input::placeholder,.corp-form textarea::placeholder{color:#a9c2bc}
+.corp-form button{grid-column:1/3;justify-self:start}
+
+/* GEO + REPEAT */
+.geo-link{background:none;border:none;color:var(--gold);text-decoration:underline;cursor:pointer;
+  font-size:.82rem;padding:0;margin-top:.6rem}
+.repeat-btn{font-size:.82rem;background:none;border:1px dashed var(--stone);color:var(--stone);
+  padding:.5rem .8rem;cursor:pointer;margin-bottom:.4rem}
+
+/* PRINT RECEIPT */
+#receipt{display:none}
+@media print{
+  body *{visibility:hidden}
+  #receipt,#receipt *{visibility:visible}
+  #receipt{display:block;position:absolute;top:0;left:0;width:100%;padding:2rem}
+}
+
+@media (max-width:860px){
+  .corp-form{grid-template-columns:1fr}
+  .corp-form textarea,.corp-form button{grid-column:auto}
+  .lang-toggle{margin:0 0 .6rem}
+}
+
+/* CUSTOM SCROLLBAR + CURSOR */
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--mist)}
+::-webkit-scrollbar-thumb{background:var(--gold);border:2px solid var(--mist)}
+a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"><circle cx="11" cy="11" r="8" fill="none" stroke="%23C6A15B" stroke-width="2"/></svg>') 11 11,pointer}
+
+/* WAVY DIVIDER */
+.wave{display:block;width:100%;line-height:0;margin-top:-1px}
+.wave svg{width:100%;height:60px;display:block}
+
+/* RIPPLE */
+.btn{position:relative;overflow:hidden}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.5);transform:scale(0);
+  animation:rippleAnim .55s ease-out;pointer-events:none}
+@keyframes rippleAnim{to{transform:scale(3);opacity:0}}
+
+/* LIQUID TEXT */
+.liquid{font-family:"Fraunces",serif;font-size:clamp(2.2rem,7vw,4.5rem);font-weight:600;
+  background:linear-gradient(0deg,var(--gold) 0%,var(--gold) 50%,#dcdfdd 50%,#dcdfdd 100%);
+  background-size:100% 220%;background-position:0 100%;-webkit-background-clip:text;background-clip:text;
+  color:transparent;transition:background-position 1.8s ease}
+.liquid.filled{background-position:0 0}
+
+/* CARD TILT + SHINE + TINTS */
+.card{transition:transform .3s ease,box-shadow .3s ease;overflow:hidden}
+.card:hover{transform:rotate(-.6deg) translateY(-4px);box-shadow:0 18px 30px rgba(11,46,51,.12)}
+.card .icon{transition:transform .3s ease}
+.card:hover .icon{transform:scale(1.06) rotate(2deg)}
+.card.tint-blue{background:linear-gradient(180deg,#eef8fb,var(--paper) 40%)}
+.card.tint-gold{background:linear-gradient(180deg,#fbf5e8,var(--paper) 40%)}
+.card.tint-green{background:linear-gradient(180deg,#eef7f2,var(--paper) 40%)}
+
+/* MINERAL CHART */
+.mineral-row{display:flex;align-items:center;gap:1rem;margin-bottom:.9rem}
+.mineral-row span{width:110px;font-size:.85rem;color:var(--stone);flex-shrink:0}
+.mineral-bar{flex:1;height:8px;background:#dfe6e2}
+.mineral-bar i{display:block;height:100%;background:var(--gold)}
+.mineral-row b{width:60px;text-align:right;font-size:.85rem;color:var(--deep)}
+
+/* JOURNEY SCROLL STRIP */
+.journey{display:flex;gap:1px;overflow-x:auto;scroll-snap-type:x mandatory;margin-top:2.6rem;background:var(--line)}
+.journey .step{scroll-snap-align:start;min-width:240px;background:var(--teal);color:#fff;padding:2rem 1.6rem;flex-shrink:0}
+.journey .step b{display:block;font-family:"Fraunces",serif;font-size:1.5rem;color:var(--gold);margin-bottom:.4rem}
+.journey .step p{font-size:.85rem;color:#b9cfc9}
+
+/* FOUNDER NOTE */
+.founder{border-left:3px solid var(--gold);padding-left:1.4rem;margin-top:2.6rem;max-width:60ch}
+.founder p{font-style:italic;color:var(--stone);font-size:1.02rem}
+.founder b{display:block;margin-top:.8rem;color:var(--deep);font-style:normal}
+
+/* HERO DRIFT */
+.hero{position:relative}
+.hero:before{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(circle at 30% 40%,rgba(198,161,91,.18),transparent 55%),
+             radial-gradient(circle at 75% 65%,rgba(20,83,92,.5),transparent 55%);
+  background-size:180% 180%;animation:driftBg 16s ease-in-out infinite}
+@keyframes driftBg{0%,100%{background-position:0% 0%}50%{background-position:100% 60%}}
+@media (prefers-reduced-motion:reduce){.hero:before{animation:none}.liquid{transition:none}}
+
+.badge-fresh{display:inline-flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--gold);
+  border:1px solid var(--gold);padding:.3rem .7rem;border-radius:20px;margin-top:1rem}
+</style>
+</head>
+<body>
+<div id="scrollBar"></div>
+<div id="seasonBanner" style="display:none">☀️ Summer stock-up: order 2+ jars this week and delivery's on us. &nbsp;·&nbsp; Refer a friend — you both get ₹20 off.
+  <button onclick="dismissBanner()" aria-label="Dismiss">×</button>
+</div>
+
+<header class="nav">
+  <div class="nav-row">
+    <div class="brand">TUSSAR<span>.</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about" data-i18n="navSource">Source</a></li>
+      <li><a href="#products" data-i18n="navProducts">Products</a></li>
+      <li><a href="#gallery" data-i18n="navProcess">Process</a></li>
+      <li><a href="#reviews" data-i18n="navReviews">Reviews</a></li>
+      <li class="lang-toggle">
+        <button class="active" data-lang="en" onclick="setLang('en')">EN</button>
+        <button data-lang="hi" onclick="setLang('hi')">HI</button>
+        <button data-lang="or" onclick="setLang('or')">OD</button>
+      </li>
+      <li><a href="#order" class="nav-order" data-i18n="navOrder">Order</a></li>
+    </ul>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<section class="hero">
+  <svg class="contour" viewBox="0 0 800 600" preserveAspectRatio="xMaxYMid slice">
+    <g fill="none" stroke="#EFF5F2" stroke-opacity=".18">
+      <circle cx="620" cy="300" r="80"/><circle cx="620" cy="300" r="140"/>
+      <circle cx="620" cy="300" r="200"/><circle cx="620" cy="300" r="260"/>
+      <circle cx="620" cy="300" r="320"/>
+    </g>
+  </svg>
+  <div class="wrap">
+    <div>
+      <p class="eyebrow" style="color:#a9c2bc">Rameswari Drinks · Packaged Drinking Water</p>
+      <h1 data-i18n="heroTitle">Water, the way the spring intended it.</h1>
+      <p class="lead" data-i18n="heroLead">TUSSAR sources from clean natural springs and purifies to strict standards, so every bottle reaches your door pure, mineral‑balanced and fresh — never treated to taste like nothing at all.</p>
+      <div class="cta-row">
+        <a class="btn btn-gold" data-i18n="heroCta1" href="https://wa.me/919439863666?text=Hi%20TUSSAR%2C%20I%27d%20like%20to%20place%20an%20order." target="_blank" rel="noopener">Order on WhatsApp</a>
+        <a class="btn btn-ghost" style="color:#fff;border-color:#fff" data-i18n="heroCta2" href="#products">View products</a>
       </div>
-    </section>
-
-    <section id="about" class="section">
-      <h2>About Us</h2>
-      <p class="lead">
-        At TUSSAR we source water from clean springs and purify it using strict
-        quality standards — so every sip is pure, refreshing, and healthy for
-        you and your family.
-      </p>
-    </section>
-
-    <section id="products" class="section products">
-      <h2>Our Products</h2>
-      <div class="product-grid">
-        <div class="product-card">
-          <img src="bottle1.svg" alt="1L Bottle" />
-          <h3>1L Bottle</h3>
-          <p>Perfect for daily hydration. Price: ₹20</p>
-          <button class="btn btn-small" onclick="openOrderModal('1L')">
-            Order Now
-          </button>
-        </div>
-        <div class="product-card">
-          <img src="bottle2.svg" alt="20L Jar" />
-          <h3>20L Jar</h3>
-          <p>Ideal for offices & homes. Price: ₹60</p>
-          <button class="btn btn-small" onclick="openOrderModal('20L')">
-            Order Now
-          </button>
-        </div>
-        <div class="product-card">
-          <img src="box_with_bottles.svg" alt="250ML Box" />
-          <h3>250ML Box</h3>
-          <p>Small packs — sold by box. Price: ₹200 / box (min 2 boxes)</p>
-          <button class="btn btn-small" onclick="openOrderModal('250ML')">
-            Order Now
-          </button>
-        </div>
+      <div class="stats">
+        <div><b>3</b><span>pack sizes</span></div>
+        <div><b>24h</b><span>delivery window</span></div>
+        <div><b>₹20</b><span>starting per bottle</span></div>
+        <div><b>500+</b><span>orders delivered</span></div>
       </div>
-    </section>
+      <div class="badge-fresh" id="freshBadge">💧 This batch bottled within the last 24 hours</div>
+    </div>
+    <div></div>
+  </div>
+</section>
+<div class="wave"><svg viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0,30 C300,70 900,-10 1200,30 L1200,60 L0,60 Z" fill="#F7FAF8"/></svg></div>
 
-    <section id="gallery" class="section gallery">
-      <h2>Gallery</h2>
-      <div class="gallery-grid">
-        <img src="gallery1.svg" alt="Water source and quality control" />
-        <img src="gallery2.svg" alt="Modern bottling facility" />
-        <img src="gallery3.svg" alt="Delivery and distribution" />
-        <img src="gallery4.svg" alt="Customer satisfaction" />
+<div class="trust">
+  <div class="wrap trust-row">
+    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z"/></svg>FSSAI compliant process</div>
+    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>Batch quality-tested</div>
+    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12a8 8 0 1 1 16 0 8 8 0 0 1-16 0z"/><path d="M4 12h16M12 4a12 12 0 0 1 0 16 12 12 0 0 1 0-16z"/></svg>Sealed, tamper-proof packaging</div>
+    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 13l2-6h9l4 4h3v6h-3M8 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM17 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>Reusable jars, less plastic waste</div>
+  </div>
+</div>
+
+<div class="section" style="text-align:center;padding-top:3rem;padding-bottom:1rem">
+  <h2 class="liquid" id="liquidWord">TUSSAR</h2>
+</div>
+
+<section class="section about" id="about">
+  <div class="wrap two-col">
+    <div class="ring-art">
+      <svg viewBox="0 0 300 300" width="280">
+        <g fill="none" stroke="#124953" stroke-width="1.4">
+          <path d="M150 20 C 90 60, 60 140, 150 280 C 240 140, 210 60, 150 20 Z" opacity=".25"/>
+          <path d="M150 60 C 105 90, 85 150, 150 250 C 215 150, 195 90, 150 60 Z" opacity=".45"/>
+          <path d="M150 100 C 122 120, 112 155, 150 215 C 188 155, 178 120, 150 100 Z" opacity=".7"/>
+        </g>
+        <circle cx="150" cy="150" r="6" fill="#C6A15B"/>
+      </svg>
+    </div>
+    <div>
+      <p class="eyebrow">Our source</p>
+      <h2>Sourced clean. Purified strictly. Delivered fast.</h2>
+      <p class="body">Every batch is drawn from natural springs, run through multi-stage purification, and quality-checked before it leaves the plant — so it keeps the minerals your body needs while removing what it doesn't. Rameswari Drinks has been getting it to homes, offices and events across the region ever since.</p>
+
+      <div class="founder">
+        <p>"We started TUSSAR because our own family couldn't find water we trusted enough to give our kids. Every jar that leaves the plant is one we'd put on our own table."</p>
+        <b>— Founder, Rameswari Drinks</b>
       </div>
-    </section>
+    </div>
+  </div>
 
-    <section id="reviews" class="section">
-      <h2>Customer Reviews</h2>
-      <div class="review-submission">
-        <textarea
-          id="newReviewText"
-          placeholder="Share your experience with TUSSAR water..."
-          rows="3"
-        ></textarea>
-        <input type="text" id="reviewerName" placeholder="Your name" />
-        <button onclick="submitReview()" class="btn">Submit Review</button>
+  <div class="wrap" style="margin-top:3.5rem">
+    <p class="eyebrow">Mineral profile <span style="opacity:.6">(sample — replace with your lab report)</span></p>
+    <div class="mineral-row"><span>TDS</span><div class="mineral-bar"><i style="width:62%"></i></div><b>150 ppm</b></div>
+    <div class="mineral-row"><span>pH level</span><div class="mineral-bar"><i style="width:72%"></i></div><b>7.2</b></div>
+    <div class="mineral-row"><span>Calcium</span><div class="mineral-bar"><i style="width:45%"></i></div><b>18 mg/L</b></div>
+    <div class="mineral-row"><span>Magnesium</span><div class="mineral-bar"><i style="width:38%"></i></div><b>9 mg/L</b></div>
+  </div>
+
+  <div class="wrap">
+    <div class="journey">
+      <div class="step"><b>01</b><p>Spring — drawn from a clean natural source.</p></div>
+      <div class="step"><b>02</b><p>Filtered — multi-stage purification removes impurities.</p></div>
+      <div class="step"><b>03</b><p>Tested — every batch checked before packaging.</p></div>
+      <div class="step"><b>04</b><p>Delivered — sealed and sent straight to your door.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="products">
+  <div class="wrap">
+    <p class="eyebrow">What we offer</p>
+    <h2>Three sizes, one standard of purity</h2>
+    <div class="grid3">
+
+      <div class="card tint-blue">
+        <svg class="icon" viewBox="0 0 64 64"><path d="M24 8h16v10l6 6v28a4 4 0 0 1-4 4H22a4 4 0 0 1-4-4V24l6-6V8z" fill="none" stroke="#124953" stroke-width="2"/><path d="M20 30h24" stroke="#C6A15B" stroke-width="2"/></svg>
+        <h3>1L Bottle</h3>
+        <div class="price">₹20 <small>/ bottle</small></div>
+        <ul>
+          <li>Daily hydration, home &amp; office</li>
+          <li>Resealable, BPA-free bottle</li>
+          <li>Doorstep delivery available</li>
+        </ul>
+        <a class="btn" href="https://wa.me/919439863666?text=Hi%20TUSSAR%2C%20I%27d%20like%20to%20order%201L%20bottles." target="_blank" rel="noopener">Order now</a>
       </div>
-      <div id="reviewsList" class="reviews-grid"></div>
-    </section>
 
-    <section id="order" class="section order-section">
-      <h2>Place Your Order</h2>
-      <p class="hint">
-        Click <strong>Order Now</strong> to open the quick order popup
-        (recommended) — or fill the inline form below.
-      </p>
+      <div class="card tint-gold">
+        <svg class="icon" viewBox="0 0 64 64"><path d="M18 14h28v6l4 4v30a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4V24l4-4v-6z" fill="none" stroke="#124953" stroke-width="2"/><path d="M14 26h36" stroke="#C6A15B" stroke-width="2"/></svg>
+        <h3>20L Jar</h3>
+        <div class="price">₹60 <small>/ jar</small></div>
+        <ul>
+          <li>Built for families &amp; offices</li>
+          <li>Reusable, returnable container</li>
+          <li>Set up a regular delivery cycle</li>
+        </ul>
+        <a class="btn" href="https://wa.me/919439863666?text=Hi%20TUSSAR%2C%20I%27d%20like%20to%20order%20a%2020L%20jar." target="_blank" rel="noopener">Order now</a>
+      </div>
 
-      <form id="inlineOrder" class="order-form">
-        <label for="inlineName">Name</label>
-        <input id="inlineName" type="text" placeholder="Full name" required />
+      <div class="card tint-green">
+        <svg class="icon" viewBox="0 0 64 64"><rect x="10" y="18" width="44" height="30" rx="2" fill="none" stroke="#124953" stroke-width="2"/><path d="M10 28h44M22 18v30M42 18v30" stroke="#C6A15B" stroke-width="1.6"/></svg>
+        <h3>250ML Box</h3>
+        <div class="price">₹200 <small>/ box of 24</small></div>
+        <ul>
+          <li>Built for events &amp; parties</li>
+          <li>Minimum order: 2 boxes</li>
+          <li>Bulk pricing for large events</li>
+        </ul>
+        <a class="btn" href="https://wa.me/919439863666?text=Hi%20TUSSAR%2C%20I%27d%20like%20to%20order%20250ML%20boxes." target="_blank" rel="noopener">Order now</a>
+      </div>
 
-        <label for="inlineEmail">Email</label>
-        <input id="inlineEmail" type="email" placeholder="you@example.com" required />
+    </div>
+  </div>
+</section>
 
-        <label for="inlinePhone">Phone</label>
-        <input id="inlinePhone" type="tel" placeholder="+91 98765 43210" required />
+<section class="section plans">
+  <div class="wrap">
+    <p class="eyebrow">For regulars</p>
+    <h2>Set it once, stop thinking about water</h2>
+    <div class="plan-row">
+      <div class="plan">
+        <h4>Pay as you go</h4>
+        <p class="p">Order whenever you need it, no commitment.</p>
+        <ul><li>Any product, any time</li><li>WhatsApp order in minutes</li><li>Cash or UPI on delivery</li></ul>
+      </div>
+      <div class="plan pop">
+        <h4>Home refill</h4>
+        <p class="p">Weekly 20L jar refill for households.</p>
+        <ul><li>Fixed weekly delivery day</li><li>Same jar, refilled &amp; sealed</li><li>Skip or reschedule anytime on WhatsApp</li></ul>
+      </div>
+      <div class="plan">
+        <h4>Office &amp; bulk</h4>
+        <p class="p">Recurring supply for workplaces and events.</p>
+        <ul><li>Multiple jars or box packs</li><li>Custom delivery schedule</li></ul>
+        <table class="bulk-table">
+          <tr><td>1–4 jars/week</td><td>₹60 / jar</td></tr>
+          <tr><td>5–9 jars/week</td><td>₹55 / jar</td></tr>
+          <tr><td>10+ jars/week</td><td>₹50 / jar</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <label for="inlineProduct">Product</label>
-        <select id="inlineProduct" required>
-          <option value="" selected disabled>Select product</option>
-          <option value="1L">1L Bottle — ₹20</option>
-          <option value="20L">20L Can — ₹60</option>
-          <option value="250ML">250ML Box — ₹200 (min 2 boxes)</option>
-        </select>
+<section class="section about">
+  <div class="wrap">
+    <p class="eyebrow">Why TUSSAR</p>
+    <h2>What stays consistent, order after order</h2>
+    <div class="features-row">
+      <div class="feat"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c3 4 6 7.5 6 11a6 6 0 0 1-12 0c0-3.5 3-7 6-11z"/></svg>
+        <h4>Natural minerals</h4><p>Spring-sourced water that keeps its natural mineral balance.</p></div>
+      <div class="feat"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+        <h4>Batch-tested</h4><p>Every batch checked against quality standards before dispatch.</p></div>
+      <div class="feat"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 13l2-6h9l4 4h3v6h-3M8 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM17 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
+        <h4>Fast delivery</h4><p>Home and office delivery on a schedule that suits you.</p></div>
+      <div class="feat"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16v12H7l-3 3V4z"/></svg>
+        <h4>Real support</h4><p>Message us directly — orders and questions, no call centre.</p></div>
+    </div>
+  </div>
+</section>
 
-        <label for="inlineQty">Quantity</label>
-        <input id="inlineQty" type="number" min="1" value="1" required />
+<section class="section gallery" id="gallery">
+  <div class="wrap">
+    <p class="eyebrow" style="color:#a9c2bc">How it's made</p>
+    <h2>From spring to doorstep</h2>
+    <div class="gal-grid">
+      <div class="gal-tile"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20l6-14 4 8 3-5 5 11H3z"/></svg><h4>Spring source</h4><p>Water drawn from a clean natural spring.</p></div>
+      <div class="gal-tile"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><h4>Quality lab</h4><p>Every batch tested before it's bottled.</p></div>
+      <div class="gal-tile"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="10" width="12" height="7"/><path d="M15 12h4l2 3v2h-6"/><circle cx="7" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/></svg><h4>Local delivery</h4><p>Bottled, jarred and boxed for dispatch.</p></div>
+      <div class="gal-tile"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z"/></svg><h4>At your door</h4><p>Homes, offices and events, on schedule.</p></div>
+    </div>
+  </div>
+</section>
+<div class="wave" style="transform:rotate(180deg)"><svg viewBox="0 0 1200 60" preserveAspectRatio="none"><path d="M0,30 C300,70 900,-10 1200,30 L1200,60 L0,60 Z" fill="#0B2E33"/></svg></div>
 
-        <p id="inlineMinMsg" class="warning small"></p>
-        <div class="total-row">Total: ₹<span id="inlineTotal">0</span></div>
+<section class="section" id="reviews">
+  <div class="wrap">
+    <p class="eyebrow">Customers</p>
+    <h2>What people say after their first order</h2>
+    <div class="rev-grid" id="revGrid">
+      <div class="rev-card"><p>"Switched our office to the 20L jars — consistent taste, and delivery is always on time."</p><b>Anita R.</b></div>
+      <div class="rev-card"><p>"Ordered boxes for a family function, arrived a day early. Will order again."</p><b>Suresh P.</b></div>
+      <div class="rev-card"><p>"Genuinely tastes cleaner than the usual brands we tried before this."</p><b>Meera D.</b></div>
+    </div>
+    <div class="rev-form">
+      <input id="rName" placeholder="Your name" />
+      <input id="rHidden" style="display:none" />
+      <textarea id="rText" rows="2" placeholder="Share your experience with TUSSAR..."></textarea>
+      <button class="btn" onclick="addReview()">Submit review</button>
+    </div>
+  </div>
+</section>
 
-        <label for="inlineAddress">Delivery Address</label>
-        <textarea id="inlineAddress" rows="3" placeholder="Complete delivery address with landmark" required></textarea>
-
-        <label for="inlineMsg">Additional Notes</label>
-        <textarea id="inlineMsg" rows="2" placeholder="Preferred delivery time, special instructions..."></textarea>
-
-        <div class="form-actions">
-          <button type="button" id="openModalFromInline" class="btn">Open Order Popup</button>
-          <button type="submit" class="btn btn-submit">Place Order</button>
-        </div>
-      </form>
-    </section>
-
-    <div id="orderModal" class="modal" aria-hidden="true">
-      <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
-        <h3 id="modalTitle">Place Your Order</h3>
-
-        <form id="modalOrderForm" class="modal-form">
-          <label for="mName">Name</label>
-          <input id="mName" type="text" required placeholder="Full name" />
-
-          <label for="mEmail">Email</label>
-          <input id="mEmail" type="email" required placeholder="you@example.com" />
-
-          <label for="mPhone">Phone</label>
-          <input id="mPhone" type="tel" required placeholder="+91 98765 43210" />
-
-          <label for="mProduct">Product</label>
-          <select id="mProduct" required>
-            <option value="" selected disabled>Select product</option>
-            <option value="1L">1L Bottle — ₹20</option>
-            <option value="20L">20L Can — ₹60</option>
-            <option value="250ML">250ML Box — ₹200 (min 2 boxes)</option>
+<section class="section order" id="order">
+  <div class="wrap order-panel">
+    <div>
+      <p class="eyebrow">Place an order</p>
+      <h2>Tell us what you need</h2>
+      <p class="body" style="margin-bottom:1.6rem">Fill this in and it opens WhatsApp with your order ready to send — no account needed.</p>
+      <button type="button" class="repeat-btn" id="repeatBtn" style="display:none" onclick="repeatOrder()">↺ Repeat my last order</button>
+      <form class="order-form" id="orderForm" onsubmit="return sendOrder(event)">
+        <div><label>Name</label><input id="oName" required></div>
+        <div><label>Phone</label><input id="oPhone" required></div>
+        <div>
+          <label>Product</label>
+          <select id="oProduct" onchange="calcTotal()" required>
+            <option value="1L" data-price="20">1L Bottle — ₹20</option>
+            <option value="20L" data-price="60">20L Jar — ₹60</option>
+            <option value="250ML" data-price="200">250ML Box (min 2) — ₹200</option>
           </select>
-
-          <label for="mQty">Quantity</label>
-          <input id="mQty" type="number" min="1" value="1" required />
-
-          <p id="minMsg" class="warning small"></p>
-          <div class="total-row">Total: ₹<span id="priceTotal">0</span></div>
-
-          <label for="mAddress">Delivery Address</label>
-          <textarea id="mAddress" rows="3" placeholder="Complete delivery address with landmark" required></textarea>
-
-          <label for="mMsg">Additional Notes</label>
-          <textarea id="mMsg" rows="2" placeholder="Preferred delivery time, special instructions..."></textarea>
-
-          <div class="form-actions">
-            <button type="submit" class="btn btn-submit">Place Order</button>
-            <button type="button" class="btn btn-ghost" id="modalCancel">Cancel</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div><label>Quantity</label><input id="oQty" type="number" min="1" value="1" onchange="calcTotal()"></div>
+        <div><label>Preferred weekly refill day (optional)</label>
+          <select id="oDay"><option value="">No fixed schedule</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select>
+        </div>
+        <div class="total-row">Total: ₹<span id="oTotal">20</span></div>
+        <div><label>Delivery address</label><textarea id="oAddr" rows="2" required></textarea></div>
+        <button class="btn btn-gold" type="submit">Send order on WhatsApp</button>
+      </form>
     </div>
-
-    <div id="modalOverlay"></div>
-
-    <div id="successMessage" class="success-message" style="display: none">
-      <div class="success-content">
-        <h3>Order Placed Successfully!</h3>
-        <p>
-          Thank you for your order. We'll contact you shortly to confirm
-          delivery details.
-        </p>
-        <button onclick="closeSuccessMessage()" class="btn">Close</button>
+    <div class="contact-card">
+      <h3>Reach us directly</h3>
+      <a href="tel:+919439863666">📞 +91 94398 63666</a>
+      <a href="mailto:rameswaridrinks@gmail.com">✉️ rameswaridrinks@gmail.com</a>
+      <a href="https://wa.me/919439863666" target="_blank" rel="noopener">💬 Chat on WhatsApp</a>
+      <a href="https://www.google.com/maps/search/?api=1&query=Berhampur%2C+Odisha" target="_blank" rel="noopener">📍 View service area on Google Maps</a>
+      <p style="color:#a9c2bc;font-size:.85rem;margin-top:1.4rem">Serving homes, offices and events in and around our delivery area. FSSAI Lic. No.: <em>add your license number</em>.</p>
+      <div class="pincode-check">
+        <input id="pinInput" placeholder="Enter your pincode" inputmode="numeric">
+        <button class="btn btn-ghost" style="color:#fff;border-color:#fff" onclick="checkPincode()">Check</button>
       </div>
+      <button class="geo-link" onclick="checkMyLocation()">📡 Or check using my current location</button>
+      <p id="pincodeResult" style="color:#dfeae6"></p>
     </div>
+  </div>
+</section>
 
-    <footer>
-      <p>© 2025 TUSSAR Mineral Water — Pure water, delivered fresh to your door.</p>
-      <p>Contact: rameswaridrinks@gmail.com | +91 9439863666</p>
-    </footer>
+<section class="section corp">
+  <div class="wrap">
+    <p class="eyebrow" style="color:#a9c2bc">For businesses</p>
+    <h2>Corporate &amp; bulk enquiry</h2>
+    <p class="body">Ordering for an office, hotel or event? Send us your requirement and we'll get back with a quote.</p>
+    <form class="corp-form" onsubmit="return sendCorpEnquiry(event)">
+      <input id="cCompany" placeholder="Company / organisation name" required>
+      <input id="cContact" placeholder="Contact person &amp; phone" required>
+      <input id="cQty" placeholder="Estimated quantity (e.g. 20 jars/week)" required>
+      <input id="cDate" placeholder="Needed from (date)" >
+      <textarea id="cNotes" rows="3" placeholder="Any other details"></textarea>
+      <button class="btn btn-gold" type="submit">Send enquiry by email</button>
+    </form>
+  </div>
+</section>
 
-    <script src="scripts-part1.js"></script>
-    <script src="scripts-part2.js"></script>
-  </body>
+<section class="section">
+  <div class="wrap">
+    <p class="eyebrow">Questions</p>
+    <h2>A few things people ask before ordering</h2>
+    <div class="faq-list" id="faqList">
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is TUSSAR water safe for daily drinking?<span>+</span></button><div class="faq-a">Yes — it's spring-sourced, purified in a multi-stage process, and every batch is tested before it's bottled or jarred.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What's the minimum order?<span>+</span></button><div class="faq-a">No minimum for 1L bottles or the 20L jar. 250ML boxes have a minimum of 2 boxes per order.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I return the 20L jar?<span>+</span></button><div class="faq-a">Yes, the jar is reusable and returnable — we collect the empty jar when we deliver your next refill.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Do you deliver on weekends?<span>+</span></button><div class="faq-a">Yes, we deliver every day. Message us on WhatsApp to confirm a slot that works for you.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How do I pay?<span>+</span></button><div class="faq-a">Cash on delivery or UPI, whichever you prefer — just let us know when you order.</div></div>
+    </div>
+  </div>
+</section>
+
+<div id="receipt">
+  <h2 style="font-family:Georgia">TUSSAR — Order Receipt</h2>
+  <p id="rcpDate"></p><hr style="margin:1rem 0">
+  <p id="rcpBody"></p>
+</div>
+
+<footer>
+  <p>© 2026 <span>TUSSAR</span> Mineral Water — Rameswari Drinks. All rights reserved.</p>
+  <p>+91 94398 63666 · rameswaridrinks@gmail.com</p>
+</footer>
+
+<button id="chat-toggle" aria-label="Chat with us">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H8l-4 4V4z"/></svg>
+</button>
+<div id="chat-panel">
+  <div class="chat-head"><b>TUSSAR Assistant</b><span>Ask about products, price, delivery or how to order</span></div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chips" id="chatChips"></div>
+  <div class="chat-input">
+    <input id="chatInput" placeholder="Type a question..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button onclick="sendChat()">Send</button>
+  </div>
+</div>
+
+<script>
+// mobile nav
+document.getElementById('menuBtn').onclick=()=>document.getElementById('navLinks').classList.toggle('open');
+
+// order total + whatsapp
+function calcTotal(){
+  const sel=document.getElementById('oProduct');
+  const price=+sel.options[sel.selectedIndex].dataset.price;
+  const qty=+document.getElementById('oQty').value||1;
+  document.getElementById('oTotal').textContent=price*qty;
+}
+calcTotal();
+function sendOrder(e){
+  e.preventDefault();
+  const name=document.getElementById('oName').value;
+  const phone=document.getElementById('oPhone').value;
+  const sel=document.getElementById('oProduct');
+  const product=sel.options[sel.selectedIndex].text;
+  const qty=document.getElementById('oQty').value;
+  const day=document.getElementById('oDay').value;
+  const addr=document.getElementById('oAddr').value;
+  const total=document.getElementById('oTotal').textContent;
+  const order={name,phone,product:sel.value,qty,addr,day};
+  try{localStorage.setItem('tussar_last_order',JSON.stringify(order));}catch(err){}
+  const msg=`Hi TUSSAR, I'd like to order:%0AName: ${name}%0APhone: ${phone}%0AProduct: ${product}%0AQty: ${qty}%0ATotal: ₹${total}%0A${day?'Preferred day: '+day+'%0A':''}Address: ${addr}`;
+  window.open(`https://wa.me/919439863666?text=${encodeURIComponent(msg.replace(/%0A/g,'\n'))}`,'_blank');
+  document.getElementById('rcpDate').textContent=new Date().toLocaleString();
+  document.getElementById('rcpBody').innerHTML=`Name: ${name}<br>Phone: ${phone}<br>Product: ${product}<br>Qty: ${qty}<br>Total: ₹${total}<br>${day?'Preferred day: '+day+'<br>':''}Address: ${addr}`;
+  return false;
+}
+function repeatOrder(){
+  try{
+    const o=JSON.parse(localStorage.getItem('tussar_last_order'));
+    if(!o)return;
+    document.getElementById('oName').value=o.name||'';
+    document.getElementById('oPhone').value=o.phone||'';
+    document.getElementById('oProduct').value=o.product||'1L';
+    document.getElementById('oQty').value=o.qty||1;
+    document.getElementById('oDay').value=o.day||'';
+    document.getElementById('oAddr').value=o.addr||'';
+    calcTotal();
+  }catch(e){}
+}
+(function(){
+  try{ if(localStorage.getItem('tussar_last_order')) document.getElementById('repeatBtn').style.display='inline-block'; }catch(e){}
+})();
+
+function sendCorpEnquiry(e){
+  e.preventDefault();
+  const company=document.getElementById('cCompany').value;
+  const contact=document.getElementById('cContact').value;
+  const qty=document.getElementById('cQty').value;
+  const date=document.getElementById('cDate').value;
+  const notes=document.getElementById('cNotes').value;
+  const body=`Company: ${company}%0AContact: ${contact}%0AEstimated quantity: ${qty}%0ANeeded from: ${date}%0ANotes: ${notes}`;
+  window.location.href=`mailto:rameswaridrinks@gmail.com?subject=${encodeURIComponent('Corporate/bulk enquiry — '+company)}&body=${body}`;
+  return false;
+}
+
+// reviews (stored per-visitor only)
+function loadReviews(){
+  try{
+    const saved=JSON.parse(localStorage.getItem('tussar_reviews')||'[]');
+    const grid=document.getElementById('revGrid');
+    saved.forEach(r=>{
+      const d=document.createElement('div');
+      d.className='rev-card';
+      d.innerHTML=`<p>"${r.text}"</p><b>${r.name}</b>`;
+      grid.appendChild(d);
+    });
+  }catch(e){}
+}
+function addReview(){
+  const name=document.getElementById('rName').value.trim()||'Anonymous';
+  const text=document.getElementById('rText').value.trim();
+  if(!text)return;
+  const grid=document.getElementById('revGrid');
+  const d=document.createElement('div');
+  d.className='rev-card';
+  d.innerHTML=`<p>"${text}"</p><b>${name}</b>`;
+  grid.appendChild(d);
+  try{
+    const saved=JSON.parse(localStorage.getItem('tussar_reviews')||'[]');
+    saved.push({name,text});
+    localStorage.setItem('tussar_reviews',JSON.stringify(saved));
+  }catch(e){}
+  document.getElementById('rName').value='';
+  document.getElementById('rText').value='';
+}
+loadReviews();
+
+// chatbot
+const FAQ=[
+  {k:['what','product','sell','offer','water'],a:"TUSSAR is packaged drinking water sourced from natural springs, purified to strict standards. We offer three products: a 1L bottle, a 20L jar, and 250ML box packs."},
+  {k:['price','cost','rate','how much','₹'],a:"1L Bottle: ₹20 · 20L Jar: ₹60 · 250ML Box (24 bottles): ₹200 per box, minimum 2 boxes. Bulk pricing is available for large events — just ask on WhatsApp."},
+  {k:['where','location','address','area','deliver to','serve'],a:"We deliver to homes, offices and events across our local service area. Share your address on WhatsApp and we'll confirm right away whether it's within our delivery zone."},
+  {k:['order','buy','purchase','how to'],a:"Easiest way: tap the gold 'Order on WhatsApp' button, or fill the order form in the Order section — it opens WhatsApp with your order pre-filled. You can also call or email us directly."},
+  {k:['delivery','time','fast','when','arrive'],a:"Most orders are delivered within 24 hours. For offices and regular jar refills, we can set up a recurring delivery schedule."},
+  {k:['payment','pay','cod','cash','upi'],a:"We accept cash on delivery and UPI. Confirm your preferred method when you message us on WhatsApp."},
+  {k:['bulk','event','party','corporate','wholesale'],a:"For events, offices or bulk orders, message us on WhatsApp with quantity and date — we offer better rates for larger orders."},
+  {k:['contact','phone','number','email','call'],a:"Call or WhatsApp +91 94398 63666, or email rameswaridrinks@gmail.com."},
+  {k:['jar','20l','can'],a:"The 20L Jar is ₹60, reusable and ideal for homes and offices. Great for setting up a regular refill schedule."},
+  {k:['bottle','1l'],a:"The 1L Bottle is ₹20 — perfect for daily hydration at home or on the go."},
+  {k:['box','250','event pack'],a:"The 250ML Box holds 24 bottles and costs ₹200 per box, minimum order of 2 boxes — popular for events and parties."},
+  {k:['quality','safe','pure','mineral','clean'],a:"Our water is spring-sourced and purified through a multi-stage process, with every batch quality-tested before it leaves the plant, keeping natural minerals intact."},
+  {k:['hi','hello','hey'],a:"Hello! I'm the TUSSAR assistant. Ask me about our products, prices, delivery or how to place an order."},
+  {k:['plan','subscription','weekly','refill','recurring'],a:"We offer a weekly Home Refill plan for the 20L jar, plus custom recurring schedules for offices and bulk buyers. Message us on WhatsApp to set one up."},
+  {k:['pincode','pin code','minimum order','return jar','weekend'],a:"Use the pincode checker in the Order section to confirm delivery to your area. The 20L jar is returnable, boxes have a minimum of 2 per order, and we deliver every day including weekends."}
+];
+function botReply(q){
+  const t=q.toLowerCase();
+  let best=null,score=0;
+  FAQ.forEach(f=>{
+    let s=f.k.reduce((n,k)=>n+(t.includes(k)?1:0),0);
+    if(s>score){score=s;best=f;}
+  });
+  return best?best.a:"I'm not sure about that one — for anything specific, message us directly on WhatsApp at +91 94398 63666 and we'll help right away.";
+}
+function pushMsg(text,cls){
+  const body=document.getElementById('chatBody');
+  const d=document.createElement('div');
+  d.className='msg '+cls;
+  d.textContent=text;
+  body.appendChild(d);
+  body.scrollTop=body.scrollHeight;
+}
+function sendChat(){
+  const inp=document.getElementById('chatInput');
+  const val=inp.value.trim();
+  if(!val)return;
+  pushMsg(val,'user');
+  inp.value='';
+  setTimeout(()=>pushMsg(botReply(val),'bot'),300);
+}
+const QUICK=["What is TUSSAR?","What are the prices?","Where do you deliver?","How do I order?"];
+function initChat(){
+  pushMsg("Hi! Ask me about products, price, delivery area or how to order.","bot");
+  const chips=document.getElementById('chatChips');
+  QUICK.forEach(q=>{
+    const c=document.createElement('button');
+    c.className='chip';c.textContent=q;
+    c.onclick=()=>{pushMsg(q,'user');setTimeout(()=>pushMsg(botReply(q),'bot'),300);};
+    chips.appendChild(c);
+  });
+}
+initChat();
+document.getElementById('chat-toggle').onclick=()=>document.getElementById('chat-panel').classList.toggle('open');
+
+// FAQ accordion
+function toggleFaq(btn){
+  const item=btn.parentElement;
+  const wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));
+  if(!wasOpen)item.classList.add('open');
+}
+
+// pincode checker — replace this list with your real delivery pincodes
+const DELIVERY_PINCODES=['760001','760002','760003','760004','761001','761002'];
+function checkPincode(){
+  const val=document.getElementById('pinInput').value.trim();
+  const out=document.getElementById('pincodeResult');
+  if(!/^\d{6}$/.test(val)){out.textContent='Enter a valid 6-digit pincode.';return;}
+  if(DELIVERY_PINCODES.includes(val)){
+    out.textContent='Good news — we deliver to your area. Place your order above.';
+  }else{
+    out.textContent="We're not listed there yet — message us on WhatsApp and we'll confirm.";
+  }
+}
+
+// scroll progress
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('scrollBar').style.width=pct+'%';
+});
+
+// seasonal / referral banner
+(function(){
+  try{
+    if(!localStorage.getItem('tussar_banner_dismissed')) document.getElementById('seasonBanner').style.display='block';
+  }catch(e){ document.getElementById('seasonBanner').style.display='block'; }
+})();
+function dismissBanner(){
+  document.getElementById('seasonBanner').style.display='none';
+  try{localStorage.setItem('tussar_banner_dismissed','1');}catch(e){}
+}
+
+// geolocation delivery check — replace with your real service-area centre
+const SERVICE_CENTER={lat:19.3149,lng:84.7941}; // Berhampur, Odisha
+const SERVICE_RADIUS_KM=15;
+function checkMyLocation(){
+  const out=document.getElementById('pincodeResult');
+  if(!navigator.geolocation){out.textContent='Location isn\'t available on this device — try the pincode field.';return;}
+  out.textContent='Checking your location...';
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const {latitude:lat,longitude:lng}=pos.coords;
+    const R=6371,dLat=(lat-SERVICE_CENTER.lat)*Math.PI/180,dLng=(lng-SERVICE_CENTER.lng)*Math.PI/180;
+    const a=Math.sin(dLat/2)**2+Math.cos(lat*Math.PI/180)*Math.cos(SERVICE_CENTER.lat*Math.PI/180)*Math.sin(dLng/2)**2;
+    const dist=R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+    out.textContent = dist<=SERVICE_RADIUS_KM
+      ? `You're about ${dist.toFixed(1)}km from our base — within our delivery area.`
+      : `You're about ${dist.toFixed(0)}km away — message us on WhatsApp to confirm delivery.`;
+  },()=>{out.textContent='Could not access your location — try the pincode field instead.'});
+}
+
+// language toggle — partial coverage (nav + hero); extend I18N to cover more text
+const I18N={
+  en:{navSource:'Source',navProducts:'Products',navProcess:'Process',navReviews:'Reviews',navOrder:'Order',
+    heroTitle:'Water, the way the spring intended it.',
+    heroLead:"TUSSAR sources from clean natural springs and purifies to strict standards, so every bottle reaches your door pure, mineral‑balanced and fresh — never treated to taste like nothing at all.",
+    heroCta1:'Order on WhatsApp',heroCta2:'View products'},
+  hi:{navSource:'स्रोत',navProducts:'उत्पाद',navProcess:'प्रक्रिया',navReviews:'समीक्षा',navOrder:'ऑर्डर',
+    heroTitle:'पानी, जैसा झरने ने चाहा था।',
+    heroLead:'TUSSAR स्वच्छ प्राकृतिक झरनों से पानी लेकर सख्त मानकों से शुद्ध करता है, ताकि हर बोतल शुद्ध और ताज़ा आपके दरवाज़े तक पहुंचे।',
+    heroCta1:'व्हाट्सएप पर ऑर्डर करें',heroCta2:'उत्पाद देखें'},
+  or:{navSource:'ଉତ୍ସ',navProducts:'ଉତ୍ପାଦ',navProcess:'ପ୍ରକ୍ରିୟା',navReviews:'ସମୀକ୍ଷା',navOrder:'ଅର୍ଡର',
+    heroTitle:'ପାଣି, ଝରଣା ଯେମିତି ଚାହିଁଥିଲା ସେମିତି।',
+    heroLead:'TUSSAR ପରିଷ୍କାର ପ୍ରାକୃତିକ ଝରଣାରୁ ପାଣି ସଂଗ୍ରହ କରି କଠୋର ମାନ ଅନୁଯାୟୀ ଶୁଦ୍ଧ କରିଥାଏ।',
+    heroCta1:'ୱାଟସ୍‌ଆପରେ ଅର୍ଡର କରନ୍ତୁ',heroCta2:'ଉତ୍ପାଦ ଦେଖନ୍ତୁ'}
+};
+function setLang(lang){
+  const d=I18N[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    if(d[key])el.textContent=d[key];
+  });
+  document.querySelectorAll('.lang-toggle button').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+}
+
+// ripple on buttons
+document.querySelectorAll('.btn').forEach(btn=>{
+  btn.addEventListener('click',function(e){
+    const r=document.createElement('span');
+    r.className='ripple';
+    const rect=this.getBoundingClientRect();
+    r.style.left=(e.clientX-rect.left-10)+'px';
+    r.style.top=(e.clientY-rect.top-10)+'px';
+    r.style.width=r.style.height='20px';
+    this.appendChild(r);
+    setTimeout(()=>r.remove(),550);
+  });
+});
+
+// liquid word fills in when scrolled into view
+const liquidEl=document.getElementById('liquidWord');
+if(liquidEl && 'IntersectionObserver' in window){
+  new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{ if(en.isIntersecting) liquidEl.classList.add('filled'); });
+  },{threshold:.5}).observe(liquidEl);
+}
+
+// freshness badge — shows today's date
+(function(){
+  const el=document.getElementById('freshBadge');
+  if(el){ const d=new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short'});
+    el.textContent='💧 This batch bottled '+d; }
+})();
+</script>
+</body>
 </html>
