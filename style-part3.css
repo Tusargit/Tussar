@@ -1,0 +1,170 @@
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.reviews-display .review-box {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(6, 18, 32, 0.06);
+  text-align: left;
+  border-left: 4px solid var(--brand1);
+}
+.review-box p {
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+  font-style: italic;
+}
+.review-box strong {
+  color: var(--dark);
+  font-weight: 600;
+}
+.review-box .review-date {
+  font-size: 0.85rem;
+  color: #999;
+  margin-top: 0.5rem;
+}
+.booking-form {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(6, 18, 32, 0.08);
+  text-align: left;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+.form-group label {
+  color: var(--dark);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 0.8rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--brand1);
+  box-shadow: 0 0 0 3px rgba(0, 180, 219, 0.1);
+}
+.price-display {
+  background: var(--bg);
+  padding: 0.8rem;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--brand2);
+  text-align: center;
+}
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+.order-section .order-form {
+  max-width: 700px;
+  margin: 1rem auto;
+  text-align: left;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(6, 18, 32, 0.08);
+}
+.order-form label {
+  display: block;
+  margin-top: 1rem;
+  color: var(--dark);
+  font-weight: 600;
+}
+.order-form input,
+.order-form select,
+.order-form textarea {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 0.5rem;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+.order-form input:focus,
+.order-form select:focus,
+.order-form textarea:focus {
+  outline: none;
+  border-color: var(--brand1);
+  box-shadow: 0 0 0 3px rgba(0, 180, 219, 0.1);
+}
+.small { font-size: 0.85rem; }
+.warning { color: var(--danger); margin-top: 0.5rem; }
+.hint { color: var(--muted); margin-bottom: 1.5rem; font-style: italic; }
+.total-row {
+  font-weight: 700;
+  margin: 1rem 0;
+  font-size: 1.2rem;
+  color: var(--dark);
+  background: var(--bg);
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+}
+#modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: none;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+#modalOverlay.active { display: block; opacity: 1; }
+#orderModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  max-width: 420px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  display: none;
+  opacity: 0;
+  transform: translate(-50%, -60%) scale(0.85) rotateX(-10deg);
+  transform-origin: top center;
+}
+#orderModal.active {
+  display: block;
+  animation: slideTiltIn 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+@keyframes slideTiltIn {
+  0% { opacity: 0; transform: translate(-50%, -70%) scale(0.85) rotateX(-10deg); }
+  60% { opacity: 1; transform: translate(-50%, -58%) scale(1.02) rotateX(2deg);
