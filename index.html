@@ -162,6 +162,40 @@ footer{background:var(--deep);color:#a9c2bc;padding:2.4rem 6vw;font-size:.85rem;
   display:flex;justify-content:space-between;flex-wrap:wrap;gap:.6rem}
 footer span{color:var(--gold)}
 
+/* ACCOUNT / LOGIN */
+.account-btn{border:1px solid rgba(255,255,255,.28);background:transparent;color:#fff;padding:.55rem .8rem;border-radius:3px;cursor:pointer;font:600 .82rem "Work Sans",sans-serif;transition:.2s}
+.account-btn:hover{background:var(--gold);color:var(--deep);border-color:var(--gold)}
+.auth-overlay{position:fixed;inset:0;background:rgba(3,18,20,.72);backdrop-filter:blur(5px);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem}
+.auth-overlay.open{display:flex}
+.auth-modal{width:min(430px,94vw);max-height:90vh;overflow:auto;background:#fff;border:1px solid #dfe6e2;box-shadow:0 20px 60px rgba(0,0,0,.3);padding:1.5rem;position:relative}
+.auth-close{position:absolute;right:1rem;top:.8rem;border:none;background:none;font-size:1.5rem;color:var(--stone);cursor:pointer}
+.auth-modal h2{font-size:1.7rem;margin-bottom:.25rem}
+.auth-sub{font-size:.82rem;color:var(--stone);margin-bottom:1.2rem}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #dfe6e2;margin-bottom:1rem}
+.auth-tab{border:none;background:none;padding:.7rem;cursor:pointer;color:var(--stone);font-weight:600}
+.auth-tab.active{color:var(--deep);border-bottom:2px solid var(--gold)}
+.auth-form{display:grid;gap:.75rem}
+.auth-form label{font-size:.78rem;color:var(--stone)}
+.auth-form input{border:1px solid #cfd9d5;padding:.75rem;font:inherit;width:100%}
+.auth-form button{margin-top:.25rem}
+.auth-note{font-size:.72rem;color:#71817d;margin-top:.8rem;line-height:1.5}
+.profile-panel{display:none}
+.profile-panel.show{display:block}
+.profile-head{display:flex;align-items:center;gap:.8rem;padding:.9rem;background:var(--mist);margin-bottom:1rem}
+.profile-avatar{width:44px;height:44px;border-radius:50%;background:var(--deep);color:var(--gold);display:grid;place-items:center;font-size:1.1rem}
+.profile-head strong{display:block;color:var(--deep)}
+.profile-head small{color:var(--stone)}
+.profile-card{border:1px solid #dfe6e2;padding:1rem;margin-bottom:.75rem}
+.profile-card h3{font-size:1rem;margin-bottom:.7rem}
+.profile-actions{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.profile-actions button{padding:.7rem;border:1px solid #cfd9d5;background:#fff;cursor:pointer;font:600 .8rem "Work Sans",sans-serif}
+.profile-actions button:hover{background:var(--mist)}
+.order-history{display:grid;gap:.55rem}
+.history-item{border:1px solid #dfe6e2;padding:.7rem;font-size:.8rem}
+.history-item strong{color:var(--deep)}
+.history-empty{font-size:.8rem;color:var(--stone)}
+.payment-box{background:var(--mist);padding:.8rem;font-size:.8rem;color:var(--stone)}
+@media(max-width:700px){.account-btn{padding:.5rem .65rem}.account-btn span{display:none}}
 /* CHATBOT */
 #chat-toggle{position:fixed;bottom:22px;right:22px;z-index:80;width:58px;height:58px;border-radius:50%;
   background:var(--gold);border:none;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.25);
@@ -409,7 +443,64 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
   border:1px solid var(--gold);padding:.3rem .7rem;border-radius:20px;margin-top:1rem}
 </style>
 </head>
-<body>
+<body><div class="auth-overlay" id="authOverlay" onclick="if(event.target===this)closeAuthModal()">
+  <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <button class="auth-close" type="button" onclick="closeAuthModal()" aria-label="Close">×</button>
+    <h2 id="authTitle">Your TUSSAR Account</h2>
+    <p class="auth-sub" id="authSub">Login to view your orders, profile and payment options.</p>
+
+    <div id="authBox">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="loginTab" type="button" onclick="showAuthTab('login')">Login</button>
+        <button class="auth-tab" id="signupTab" type="button" onclick="showAuthTab('signup')">Create account</button>
+      </div>
+
+      <form class="auth-form" id="loginForm" onsubmit="return loginCustomer(event)">
+        <div><label>Email or mobile</label><input id="loginIdentity" required autocomplete="username" placeholder="Email or mobile number"></div>
+        <div><label>Password</label><input id="loginPassword" type="password" required autocomplete="current-password" placeholder="Password"></div>
+        <button class="btn btn-gold" type="submit">🔐 Login</button>
+      </form>
+
+      <form class="auth-form" id="signupForm" style="display:none" onsubmit="return signupCustomer(event)">
+        <div><label>Full name</label><input id="signupName" required autocomplete="name" placeholder="Your name"></div>
+        <div><label>Mobile</label><input id="signupPhone" required autocomplete="tel" placeholder="10-digit mobile"></div>
+        <div><label>Email</label><input id="signupEmail" type="email" required autocomplete="email" placeholder="you@example.com"></div>
+        <div><label>Password</label><input id="signupPassword" type="password" minlength="6" required autocomplete="new-password" placeholder="Minimum 6 characters"></div>
+        <button class="btn btn-gold" type="submit">✨ Create account</button>
+      </form>
+      <p class="auth-note">Account UI is ready. For production, authentication, order history and payment records should be stored in a secure backend/database rather than browser storage.</p>
+    </div>
+
+    <div class="profile-panel" id="profilePanel">
+      <div class="profile-head">
+        <div class="profile-avatar" id="profileAvatar">T</div>
+        <div><strong id="profileName">Customer</strong><small id="profileContact">—</small></div>
+      </div>
+
+      <div class="profile-card">
+        <h3>📦 Order history</h3>
+        <div class="order-history" id="orderHistory"></div>
+      </div>
+
+      <div class="profile-card">
+        <h3>💳 Payments</h3>
+        <div class="payment-box">Payment history and saved payment methods will appear here after the secure payment backend is connected.</div>
+      </div>
+
+      <div class="profile-card">
+        <h3>👤 Profile</h3>
+        <div class="profile-actions">
+          <button type="button" onclick="showProfileMessage('Address book')">📍 Address book</button>
+          <button type="button" onclick="showProfileMessage('Profile editing')">✏️ Edit profile</button>
+        </div>
+      </div>
+
+      <button class="btn btn-ghost" type="button" style="width:100%;justify-content:center" onclick="logoutCustomer()">Log out</button>
+      <p class="auth-note" id="profileMessage"></p>
+    </div>
+  </div>
+</div>
+
 <div id="scrollBar"></div>
 <div id="seasonBanner" style="display:none">☀️ Summer stock-up: order 2+ jars this week and delivery's on us. &nbsp;·&nbsp; Refer a friend — you both get ₹20 off.
   <button onclick="dismissBanner()" aria-label="Dismiss">×</button>
@@ -428,7 +519,7 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
         <button data-lang="hi" onclick="setLang('hi')">HI</button>
         <button data-lang="or" onclick="setLang('or')">OD</button>
       </li>
-      <li><a href="#trackOrder">Track Order</a>
+      <li><a href="#trackOrder">Track Order</a><a href="#account" data-account-link onclick="openAuthModal();return false;">👤 Login / Profile</a>
     <a href="#order" class="nav-order" data-i18n="navOrder">Order</a></li>
     </ul>
     <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
@@ -859,6 +950,7 @@ function sendOrder(e){
   lines.push(`${labels.address}: ${addr}`);
   const orderId=generateOrderId();
   lines.unshift('Order ID: '+orderId);
+  attachOrderToCustomer({id:orderId,product,qty:Number(qty)||1,total,date:new Date().toLocaleString('en-IN')});
   try{localStorage.setItem('tussar_current_order_id',orderId);}catch(err){}
   window.open('https://wa.me/919348585599?text='+encodeURIComponent(lines.join('\\n')),'_blank');
   document.getElementById('rcpDate').textContent=new Date().toLocaleString();
@@ -1431,6 +1523,105 @@ if(liquidEl && 'IntersectionObserver' in window){
   if(el){ const d=new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short'});
     el.textContent='💧 This batch bottled '+d; }
 })();
+
+/* CUSTOMER ACCOUNT */
+let currentCustomer=null;
+function getCustomers(){
+  try{return JSON.parse(localStorage.getItem('tussar_customers')||'[]');}catch(e){return [];}
+}
+function saveCustomers(list){try{localStorage.setItem('tussar_customers',JSON.stringify(list));}catch(e){}}
+function openAuthModal(){
+  document.getElementById('authOverlay').classList.add('open');
+  const logged=localStorage.getItem('tussar_logged_customer');
+  if(logged){
+    try{currentCustomer=JSON.parse(logged);showProfilePanel();}catch(e){showAuthPanel();}
+  }else showAuthPanel();
+}
+function closeAuthModal(){document.getElementById('authOverlay').classList.remove('open');}
+function showAuthPanel(){
+  document.getElementById('authBox').style.display='block';
+  document.getElementById('profilePanel').classList.remove('show');
+}
+function showAuthTab(tab){
+  const login=tab==='login';
+  document.getElementById('loginForm').style.display=login?'grid':'none';
+  document.getElementById('signupForm').style.display=login?'none':'grid';
+  document.getElementById('loginTab').classList.toggle('active',login);
+  document.getElementById('signupTab').classList.toggle('active',!login);
+}
+function signupCustomer(e){
+  e.preventDefault();
+  const name=document.getElementById('signupName').value.trim();
+  const phone=document.getElementById('signupPhone').value.trim();
+  const email=document.getElementById('signupEmail').value.trim().toLowerCase();
+  const password=document.getElementById('signupPassword').value;
+  if(password.length<6){alert('Password must be at least 6 characters.');return false;}
+  const customers=getCustomers();
+  if(customers.some(c=>c.email===email||c.phone===phone)){alert('An account with this email or mobile already exists.');return false;}
+  // Demo-only local account. Do not use this storage approach for production authentication.
+  const customer={id:'CUST-'+Date.now(),name,phone,email,password,orders:[]};
+  customers.push(customer);saveCustomers(customers);
+  currentCustomer={...customer};delete currentCustomer.password;
+  localStorage.setItem('tussar_logged_customer',JSON.stringify(currentCustomer));
+  showProfilePanel();
+  return false;
+}
+function loginCustomer(e){
+  e.preventDefault();
+  const identity=document.getElementById('loginIdentity').value.trim().toLowerCase();
+  const password=document.getElementById('loginPassword').value;
+  const customer=getCustomers().find(c=>(c.email===identity||c.phone===identity)&&c.password===password);
+  if(!customer){alert('Invalid login details.');return false;}
+  currentCustomer={...customer};delete currentCustomer.password;
+  localStorage.setItem('tussar_logged_customer',JSON.stringify(currentCustomer));
+  showProfilePanel();
+  return false;
+}
+function showProfilePanel(){
+  document.getElementById('authBox').style.display='none';
+  document.getElementById('profilePanel').classList.add('show');
+  const c=currentCustomer||{};
+  document.getElementById('profileName').textContent=c.name||'Customer';
+  document.getElementById('profileContact').textContent=c.email||c.phone||'';
+  document.getElementById('profileAvatar').textContent=(c.name||'C').charAt(0).toUpperCase();
+  renderOrderHistory();
+  document.getElementById('accountBtnText').textContent='Profile';
+}
+function renderOrderHistory(){
+  const box=document.getElementById('orderHistory');
+  const orders=currentCustomer?.orders||[];
+  if(!orders.length){box.innerHTML='<div class="history-empty">No orders in your account yet. Your future account-linked orders will appear here.</div>';return;}
+  box.innerHTML=orders.slice().reverse().map(o=>'<div class="history-item"><strong>'+o.id+'</strong><br>'+o.product+' × '+o.qty+' — ₹'+o.total+'<br><span>'+o.date+'</span></div>').join('');
+}
+function logoutCustomer(){
+  localStorage.removeItem('tussar_logged_customer');
+  currentCustomer=null;
+  document.getElementById('accountBtnText').textContent='Login';
+  showAuthPanel();
+  showAuthTab('login');
+}
+function showProfileMessage(msg){
+  document.getElementById('profileMessage').textContent=msg+' will be connected to the customer backend.';
+}
+function attachOrderToCustomer(order){
+  if(!currentCustomer)return;
+  const customers=getCustomers();
+  const idx=customers.findIndex(c=>c.id===currentCustomer.id);
+  if(idx<0)return;
+  customers[idx].orders=customers[idx].orders||[];
+  customers[idx].orders.push(order);
+  saveCustomers(customers);
+  currentCustomer={...customers[idx]};delete currentCustomer.password;
+  localStorage.setItem('tussar_logged_customer',JSON.stringify(currentCustomer));
+  renderOrderHistory();
+}
+(function initCustomerAccount(){
+  try{
+    const saved=localStorage.getItem('tussar_logged_customer');
+    if(saved){currentCustomer=JSON.parse(saved);document.getElementById('accountBtnText').textContent='Profile';}
+  }catch(e){}
+})();
+
 </script>
 </body>
 </html>
