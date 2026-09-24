@@ -409,7 +409,7 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
       <h1 data-i18n="heroTitle">Water, the way the spring intended it.</h1>
       <p class="lead" data-i18n="heroLead">TUSSAR sources from clean natural springs and purifies to strict standards, so every bottle reaches your door pure, mineral‑balanced and fresh — never treated to taste like nothing at all.</p>
       <div class="cta-row">
-        <a class="btn btn-gold" data-i18n="heroCta1" href="https://wa.me/919439863666?text=Hi%20TUSSAR%2C%20I%27d%20like%20to%20place%20an%20order." target="_blank" rel="noopener">Order on WhatsApp</a>
+        <a class="btn btn-gold" id="heroWhatsAppBtn" data-i18n="heroCta1" href="https://wa.me/919439863666" target="_blank" rel="noopener" onclick="openWhatsAppOrder(); return false;">Order on WhatsApp</a>
         <a class="btn btn-ghost" style="color:#fff;border-color:#fff" data-i18n="heroCta2" href="#products">View products</a>
       </div>
       <div class="stats">
@@ -495,7 +495,7 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
           <li>Resealable, BPA-free bottle</li>
           <li>Doorstep delivery available</li>
         </ul>
-        <a class="btn" href="https://wa.me/919439863666?text=Hi%20TUSSAR%2C%20I%27d%20like%20to%20order%201L%20bottles." target="_blank" rel="noopener">Order now</a>
+        <a class="btn" href="https://wa.me/919439863666" target="_blank" rel="noopener" onclick="openWhatsAppOrder('1L'); return false;">Order now</a>
       </div>
 
       <div class="card tint-gold">
@@ -507,7 +507,7 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
           <li>Reusable, returnable container</li>
           <li>Set up a regular delivery cycle</li>
         </ul>
-        <a class="btn" href="https://wa.me/919439863666?text=Hi%20TUSSAR%2C%20I%27d%20like%20to%20order%20a%2020L%20jar." target="_blank" rel="noopener">Order now</a>
+        <a class="btn" href="https://wa.me/919439863666" target="_blank" rel="noopener" onclick="openWhatsAppOrder('20L'); return false;">Order now</a>
       </div>
 
       <div class="card tint-green">
@@ -519,7 +519,7 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
           <li>Minimum order: 2 boxes</li>
           <li>Bulk pricing for large events</li>
         </ul>
-        <a class="btn" href="https://wa.me/919439863666?text=Hi%20TUSSAR%2C%20I%27d%20like%20to%20order%20250ML%20boxes." target="_blank" rel="noopener">Order now</a>
+        <a class="btn" href="https://wa.me/919439863666" target="_blank" rel="noopener" onclick="openWhatsAppOrder('250ML'); return false;">Order now</a>
       </div>
 
     </div>
@@ -742,17 +742,31 @@ function sendOrder(e){
   const name=document.getElementById('oName').value;
   const phone=document.getElementById('oPhone').value;
   const sel=document.getElementById('oProduct');
-  const product=sel.options[sel.selectedIndex].text;
+  const product=sel.value;
   const qty=document.getElementById('oQty').value;
   const day=document.getElementById('oDay').value;
   const addr=document.getElementById('oAddr').value;
   const total=document.getElementById('oTotal').textContent;
-  const order={name,phone,product:sel.value,qty,addr,day};
+  const lang=getCurrentLanguage();
+  const productNames={
+    en:{'1L':'1L Bottle','20L':'20L Jar','250ML':'250ML Box'},
+    hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},
+    or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}
+  };
+  const labels={
+    en:{intro:"Hi TUSSAR, I'd like to place an order.",name:'Name',phone:'Phone',product:'Product',qty:'Quantity',total:'Total',day:'Preferred day',address:'Address'},
+    hi:{intro:'नमस्ते TUSSAR, मुझे ऑर्डर करना है।',name:'नाम',phone:'फोन',product:'उत्पाद',qty:'मात्रा',total:'कुल',day:'पसंदीदा दिन',address:'पता'},
+    or:{intro:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।',name:'ନାମ',phone:'ଫୋନ୍',product:'ଉତ୍ପାଦ',qty:'ପରିମାଣ',total:'ମୋଟ',day:'ପସନ୍ଦର ଦିନ',address:'ଠିକଣା'}
+  }[lang];
+  const displayProduct=productNames[lang][product];
+  const order={name,phone,product,qty,addr,day,lang};
   try{localStorage.setItem('tussar_last_order',JSON.stringify(order));}catch(err){}
-  const msg=`Hi TUSSAR, I'd like to order:%0AName: ${name}%0APhone: ${phone}%0AProduct: ${product}%0AQty: ${qty}%0ATotal: ₹${total}%0A${day?'Preferred day: '+day+'%0A':''}Address: ${addr}`;
-  window.open(`https://wa.me/919439863666?text=${encodeURIComponent(msg.replace(/%0A/g,'\n'))}`,'_blank');
+  const lines=[labels.intro,`${labels.name}: ${name}`,`${labels.phone}: ${phone}`,`${labels.product}: ${displayProduct}`,`${labels.qty}: ${qty}`,`${labels.total}: ₹${total}`];
+  if(day)lines.push(`${labels.day}: ${day}`);
+  lines.push(`${labels.address}: ${addr}`);
+  window.open('https://wa.me/919439863666?text='+encodeURIComponent(lines.join('\\n')),'_blank');
   document.getElementById('rcpDate').textContent=new Date().toLocaleString();
-  document.getElementById('rcpBody').innerHTML=`Name: ${name}<br>Phone: ${phone}<br>Product: ${product}<br>Qty: ${qty}<br>Total: ₹${total}<br>${day?'Preferred day: '+day+'<br>':''}Address: ${addr}`;
+  document.getElementById('rcpBody').innerHTML=`${labels.name}: ${name}<br>${labels.phone}: ${phone}<br>${labels.product}: ${displayProduct}<br>${labels.qty}: ${qty}<br>${labels.total}: ₹${total}<br>${day?`${labels.day}: ${day}<br>`:''}${labels.address}: ${addr}`;
   return false;
 }
 function repeatOrder(){
@@ -945,40 +959,57 @@ const I18N={
     heroLead:'TUSSAR ପରିଷ୍କାର ପ୍ରାକୃତିକ ଝରଣାରୁ ପାଣି ସଂଗ୍ରହ କରି କଠୋର ମାନ ଅନୁଯାୟୀ ଶୁଦ୍ଧ କରିଥାଏ।',
     heroCta1:'ୱାଟସ୍‌ଆପରେ ଅର୍ଡର କରନ୍ତୁ',heroCta2:'ଉତ୍ପାଦ ଦେଖନ୍ତୁ'}
 };
-function setLang(lang){
+
+function getCurrentLanguage(){
+  try{
+    const saved=localStorage.getItem('tussar_language');
+    return I18N[saved] ? saved : 'en';
+  }catch(e){return 'en';}
+}
+
+function openWhatsAppOrder(product){
+  const lang=getCurrentLanguage();
+  const messages={
+    en:{general:"Hi TUSSAR, I'd like to place an order.",'1L':"Hi TUSSAR, I'd like to order 1L bottles.",'20L':"Hi TUSSAR, I'd like to order a 20L jar.",'250ML':"Hi TUSSAR, I'd like to order 250ML boxes."},
+    hi:{general:'नमस्ते TUSSAR, मुझे ऑर्डर करना है।','1L':'नमस्ते TUSSAR, मुझे 1L बोतलें ऑर्डर करनी हैं।','20L':'नमस्ते TUSSAR, मुझे 20L जार ऑर्डर करना है।','250ML':'नमस्ते TUSSAR, मुझे 250ML बॉक्स ऑर्डर करने हैं।'},
+    or:{general:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','1L':'ନମସ୍କାର TUSSAR, ମୁଁ 1L ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','20L':'ନମସ୍କାର TUSSAR, ମୁଁ 20L ଜାର ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','250ML':'ନମସ୍କାର TUSSAR, ମୁଁ 250ML ବକ୍ସ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।'}
+  };
+  const text=messages[lang][product||'general'];
+  window.open('https://wa.me/919439863666?text='+encodeURIComponent(text),'_blank');
+}
+
+function setLang(lang,options={}){
+  if(!I18N[lang])lang='en';
+  try{localStorage.setItem('tussar_language',lang);}catch(e){}
   const d=I18N[lang];
+  document.documentElement.lang=lang==='or'?'or':lang;
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const key=el.getAttribute('data-i18n');
     if(d[key])el.textContent=d[key];
   });
-
-  // Highlight the selected language, then return the visitor to the main hero.
   document.querySelectorAll('.lang-toggle button').forEach(b=>{
     b.classList.toggle('active',b.dataset.lang===lang);
     b.classList.remove('lang-selected');
   });
   const selected=document.querySelector(`.lang-toggle button[data-lang="${lang}"]`);
-  if(selected){
-    void selected.offsetWidth;
-    selected.classList.add('lang-selected');
-  }
-
-  // On mobile the language selector lives inside the hamburger menu.
-  // Close it and bring the user back to the main page after choosing a language.
+  if(selected){void selected.offsetWidth;selected.classList.add('lang-selected');}
   if(navLinks){
     navLinks.classList.remove('open');
     if(menuBtn)menuBtn.setAttribute('aria-expanded','false');
   }
-  window.scrollTo({top:0,behavior:'smooth'});
-
-  const hero=document.querySelector('.hero');
-  if(hero){
-    hero.classList.remove('language-updated');
-    void hero.offsetWidth;
-    hero.classList.add('language-updated');
-    setTimeout(()=>hero.classList.remove('language-updated'),650);
+  if(options.scrollToTop!==false)window.scrollTo({top:0,behavior:'smooth'});
+  if(options.animate!==false){
+    const hero=document.querySelector('.hero');
+    if(hero){
+      hero.classList.remove('language-updated');void hero.offsetWidth;
+      hero.classList.add('language-updated');
+      setTimeout(()=>hero.classList.remove('language-updated'),650);
+    }
   }
 }
+
+// Restore the last language selected by this visitor. It remains until they change it.
+setLang(getCurrentLanguage(),{scrollToTop:false,animate:false});
 
 // Small click feedback for buttons and navigation links.
 document.querySelectorAll('.btn').forEach(btn=>{
