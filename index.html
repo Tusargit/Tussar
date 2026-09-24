@@ -124,6 +124,16 @@ header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backgroun
 .contact-card h3{color:#fff;font-size:1.2rem;margin-bottom:1.2rem}
 .contact-card a{display:block;color:#dfeae6;text-decoration:none;margin-bottom:.7rem;font-size:.95rem}
 .contact-card a:hover{color:var(--gold)}
+.contact-intro{color:#a9c2bc;font-size:.88rem;margin:-.5rem 0 1.1rem}
+.contact-action{display:flex!important;align-items:center;gap:.75rem;padding:.75rem .8rem;border:1px solid rgba(255,255,255,.14);border-radius:8px;margin-bottom:.65rem!important;background:rgba(255,255,255,.04)}
+.contact-action span{display:flex;flex-direction:column;line-height:1.25}
+.contact-action small{color:#a9c2bc;font-size:.72rem;margin-top:.15rem}
+.order-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.65rem}
+.order-actions .btn{width:100%;text-align:center;display:flex;align-items:center;justify-content:center;min-height:48px}
+.btn-mail{background:#fff;color:var(--deep);border:1px solid var(--deep);font-family:inherit;font-weight:600;cursor:pointer}
+.btn-call{background:var(--teal);color:#fff!important;border:1px solid var(--teal);text-decoration:none;font-family:inherit;font-weight:600}
+.btn-mail:hover,.btn-call:hover{transform:translateY(-2px)}
+@media(max-width:700px){.order-actions{grid-template-columns:1fr}.order-actions .btn{min-height:52px}}
 
 /* FOOTER */
 footer{background:var(--deep);color:#a9c2bc;padding:2.4rem 6vw;font-size:.85rem;
@@ -635,14 +645,19 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
         </div>
         <div class="total-row">Total: ₹<span id="oTotal">20</span></div>
         <div><label>Delivery address</label><textarea id="oAddr" rows="2" required></textarea></div>
-        <button class="btn btn-gold" type="submit">Send order on WhatsApp</button>
+        <div class="order-actions">
+  <button class="btn btn-gold" type="submit">💬 Order via WhatsApp</button>
+  <button class="btn btn-mail" type="button" onclick="sendOrderByEmail()">✉️ Order by Email</button>
+  <a class="btn btn-call" href="tel:+919439863666">📞 Call Directly</a>
+</div>
       </form>
     </div>
     <div class="contact-card">
-      <h3>Reach us directly</h3>
-      <a href="tel:+919439863666">📞 +91 94398 63666</a>
-      <a href="mailto:rameswaridrinks@gmail.com">✉️ rameswaridrinks@gmail.com</a>
-      <a href="https://wa.me/919439863666" target="_blank" rel="noopener">💬 Chat on WhatsApp</a>
+      <h3>Choose how you want to order</h3>
+      <p class="contact-intro">Order your way — WhatsApp, email, or a direct phone call.</p>
+      <a class="contact-action" href="tel:+919439863666">📞 <span><b>Call directly</b><small>+91 94398 63666</small></span></a>
+      <a class="contact-action" href="mailto:rameswaridrinks@gmail.com">✉️ <span><b>Order by email</b><small>rameswaridrinks@gmail.com</small></span></a>
+      <a class="contact-action" href="https://wa.me/919439863666" target="_blank" rel="noopener">💬 <span><b>Order on WhatsApp</b><small>Chat with TUSSAR</small></span></a>
       <a href="https://www.google.com/maps/search/?api=1&query=Berhampur%2C+Odisha" target="_blank" rel="noopener">📍 View service area on Google Maps</a>
       <p style="color:#a9c2bc;font-size:.85rem;margin-top:1.4rem">Serving homes, offices and events in and around our delivery area. FSSAI Lic. No.: <em>add your license number</em>.</p>
       <div class="pincode-check">
@@ -804,6 +819,38 @@ function repeatOrder(){
 (function(){
   try{ if(localStorage.getItem('tussar_last_order')) document.getElementById('repeatBtn').style.display='inline-block'; }catch(e){}
 })();
+
+function sendOrderByEmail(){
+  const lang=getCurrentLanguage();
+  const product=document.getElementById('oProduct').value;
+  const qty=document.getElementById('oQty').value;
+  const name=document.getElementById('oName').value.trim();
+  const phone=document.getElementById('oPhone').value.trim();
+  const day=document.getElementById('oDay').value;
+  const addr=document.getElementById('oAddr').value.trim();
+  const total=document.getElementById('oTotal').textContent;
+  const productNames={
+    en:{'1L':'1L Bottle','20L':'20L Jar','250ML':'250ML Box'},
+    hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},
+    or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}
+  };
+  const labels={
+    en:{subject:'TUSSAR Water Order',intro:"I'd like to place an order.",name:'Name',phone:'Phone',product:'Product',qty:'Quantity',total:'Total',day:'Preferred day',address:'Delivery address'},
+    hi:{subject:'TUSSAR पानी का ऑर्डर',intro:'मैं ऑर्डर करना चाहता/चाहती हूँ।',name:'नाम',phone:'फोन',product:'उत्पाद',qty:'मात्रा',total:'कुल',day:'पसंदीदा दिन',address:'डिलीवरी पता'},
+    or:{subject:'TUSSAR ପାଣି ଅର୍ଡର',intro:'ମୁଁ ଏକ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।',name:'ନାମ',phone:'ଫୋନ୍',product:'ଉତ୍ପାଦ',qty:'ପରିମାଣ',total:'ମୋଟ',day:'ପସନ୍ଦର ଦିନ',address:'ଡେଲିଭରି ଠିକଣା'}
+  }[lang];
+  const lines=[
+    labels.intro,
+    labels.name+': '+name,
+    labels.phone+': '+phone,
+    labels.product+': '+(productNames[lang][product]||product),
+    labels.qty+': '+qty,
+    labels.total+': ₹'+total
+  ];
+  if(day)lines.push(labels.day+': '+day);
+  lines.push(labels.address+': '+addr);
+  window.location.href='mailto:rameswaridrinks@gmail.com?subject='+encodeURIComponent(labels.subject)+'&body='+encodeURIComponent(lines.join('\n'));
+}
 
 function sendCorpEnquiry(e){
   e.preventDefault();
