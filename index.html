@@ -781,11 +781,17 @@ document.addEventListener('click',e=>{
 });
 
 // order total + whatsapp
+function getDeliveryMode(){return document.querySelector('input[name="deliveryMode"]:checked')?.value||'standard';}
+function getPriorityDeliveryFee(qty){const q=Math.max(1,Number(qty)||1);return Math.max(20,20+Math.max(0,Math.ceil((q-5)/5))*10);}
 function calcTotal(){
-  const sel=document.getElementById('oProduct');
-  const price=+sel.options[sel.selectedIndex].dataset.price;
-  const qty=+document.getElementById('oQty').value||1;
-  document.getElementById('oTotal').textContent=price*qty;
+ const sel=document.getElementById('oProduct');const price=+sel.options[sel.selectedIndex].dataset.price;
+ const qty=Math.max(1,+document.getElementById('oQty').value||1);const subtotal=price*qty;
+ const priority=getDeliveryMode()==='priority'?getPriorityDeliveryFee(qty):0;
+ const subtotalEl=document.getElementById('oSubtotal');if(subtotalEl)subtotalEl.textContent=subtotal;
+ const feeEl=document.getElementById('deliveryFee');if(feeEl)feeEl.textContent='₹'+priority;
+ const label=document.getElementById('priorityFeeLabel');if(label)label.textContent='(+'+'₹'+getPriorityDeliveryFee(qty)+')';
+ document.getElementById('oTotal').textContent=subtotal+priority;
+ return {subtotal,priority,total:subtotal+priority};
 }
 calcTotal();
 function sendOrder(e){
