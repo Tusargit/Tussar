@@ -133,6 +133,11 @@ header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backgroun
 .btn-mail{background:#fff;color:var(--deep);border:1px solid var(--deep);font-family:inherit;font-weight:600;cursor:pointer}
 .btn-call{background:var(--teal);color:#fff!important;border:1px solid var(--teal);text-decoration:none;font-family:inherit;font-weight:600}
 .btn-mail:hover,.btn-call:hover{transform:translateY(-2px)}
+.voice-order-btn{width:100%;margin-top:.7rem;border:1px dashed var(--gold);background:rgba(198,161,91,.08);color:var(--deep);padding:.75rem;font:600 .9rem "Work Sans",sans-serif;cursor:pointer;border-radius:2px}
+.voice-order-btn:hover{background:rgba(198,161,91,.18);transform:translateY(-1px)}
+.voice-order-status{font-size:.78rem;color:var(--stone);margin-top:.45rem}
+.delivery-eta{margin-top:.8rem;padding:.75rem;border-left:3px solid var(--gold);background:rgba(198,161,91,.08);color:#dfeae6;font-size:.84rem;display:none}
+.delivery-eta.show{display:block}
 @media(max-width:700px){.order-actions{grid-template-columns:1fr}.order-actions .btn{min-height:52px}}
 
 /* FOOTER */
@@ -650,6 +655,8 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
   <button class="btn btn-mail" type="button" onclick="sendOrderByEmail()">✉️ Order by Email</button>
   <a class="btn btn-call" href="tel:+919439863666">📞 Call Directly</a>
 </div>
+<button class="voice-order-btn" type="button" onclick="startVoiceOrder()">🎙️ Speak your order</button>
+<p id="voiceOrderStatus" class="voice-order-status">Try: “2 twenty litre jars” or “5 one litre bottles”.</p>
       </form>
     </div>
     <div class="contact-card">
@@ -666,6 +673,7 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
       </div>
       <button class="geo-link" onclick="checkMyLocation()">📡 Or check using my current location</button>
       <p id="pincodeResult" style="color:#dfeae6"></p>
+      <div id="deliveryEta" class="delivery-eta" aria-live="polite"></div>
     </div>
   </div>
 </section>
@@ -976,8 +984,49 @@ function detectChatLanguage(text){
   return chatLanguage;
 }
 
+function parseOrderRequest(text){
+  const t=String(text||'').toLowerCase();
+  let product=null;
+  if(/250\s*ml|250ml|box|boxes|ବକ୍ସ|बॉक्स/.test(t)) product='250ML';
+  else if(/20\s*l|20l|20\s*litre|20\s*liter|jar|जार|ଜାର/.test(t)) product='20L';
+  else if(/1\s*l|1l|1\s*litre|1\s*liter|bottle|बोतल|ବୋତଲ/.test(t)) product='1L';
+  const digit=t.match(/(?:^|\D)(\d{1,3})(?:\D|$)/);
+  const wordNums={one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,एक:1,दो:2,तीन:3,चार:4,पांच:5,पाँच:5,छह:6,सात:7,आठ:8,नौ:9,दस:10,ଏକ:1,ଦୁଇ:2,ତିନି:3,ଚାରି:4,ପାଞ୍ଚ:5,ଛଅ:6,ସାତ:7,ଆଠ:8,ନଅ:9,ଦଶ:10};
+  let qty=digit?Number(digit[1]):null;
+  if(!qty){for(const [word,n] of Object.entries(wordNums)){if(t.includes(word)){qty=n;break;}}}
+  if(product==='250ML' && (!qty || qty<2)) qty=qty||2;
+  return {product,qty:qty||null};
+}
+function productLabel(product,lang){
+  const labels={en:{'1L':'1L bottle','20L':'20L jar','250ML':'250ML box'},hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}};
+  return labels[lang]?.[product]||labels.en[product];
+}
+function prepareOrderFromRequest(text){
+  const parsed=parseOrderRequest(text);
+  if(!parsed.product)return null;
+  document.getElementById('oProduct').value=parsed.product;
+  document.getElementById('oQty').value=parsed.qty||1;
+  calcTotal();
+  document.getElementById('order').scrollIntoView({behavior:'smooth',block:'start'});
+  return parsed;
+}
+function smartOrderReply(q,lang){
+  const parsed=parseOrderRequest(q);
+  if(!parsed.product)return null;
+  const qty=parsed.qty||1;
+  const label=productLabel(parsed.product,lang);
+  const total=document.getElementById('oTotal')?.textContent||'';
+  const replies={
+    en:'Got it — I detected '+qty+' × '+label+'. I’ve filled the order form for you (total ₹'+total+'). Add your name, phone and address, then choose WhatsApp, email or call.',
+    hi:'समझ गया — मैंने '+qty+' × '+label+' पहचाना है। मैंने order form भर दिया है (कुल ₹'+total+')। अब नाम, फोन और पता भरकर WhatsApp, email या call चुनें।',
+    or:'ବୁଝିଲି — ମୁଁ '+qty+' × '+label+' ଚିହ୍ନଟ କରିଛି। ମୁଁ order form ଭରିଦେଇଛି (ମୋଟ ₹'+total+')। ଏବେ ନାମ, ଫୋନ୍ ଓ ଠିକଣା ଦେଇ WhatsApp, email କିମ୍ବା call ବାଛନ୍ତୁ।'
+  };
+  return replies[lang];
+}
 function botReply(q){
   const lang=detectChatLanguage(q);
+  const smart=smartOrderReply(q,lang);
+  if(smart)return smart;
   const t=q.toLowerCase();
   let best=null,score=0;
   CHAT_DATA.forEach(f=>{
@@ -985,6 +1034,13 @@ function botReply(q){
     const s=keys.reduce((n,k)=>n+(t.includes(k.toLowerCase())?1:0),0);
     if(s>score){score=s;best=f;}
   });
+  if(/eta|delivery time|when.*deliver|कब.*डिलीवरी|डिलीवरी.*कब|ଡେଲିଭରି.*କେବେ|କେବେ.*ଡେଲିଭରି/.test(t)){
+    return {
+      en:'For a deliverable pincode, the site can show an estimated delivery window. Final ETA is confirmed by TUSSAR after the order is received.',
+      hi:'डिलीवरी वाले पिनकोड के लिए साइट अनुमानित delivery window दिखा सकती है। ऑर्डर मिलने के बाद TUSSAR final ETA confirm करेगा।',
+      or:'ଡେଲିଭରି ଯୋଗ୍ୟ ପିନକୋଡ୍ ପାଇଁ ସାଇଟ୍ ଅନୁମାନିତ delivery window ଦେଖାଇପାରେ। ଅର୍ଡର ମିଳିବା ପରେ TUSSAR final ETA confirm କରିବ।'
+    }[lang];
+  }
   return best?best.a[lang]||best.a.en:CHAT_TEXT[lang].fallback;
 }
 
@@ -1081,6 +1137,23 @@ function startVoiceChat(){
   };
   recognition.start();
 }
+function startVoiceOrder(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const status=document.getElementById('voiceOrderStatus');
+  if(!SR){status.textContent='Voice ordering is not available in this browser.';return;}
+  const r=new SR();
+  r.lang=chatLanguage==='or'?'or-IN':chatLanguage==='hi'?'hi-IN':'en-IN';
+  r.interimResults=false;r.maxAlternatives=1;
+  status.textContent=CHAT_TEXT[chatLanguage].listening+' Say the product and quantity.';
+  r.onresult=e=>{
+    const spoken=e.results[0][0].transcript;
+    const parsed=prepareOrderFromRequest(spoken);
+    if(parsed)status.textContent='Voice order detected: '+(parsed.qty||1)+' × '+productLabel(parsed.product,chatLanguage);
+    else status.textContent='I could not detect the product. Try “2 twenty litre jars”.';
+  };
+  r.onerror=()=>{status.textContent=CHAT_TEXT[chatLanguage].fallback;};
+  r.start();
+}
 
 function initChat(){
   try{
@@ -1117,12 +1190,25 @@ function toggleFaq(btn){
 
 // pincode checker — replace this list with your real delivery pincodes
 const DELIVERY_PINCODES=['760001','760002','760003','760004','761001','761002'];
+function showDeliveryEta(pincode){
+  const eta=document.getElementById('deliveryEta');
+  if(!eta)return;
+  eta.textContent=chatLanguage==='hi'
+    ? 'Estimated delivery: 24–48 hours after order confirmation. Final ETA will be confirmed by TUSSAR.'
+    : chatLanguage==='or'
+    ? 'ଅନୁମାନିତ ଡେଲିଭରି: ଅର୍ଡର କନଫର୍ମ ହେବା ପରେ 24–48 ଘଣ୍ଟା। Final ETA TUSSAR କନଫର୍ମ କରିବ।'
+    : 'Estimated delivery: 24–48 hours after order confirmation. Final ETA will be confirmed by TUSSAR.';
+  eta.classList.add('show');
+}
 function checkPincode(){
   const val=document.getElementById('pinInput').value.trim();
   const out=document.getElementById('pincodeResult');
+  const eta=document.getElementById('deliveryEta');
+  if(eta)eta.classList.remove('show');
   if(!/^\d{6}$/.test(val)){out.textContent='Enter a valid 6-digit pincode.';return;}
   if(DELIVERY_PINCODES.includes(val)){
     out.textContent='Good news — we deliver to your area. Place your order above.';
+    showDeliveryEta(val);
   }else{
     out.textContent="We're not listed there yet — message us on WhatsApp and we'll confirm.";
   }
