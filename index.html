@@ -778,7 +778,7 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
     <div class="contact-card">
       <h3>Choose how you want to order</h3>
       <p class="contact-intro">Order your way — WhatsApp, email, or a direct phone call.</p>
-      <a class="contact-action" href="tel:+919348585599">📞 <span><b>Call directly</b><small>+91 94398 63666</small></span></a>
+      <a class="contact-action" href="tel:+919348585599">📞 <span><b>Call directly</b><small>+91 93485 85599</small></span></a>
       <a class="contact-action" href="mailto:tusarmohanty741@gmail.com">✉️ <span><b>Order by email</b><small>tusarmohanty741@gmail.com</small></span></a>
       <a class="contact-action" href="https://wa.me/919348585599" target="_blank" rel="noopener">💬 <span><b>Order on WhatsApp</b><small>Chat with TUSSAR</small></span></a>
       <a href="https://www.google.com/maps/search/?api=1&query=X2W5%2B9P5%2C%20Kusupur%2C%20Odisha%20752110" target="_blank" rel="noopener">📍 View service area on Google Maps</a>
@@ -952,7 +952,7 @@ function sendOrder(e){
   lines.unshift('Order ID: '+orderId);
   attachOrderToCustomer({id:orderId,product,qty:Number(qty)||1,total,date:new Date().toLocaleString('en-IN')});
   try{localStorage.setItem('tussar_current_order_id',orderId);}catch(err){}
-  window.open('https://wa.me/919348585599'+encodeURIComponent(lines.join('\\n')),'_blank');
+  window.open('https://wa.me/919348585599?text='+encodeURIComponent(lines.join('\\n')),'_blank');
   document.getElementById('rcpDate').textContent=new Date().toLocaleString();
   document.getElementById('rcpBody').innerHTML=`${labels.name}: ${name}<br>${labels.phone}: ${phone}<br>${labels.product}: ${displayProduct}<br>${labels.qty}: ${qty}<br>${labels.total}: ₹${total}<br>${day?`${labels.day}: ${day}<br>`:''}${labels.address}: ${addr}`;
   return false;
@@ -1446,7 +1446,7 @@ function openWhatsAppOrder(product){
     or:{general:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','1L':'ନମସ୍କାର TUSSAR, ମୁଁ 1L ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','20L':'ନମସ୍କାର TUSSAR, ମୁଁ 20L ଜାର ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','250ML':'ନମସ୍କାର TUSSAR, ମୁଁ 250ML ବକ୍ସ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।'}
   };
   const text=messages[lang][product||'general'];
-  window.open('https://wa.me/919348585599'+encodeURIComponent(text),'_blank');
+  window.open('https://wa.me/919348585599?text='+encodeURIComponent(text),'_blank');
 }
 
 function setLang(lang,options={}){
