@@ -524,7 +524,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
       <p class="lead" data-i18n="heroLead">TUSSAR sources from clean natural springs and purifies to strict standards, so every bottle reaches your door pure, mineral‑balanced and fresh — never treated to taste like nothing at all.</p>
       <div class="cta-row">
         <a class="btn btn-gold" id="heroWhatsAppBtn" data-i18n="heroCta1" href="https://wa.me/919348585599" target="_blank" rel="noopener" onclick="openWhatsAppOrder(); return false;">Order on WhatsApp</a>
-        <a class="btn btn-ghost" style="color:#fff;border-color:#fff" data-i18n="heroCta2" href="#products">View products</a>
+        <a class="btn btn-ghost" style="color:#fff;border-color:#fff" data-i18n="heroCta2" href="products.html">View products</a>
       </div>
       <div class="stats">
         <div><b>3</b><span>pack sizes</span></div>
@@ -627,7 +627,9 @@ document.addEventListener('click',e=>{
 function getDeliveryMode(){return document.querySelector('input[name="deliveryMode"]:checked')?.value||'standard';}
 function getPriorityDeliveryFee(qty){const q=Math.max(1,Number(qty)||1);return Math.max(20,20+Math.max(0,Math.ceil((q-5)/5))*10);}
 function calcTotal(){
- const sel=document.getElementById('oProduct');const price=+sel.options[sel.selectedIndex].dataset.price;
+ const sel=document.getElementById('oProduct');
+ if(!sel)return {subtotal:0,priority:0,total:0};
+ const price=+sel.options[sel.selectedIndex].dataset.price;
  const qty=Math.max(1,+document.getElementById('oQty').value||1);const subtotal=price*qty;
  const priority=getDeliveryMode()==='priority'?getPriorityDeliveryFee(qty):0;
  const subtotalEl=document.getElementById('oSubtotal');if(subtotalEl)subtotalEl.textContent=subtotal;
@@ -692,7 +694,10 @@ function repeatOrder(){
   }catch(e){}
 }
 (function(){
-  try{ if(localStorage.getItem('tussar_last_order')) document.getElementById('repeatBtn').style.display='inline-block'; }catch(e){}
+  try{
+    const repeatBtn=document.getElementById('repeatBtn');
+    if(repeatBtn&&localStorage.getItem('tussar_last_order')) repeatBtn.style.display='inline-block';
+  }catch(e){}
 })();
 
 function sendOrderByEmail(){
@@ -747,6 +752,7 @@ function loadReviews(){
   try{
     const saved=JSON.parse(localStorage.getItem('tussar_reviews')||'[]');
     const grid=document.getElementById('revGrid');
+    if(!grid)return;
     saved.forEach(r=>{
       const d=document.createElement('div');
       d.className='rev-card';
