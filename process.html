@@ -442,7 +442,11 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
 .badge-fresh{display:inline-flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--gold);
   border:1px solid var(--gold);padding:.3rem .7rem;border-radius:20px;margin-top:1rem}
 </style>
-<style>body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform .42s ease}body.page-ready{opacity:1;transform:none}body.page-leaving{opacity:0;transform:translateY(-8px)}.nav-links a{position:relative;transition:color .25s ease,transform .25s ease}.nav-links a::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .28s ease}.nav-links a:hover{transform:translateY(-2px)}.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}.nav-links a.active{color:#fff}.page-intro{padding:2.4rem 0 0;background:var(--paper)}.page-intro .wrap{display:flex;align-items:end;gap:2rem}.page-intro .kicker{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600}.page-intro h1{font-size:clamp(2rem,5vw,3.4rem);margin-top:.25rem}.page-intro p{max-width:50ch;color:var(--stone);margin-top:.5rem}@media(max-width:760px){.page-intro .wrap{display:block}}@media(prefers-reduced-motion:reduce){body,.nav-links a,.nav-links a::after{transition:none!important}}</style></head><div class="auth-overlay" id="authOverlay" onclick="if(event.target===this)closeAuthModal()">
+<style>
+body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform .42s ease}body.page-ready{opacity:1;transform:none}body.page-leaving{opacity:0;transform:translateY(-8px)}
+.nav-links a{position:relative;transition:color .25s ease,transform .25s ease}.nav-links a::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .28s ease}.nav-links a:hover{transform:translateY(-2px)}.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}.nav-links a.active{color:#fff}
+.page-intro{padding:2.4rem 0 0;background:var(--paper)}.page-intro .wrap{display:flex;align-items:end;gap:2rem}.page-intro .kicker{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600}.page-intro h1{font-size:clamp(2rem,5vw,3.4rem);margin-top:.25rem}.page-intro p{max-width:50ch;color:var(--stone);margin-top:.5rem}.explore-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:2rem auto 0;max-width:1120px;padding:0 6vw 4rem}.explore-card{padding:1.35rem;background:#fff;border:1px solid #dfe6e2;text-decoration:none;transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease}.explore-card:hover{transform:translateY(-6px);box-shadow:0 16px 35px rgba(11,46,51,.10);border-color:var(--gold)}.explore-card span{font-size:.72rem;color:var(--gold);font-weight:600;letter-spacing:.08em}.explore-card h3{margin:.35rem 0;font-size:1.15rem}.explore-card p{font-size:.82rem;color:var(--stone)}@media(max-width:760px){.page-intro .wrap{display:block}.explore-grid{grid-template-columns:1fr 1fr}}@media(max-width:480px){.explore-grid{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){body,.nav-links a,.nav-links a::after,.explore-card{transition:none!important}}
+</style></head><div class="auth-overlay" id="authOverlay" onclick="if(event.target===this)closeAuthModal()">
   <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
     <button class="auth-close" type="button" onclick="closeAuthModal()" aria-label="Close">×</button>
     <h2 id="authTitle">Your TUSSAR Account</h2>
@@ -516,4 +520,794 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
       <div class="gal-tile"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z"/></svg><h4>At your door</h4><p>Homes, offices and events, on schedule.</p></div>
     </div>
   </div>
-</section>
+</section><div id="receipt">
+  <h2 style="font-family:Georgia">TUSSAR — Order Receipt</h2>
+  <p id="rcpDate"></p><hr style="margin:1rem 0">
+  <p id="rcpBody"></p>
+</div>
+
+<footer>
+  <p>© 2026 <span>TUSSAR</span> Mineral Water — Rameswari Drinks. All rights reserved.</p>
+  <p>+91 93485 85599 · tusarmohanty741@gmail.com</p>
+</footer>
+
+<button id="chat-toggle" aria-label="Chat with us">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H8l-4 4V4z"/></svg>
+</button>
+<div id="chat-panel">
+  <div class="chat-head">
+    <div class="chat-head-row">
+      <b id="chatTitle">TUSSAR Assistant</b>
+      <button id="chatSpeakToggle" class="chat-icon-btn" type="button" title="Voice replies" aria-label="Toggle voice replies">🔊</button>
+    </div>
+    <span id="chatSubtitle">Ask in English, Hindi or Odia — type or speak.</span>
+    <div class="chat-languages" role="group" aria-label="Chat language">
+      <button type="button" data-chat-lang="en" class="chat-lang active">English</button>
+      <button type="button" data-chat-lang="hi" class="chat-lang">हिंदी</button>
+      <button type="button" data-chat-lang="or" class="chat-lang">ଓଡ଼ିଆ</button>
+    </div>
+  </div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chips" id="chatChips"></div>
+  <div class="chat-input">
+    <input id="chatInput" placeholder="Type a question..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button id="chatMic" type="button" onclick="startVoiceChat()" title="Speak">🎙️</button>
+    <button id="chatSend" type="button" onclick="sendChat()">Send</button>
+  </div>
+</div>
+
+<script>
+// mobile nav
+const menuBtn=document.getElementById('menuBtn');
+const navLinks=document.getElementById('navLinks');
+const closeMobileNav=()=>navLinks.classList.remove('open');
+
+menuBtn.onclick=()=>{
+  const isOpen=navLinks.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded',String(isOpen));
+};
+
+// Close the mobile menu before jumping to a section, so the destination is visible.
+navLinks.querySelectorAll('a[href^="#"]').forEach(link=>{
+  link.addEventListener('click',()=>{
+    closeMobileNav();
+    menuBtn.setAttribute('aria-expanded','false');
+  });
+});
+
+// Close when tapping outside the header.
+document.addEventListener('click',e=>{
+  if(!e.target.closest('header.nav') && navLinks.classList.contains('open')){
+    closeMobileNav();
+    menuBtn.setAttribute('aria-expanded','false');
+  }
+});
+
+// order total + whatsapp
+function getDeliveryMode(){return document.querySelector('input[name="deliveryMode"]:checked')?.value||'standard';}
+function getPriorityDeliveryFee(qty){const q=Math.max(1,Number(qty)||1);return Math.max(20,20+Math.max(0,Math.ceil((q-5)/5))*10);}
+function calcTotal(){
+ const sel=document.getElementById('oProduct');const price=+sel.options[sel.selectedIndex].dataset.price;
+ const qty=Math.max(1,+document.getElementById('oQty').value||1);const subtotal=price*qty;
+ const priority=getDeliveryMode()==='priority'?getPriorityDeliveryFee(qty):0;
+ const subtotalEl=document.getElementById('oSubtotal');if(subtotalEl)subtotalEl.textContent=subtotal;
+ const feeEl=document.getElementById('deliveryFee');if(feeEl)feeEl.textContent='₹'+priority;
+ const label=document.getElementById('priorityFeeLabel');if(label)label.textContent='(+'+'₹'+getPriorityDeliveryFee(qty)+')';
+ document.getElementById('oTotal').textContent=subtotal+priority;
+ return {subtotal,priority,total:subtotal+priority};
+}
+calcTotal();
+function generateOrderId(){
+  const d=new Date();
+  const date=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');
+  return 'TUS-'+date+'-'+Math.floor(1000+Math.random()*9000);
+}
+function sendOrder(e){
+  e.preventDefault();
+  const name=document.getElementById('oName').value;
+  const phone=document.getElementById('oPhone').value;
+  const sel=document.getElementById('oProduct');
+  const product=sel.value;
+  const qty=document.getElementById('oQty').value;
+  const day=document.getElementById('oDay').value;
+  const addr=document.getElementById('oAddr').value;
+  const total=document.getElementById('oTotal').textContent;
+  const lang=getCurrentLanguage();
+  const productNames={
+    en:{'1L':'1L Bottle','20L':'20L Jar','250ML':'250ML Box'},
+    hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},
+    or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}
+  };
+  const labels={
+    en:{intro:"Hi TUSSAR, I'd like to place an order.",name:'Name',phone:'Phone',product:'Product',qty:'Quantity',total:'Total',day:'Preferred day',address:'Address'},
+    hi:{intro:'नमस्ते TUSSAR, मुझे ऑर्डर करना है।',name:'नाम',phone:'फोन',product:'उत्पाद',qty:'मात्रा',total:'कुल',day:'पसंदीदा दिन',address:'पता'},
+    or:{intro:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।',name:'ନାମ',phone:'ଫୋନ୍',product:'ଉତ୍ପାଦ',qty:'ପରିମାଣ',total:'ମୋଟ',day:'ପସନ୍ଦର ଦିନ',address:'ଠିକଣା'}
+  }[lang];
+  const displayProduct=productNames[lang][product];
+  const order={name,phone,product,qty,addr,day,lang};
+  try{localStorage.setItem('tussar_last_order',JSON.stringify(order));}catch(err){}
+  const lines=[labels.intro,`${labels.name}: ${name}`,`${labels.phone}: ${phone}`,`${labels.product}: ${displayProduct}`,`${labels.qty}: ${qty}`,`${labels.total}: ₹${total}`];
+  if(day)lines.push(`${labels.day}: ${day}`);
+  lines.push(`${labels.address}: ${addr}`);
+  const orderId=generateOrderId();
+  lines.unshift('Order ID: '+orderId);
+  attachOrderToCustomer({id:orderId,product,qty:Number(qty)||1,total,date:new Date().toLocaleString('en-IN')});
+  try{localStorage.setItem('tussar_current_order_id',orderId);}catch(err){}
+  window.open('https://wa.me/919348585599?text='+encodeURIComponent(lines.join('\\n')),'_blank');
+  document.getElementById('rcpDate').textContent=new Date().toLocaleString();
+  document.getElementById('rcpBody').innerHTML=`${labels.name}: ${name}<br>${labels.phone}: ${phone}<br>${labels.product}: ${displayProduct}<br>${labels.qty}: ${qty}<br>${labels.total}: ₹${total}<br>${day?`${labels.day}: ${day}<br>`:''}${labels.address}: ${addr}`;
+  return false;
+}
+function repeatOrder(){
+  try{
+    const o=JSON.parse(localStorage.getItem('tussar_last_order'));
+    if(!o)return;
+    document.getElementById('oName').value=o.name||'';
+    document.getElementById('oPhone').value=o.phone||'';
+    document.getElementById('oProduct').value=o.product||'1L';
+    document.getElementById('oQty').value=o.qty||1;
+    document.getElementById('oDay').value=o.day||'';
+    document.getElementById('oAddr').value=o.addr||'';
+    calcTotal();
+  }catch(e){}
+}
+(function(){
+  try{ if(localStorage.getItem('tussar_last_order')) document.getElementById('repeatBtn').style.display='inline-block'; }catch(e){}
+})();
+
+function sendOrderByEmail(){
+  const lang=getCurrentLanguage();
+  const product=document.getElementById('oProduct').value;
+  const qty=document.getElementById('oQty').value;
+  const name=document.getElementById('oName').value.trim();
+  const phone=document.getElementById('oPhone').value.trim();
+  const day=document.getElementById('oDay').value;
+  const addr=document.getElementById('oAddr').value.trim();
+  const total=document.getElementById('oTotal').textContent;
+  const orderId=generateOrderId();
+  try{localStorage.setItem('tussar_current_order_id',orderId);}catch(e){}
+  const productNames={
+    en:{'1L':'1L Bottle','20L':'20L Jar','250ML':'250ML Box'},
+    hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},
+    or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}
+  };
+  const labels={
+    en:{subject:'TUSSAR Water Order',intro:"I'd like to place an order.",name:'Name',phone:'Phone',product:'Product',qty:'Quantity',total:'Total',day:'Preferred day',address:'Delivery address'},
+    hi:{subject:'TUSSAR पानी का ऑर्डर',intro:'मैं ऑर्डर करना चाहता/चाहती हूँ।',name:'नाम',phone:'फोन',product:'उत्पाद',qty:'मात्रा',total:'कुल',day:'पसंदीदा दिन',address:'डिलीवरी पता'},
+    or:{subject:'TUSSAR ପାଣି ଅର୍ଡର',intro:'ମୁଁ ଏକ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।',name:'ନାମ',phone:'ଫୋନ୍',product:'ଉତ୍ପାଦ',qty:'ପରିମାଣ',total:'ମୋଟ',day:'ପସନ୍ଦର ଦିନ',address:'ଡେଲିଭରି ଠିକଣା'}
+  }[lang];
+  const lines=[
+    'Order ID: '+orderId,
+    labels.intro,
+    labels.name+': '+name,
+    labels.phone+': '+phone,
+    labels.product+': '+(productNames[lang][product]||product),
+    labels.qty+': '+qty,
+    labels.total+': ₹'+total
+  ];
+  if(day)lines.push(labels.day+': '+day);
+  lines.push(labels.address+': '+addr);
+  window.location.href='mailto:tusarmohanty741@gmail.com?subject='+encodeURIComponent(labels.subject)+'&body='+encodeURIComponent(lines.join('\n'));
+}
+
+function sendCorpEnquiry(e){
+  e.preventDefault();
+  const company=document.getElementById('cCompany').value;
+  const contact=document.getElementById('cContact').value;
+  const qty=document.getElementById('cQty').value;
+  const date=document.getElementById('cDate').value;
+  const notes=document.getElementById('cNotes').value;
+  const body=`Company: ${company}%0AContact: ${contact}%0AEstimated quantity: ${qty}%0ANeeded from: ${date}%0ANotes: ${notes}`;
+  window.location.href=`mailto:tusarmohanty741@gmail.com?subject=${encodeURIComponent('Corporate/bulk enquiry — '+company)}&body=${body}`;
+  return false;
+}
+
+// reviews (stored per-visitor only)
+function loadReviews(){
+  try{
+    const saved=JSON.parse(localStorage.getItem('tussar_reviews')||'[]');
+    const grid=document.getElementById('revGrid');
+    saved.forEach(r=>{
+      const d=document.createElement('div');
+      d.className='rev-card';
+      d.innerHTML=`<p>"${r.text}"</p><b>${r.name}</b>`;
+      grid.appendChild(d);
+    });
+  }catch(e){}
+}
+function addReview(){
+  const name=document.getElementById('rName').value.trim()||'Anonymous';
+  const text=document.getElementById('rText').value.trim();
+  if(!text)return;
+  const grid=document.getElementById('revGrid');
+  const d=document.createElement('div');
+  d.className='rev-card';
+  d.innerHTML=`<p>"${text}"</p><b>${name}</b>`;
+  grid.appendChild(d);
+  try{
+    const saved=JSON.parse(localStorage.getItem('tussar_reviews')||'[]');
+    saved.push({name,text});
+    localStorage.setItem('tussar_reviews',JSON.stringify(saved));
+  }catch(e){}
+  document.getElementById('rName').value='';
+  document.getElementById('rText').value='';
+}
+loadReviews();
+
+// chatbot
+const CHAT_DATA=[
+  {k:{en:['what','product','sell','offer','water'],hi:['क्या','उत्पाद','प्रोडक्ट','बेच','पानी'],or:['କଣ','ଉତ୍ପାଦ','ପାଣି','ବିକ୍ରି']},
+   a:{en:"TUSSAR is packaged drinking water sourced from natural springs, purified to strict standards. We offer 1L bottles, 20L jars and 250ML box packs.",
+      hi:"TUSSAR प्राकृतिक झरनों से प्राप्त और सख्त मानकों के अनुसार शुद्ध किया गया पैकेज्ड ड्रिंकिंग वाटर है। हमारे पास 1L बोतल, 20L जार और 250ML बॉक्स पैक हैं।",
+      or:"TUSSAR ପ୍ରାକୃତିକ ଝରଣାରୁ ଆସିଥିବା ଏବଂ କଠୋର ମାନ ଅନୁଯାୟୀ ଶୁଦ୍ଧ କରାଯାଇଥିବା ପ୍ୟାକେଜ୍ଡ ପାନୀୟ ଜଳ। 1L ବୋତଲ, 20L ଜାର ଏବଂ 250ML ବକ୍ସ ପ୍ୟାକ୍ ମିଳେ।"}},
+  {k:{en:['price','cost','rate','how much','₹'],hi:['कीमत','दाम','रेट','कितना','मूल्य'],or:['ଦାମ','ମୂଲ୍ୟ','କେତେ','ରେଟ']},
+   a:{en:"1L Bottle: ₹20 · 20L Jar: ₹60 · 250ML Box (24 bottles): ₹200 per box, minimum 2 boxes. Bulk pricing is available.",
+      hi:"1L बोतल: ₹20 · 20L जार: ₹60 · 250ML बॉक्स (24 बोतल): ₹200 प्रति बॉक्स, न्यूनतम 2 बॉक्स। बड़े ऑर्डर पर बेहतर रेट मिल सकता है।",
+      or:"1L ବୋତଲ: ₹20 · 20L ଜାର: ₹60 · 250ML ବକ୍ସ (24 ବୋତଲ): ପ୍ରତି ବକ୍ସ ₹200, ସର୍ବନିମ୍ନ 2 ବକ୍ସ। ବଲ୍କ ଅର୍ଡର ପାଇଁ ଭଲ ରେଟ୍ ମିଳିପାରେ।"}},
+  {k:{en:['where','location','address','area','deliver','serve'],hi:['कहां','कहाँ','लोकेशन','पता','डिलीवरी','पहुंच'],or:['କେଉଁଠି','ସ୍ଥାନ','ଠିକଣା','ଡେଲିଭରି','ପହଞ୍ଚ']},
+   a:{en:"We deliver to homes, offices and events across our local service area. Share your address on WhatsApp and we'll confirm the delivery zone.",
+      hi:"हम अपने स्थानीय सेवा क्षेत्र में घरों, ऑफिस और इवेंट्स तक डिलीवरी करते हैं। WhatsApp पर पता भेजें, हम डिलीवरी क्षेत्र की पुष्टि करेंगे।",
+      or:"ଆମେ ଆମର ସ୍ଥାନୀୟ ସେବା ଅଞ୍ଚଳରେ ଘର, ଅଫିସ୍ ଏବଂ ଇଭେଣ୍ଟକୁ ଡେଲିଭରି କରୁଛୁ। WhatsApp ରେ ଠିକଣା ପଠାନ୍ତୁ, ଆମେ ନିଶ୍ଚିତ କରିଦେବୁ।"}},
+  {k:{en:['order','buy','purchase','how to'],hi:['ऑर्डर','आर्डर','खरीद','कैसे ऑर्डर'],or:['ଅର୍ଡର','କିଣିବା','କିପରି ଅର୍ଡର']},
+   a:{en:"Tap the Order on WhatsApp button or fill the Order form. Your order details will open in WhatsApp.",
+      hi:"Order on WhatsApp बटन दबाएं या Order form भरें। आपकी ऑर्डर जानकारी WhatsApp में खुल जाएगी।",
+      or:"Order on WhatsApp ବଟନ୍ ଦବାନ୍ତୁ କିମ୍ବା Order form ପୂରଣ କରନ୍ତୁ। ଆପଣଙ୍କ ଅର୍ଡର ବିବରଣୀ WhatsApp ରେ ଖୋଲିବ।"}},
+  {k:{en:['delivery','time','fast','when','arrive'],hi:['डिलीवरी','कब','समय','कितने समय'],or:['ଡେଲିଭରି','କେବେ','ସମୟ','କେତେ ସମୟ']},
+   a:{en:"Most orders are delivered within 24 hours. Regular 20L jar refills can be scheduled.",
+      hi:"अधिकांश ऑर्डर 24 घंटे के अंदर डिलीवर किए जाते हैं। 20L जार की नियमित रिफिल डिलीवरी भी तय की जा सकती है।",
+      or:"ଅଧିକାଂଶ ଅର୍ଡର 24 ଘଣ୍ଟା ମଧ୍ୟରେ ଡେଲିଭରି ହୁଏ। 20L ଜାରର ନିୟମିତ ରିଫିଲ୍ ଡେଲିଭରି ମଧ୍ୟ ଧାର୍ଯ୍ୟ କରିହେବ।"}},
+  {k:{en:['payment','pay','cod','cash','upi'],hi:['पेमेंट','भुगतान','कैश','यूपीआई','upi'],or:['ପେମେଣ୍ଟ','ଟଙ୍କା','କ୍ୟାଶ','ୟୁପିଆଇ']},
+   a:{en:"We accept cash on delivery and UPI. Confirm your preferred method on WhatsApp.",
+      hi:"हम Cash on Delivery और UPI स्वीकार करते हैं। WhatsApp पर अपना पसंदीदा तरीका बताएं।",
+      or:"ଆମେ Cash on Delivery ଏବଂ UPI ଗ୍ରହଣ କରୁଛୁ। WhatsApp ରେ ଆପଣଙ୍କ ପସନ୍ଦର ପେମେଣ୍ଟ ପ୍ରକାର କୁହନ୍ତୁ।"}},
+  {k:{en:['bulk','event','party','corporate','wholesale'],hi:['बल्क','इवेंट','पार्टी','कॉर्पोरेट','थोक'],or:['ବଲ୍କ','ଇଭେଣ୍ଟ','ପାର୍ଟି','କର୍ପୋରେଟ୍','ହୋଲସେଲ']},
+   a:{en:"For events, offices or bulk orders, send quantity and date on WhatsApp for larger-order pricing.",
+      hi:"इवेंट, ऑफिस या बड़े ऑर्डर के लिए मात्रा और तारीख WhatsApp पर भेजें। बड़े ऑर्डर के लिए बेहतर रेट मिल सकता है।",
+      or:"ଇଭେଣ୍ଟ, ଅଫିସ୍ କିମ୍ବା ବଲ୍କ ଅର୍ଡର ପାଇଁ ପରିମାଣ ଏବଂ ତାରିଖ WhatsApp ରେ ପଠାନ୍ତୁ। ବଡ଼ ଅର୍ଡର ପାଇଁ ଭଲ ରେଟ୍ ମିଳିପାରେ।"}},
+  {k:{en:['contact','phone','number','email','call'],hi:['कॉन्टैक्ट','संपर्क','फोन','नंबर','ईमेल','कॉल'],or:['ଯୋଗାଯୋଗ','ଫୋନ୍','ନମ୍ବର','ଇମେଲ୍','କଲ୍']},
+   a:{en:"Call or WhatsApp +91 93485 85599, or email tusarmohanty741@gmail.com.",
+      hi:"कॉल या WhatsApp करें: +91 93485 85599, या ईमेल करें: tusarmohanty741@gmail.com।",
+      or:"କଲ୍ କିମ୍ବା WhatsApp କରନ୍ତୁ: +91 93485 85599, କିମ୍ବା ଇମେଲ୍ କରନ୍ତୁ: tusarmohanty741@gmail.com।"}},
+  {k:{en:['jar','20l','can'],hi:['जार','20l','कैन'],or:['ଜାର','20l','କ୍ୟାନ୍']},
+   a:{en:"The 20L Jar is ₹60, reusable and ideal for homes and offices. A regular refill schedule can be set up.",
+      hi:"20L जार ₹60 का है, दोबारा उपयोग किया जा सकता है और घर व ऑफिस के लिए अच्छा है। नियमित रिफिल शेड्यूल बनाया जा सकता है।",
+      or:"20L ଜାରର ଦାମ ₹60। ଏହା ପୁନଃବ୍ୟବହାରଯୋଗ୍ୟ ଏବଂ ଘର ଓ ଅଫିସ୍ ପାଇଁ ଭଲ। ନିୟମିତ ରିଫିଲ୍ ସ୍କେଡ୍ୟୁଲ୍ କରିହେବ।"}},
+  {k:{en:['bottle','1l'],hi:['बोतल','1l'],or:['ବୋତଲ','1l']},
+   a:{en:"The 1L Bottle is ₹20 — perfect for daily hydration.",
+      hi:"1L बोतल ₹20 की है — रोज़ाना पीने के लिए सुविधाजनक।",
+      or:"1L ବୋତଲର ଦାମ ₹20 — ଦୈନିକ ପାଣି ପିଇବା ପାଇଁ ଭଲ।"}},
+  {k:{en:['box','250','event pack'],hi:['बॉक्स','250','इवेंट पैक'],or:['ବକ୍ସ','250','ଇଭେଣ୍ଟ ପ୍ୟାକ୍']},
+   a:{en:"The 250ML Box has 24 bottles and costs ₹200 per box, with a minimum order of 2 boxes.",
+      hi:"250ML बॉक्स में 24 बोतलें होती हैं और कीमत ₹200 प्रति बॉक्स है। न्यूनतम ऑर्डर 2 बॉक्स है।",
+      or:"250ML ବକ୍ସରେ 24ଟି ବୋତଲ ଥାଏ ଏବଂ ପ୍ରତି ବକ୍ସ ₹200। ସର୍ବନିମ୍ନ ଅର୍ଡର 2ଟି ବକ୍ସ।"}},
+  {k:{en:['quality','safe','pure','mineral','clean'],hi:['गुणवत्ता','सुरक्षित','शुद्ध','मिनरल','साफ'],or:['ଗୁଣବତ୍ତା','ସୁରକ୍ଷିତ','ଶୁଦ୍ଧ','ମିନେରାଲ୍','ସଫା']},
+   a:{en:"Our water is spring-sourced and purified through a multi-stage process, with quality testing before dispatch.",
+      hi:"हमारा पानी प्राकृतिक झरनों से प्राप्त होता है और मल्टी-स्टेज प्रक्रिया से शुद्ध किया जाता है, फिर गुणवत्ता जांच के बाद भेजा जाता है।",
+      or:"ଆମ ପାଣି ପ୍ରାକୃତିକ ଝରଣାରୁ ଆସେ ଏବଂ ମଲ୍ଟି-ଷ୍ଟେଜ୍ ପ୍ରକ୍ରିୟାରେ ଶୁଦ୍ଧ କରାଯାଏ। ପଠାଇବା ପୂର୍ବରୁ ଗୁଣବତ୍ତା ପରୀକ୍ଷା ହୁଏ।"}},
+  {k:{en:['hi','hello','hey'],hi:['नमस्ते','नमस्कार','हैलो','हाय'],or:['ନମସ୍କାର','ହେଲୋ','ହାଏ']},
+   a:{en:"Hello! I'm the TUSSAR assistant. Ask me about products, prices, delivery or ordering.",
+      hi:"नमस्ते! मैं TUSSAR Assistant हूँ। आप प्रोडक्ट, कीमत, डिलीवरी या ऑर्डर के बारे में पूछ सकते हैं।",
+      or:"ନମସ୍କାର! ମୁଁ TUSSAR Assistant। ଆପଣ ଉତ୍ପାଦ, ଦାମ, ଡେଲିଭରି କିମ୍ବା ଅର୍ଡର ବିଷୟରେ ପଚାରିପାରିବେ।"}},
+  {k:{en:['plan','subscription','weekly','refill','recurring'],hi:['प्लान','सब्सक्रिप्शन','साप्ताहिक','रिफिल','नियमित'],or:['ପ୍ଲାନ୍','ସବ୍ସକ୍ରିପସନ୍','ସାପ୍ତାହିକ','ରିଫିଲ୍','ନିୟମିତ']},
+   a:{en:"We offer a weekly Home Refill plan for the 20L jar and custom recurring schedules for offices and bulk buyers.",
+      hi:"20L जार के लिए Weekly Home Refill plan और ऑफिस व बड़े खरीदारों के लिए custom recurring schedules उपलब्ध हैं।",
+      or:"20L ଜାର ପାଇଁ Weekly Home Refill plan ଏବଂ ଅଫିସ୍ ଓ ବଡ଼ କ୍ରେତାଙ୍କ ପାଇଁ custom recurring schedule ମିଳେ।"}},
+  {k:{en:['pincode','pin code','minimum order','return jar','weekend'],hi:['पिनकोड','पिन कोड','न्यूनतम ऑर्डर','जार वापस','वीकेंड'],or:['ପିନକୋଡ୍','ପିନ କୋଡ୍','ସର୍ବନିମ୍ନ ଅର୍ଡର','ଜାର ଫେରାଇବା','ସପ୍ତାହାନ୍ତ']},
+   a:{en:"Use the pincode checker in the Order section. The 20L jar is returnable, 250ML boxes have a minimum of 2, and delivery is available on weekends.",
+      hi:"Order section में pincode checker इस्तेमाल करें। 20L जार returnable है, 250ML बॉक्स के लिए न्यूनतम 2 बॉक्स हैं और weekend delivery उपलब्ध है।",
+      or:"Order section ରେ pincode checker ବ୍ୟବହାର କରନ୍ତୁ। 20L ଜାର ଫେରାଇପାରିବେ, 250ML ବକ୍ସର ସର୍ବନିମ୍ନ 2ଟି ଏବଂ weekend delivery ଉପଲବ୍ଧ।"}}
+];
+
+const CHAT_TEXT={
+  en:{welcome:"Hi! Ask me about products, price, delivery area or how to order.",placeholder:"Type a question...",send:"Send",fallback:"I'm not sure about that. Please message TUSSAR on WhatsApp at +91 93485 85599 and we'll help.",listening:"Listening..."},
+  hi:{welcome:"नमस्ते! प्रोडक्ट, कीमत, डिलीवरी या ऑर्डर के बारे में पूछें।",placeholder:"अपना सवाल लिखें...",send:"भेजें",fallback:"मुझे इसका सही जवाब नहीं मिला। WhatsApp पर +91 93485 85599 पर TUSSAR को मैसेज करें।",listening:"सुन रहा हूँ..."},
+  or:{welcome:"ନମସ୍କାର! ଉତ୍ପାଦ, ଦାମ, ଡେଲିଭରି କିମ୍ବା ଅର୍ଡର ବିଷୟରେ ପଚାରନ୍ତୁ।",placeholder:"ଆପଣଙ୍କ ପ୍ରଶ୍ନ ଲେଖନ୍ତୁ...",send:"ପଠାନ୍ତୁ",fallback:"ମୁଁ ଏହାର ସଠିକ୍ ଉତ୍ତର ଦେଇପାରୁନି। +91 93485 85599 ରେ WhatsApp ରେ TUSSAR କୁ ମେସେଜ୍ କରନ୍ତୁ।",listening:"ଶୁଣୁଛି..."}
+};
+
+let chatLanguage=getCurrentLanguage();
+let voiceReplies=true;
+let recognition=null;
+
+function detectChatLanguage(text){
+  if(/[\u0B00-\u0B7F]/.test(text))return 'or';
+  if(/[\u0900-\u097F]/.test(text))return 'hi';
+  return chatLanguage;
+}
+
+function parseOrderRequest(text){
+  const t=String(text||'').toLowerCase();
+  let product=null;
+  if(/250\s*ml|250ml|box|boxes|ବକ୍ସ|बॉक्स/.test(t)) product='250ML';
+  else if(/20\s*l|20l|20\s*litre|20\s*liter|jar|जार|ଜାର/.test(t)) product='20L';
+  else if(/1\s*l|1l|1\s*litre|1\s*liter|bottle|बोतल|ବୋତଲ/.test(t)) product='1L';
+  const digit=t.match(/(?:^|\D)(\d{1,3})(?:\D|$)/);
+  const wordNums={one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,एक:1,दो:2,तीन:3,चार:4,पांच:5,पाँच:5,छह:6,सात:7,आठ:8,नौ:9,दस:10,ଏକ:1,ଦୁଇ:2,ତିନି:3,ଚାରି:4,ପାଞ୍ଚ:5,ଛଅ:6,ସାତ:7,ଆଠ:8,ନଅ:9,ଦଶ:10};
+  let qty=digit?Number(digit[1]):null;
+  if(!qty){for(const [word,n] of Object.entries(wordNums)){if(t.includes(word)){qty=n;break;}}}
+  if(product==='250ML' && (!qty || qty<2)) qty=qty||2;
+  return {product,qty:qty||null};
+}
+function productLabel(product,lang){
+  const labels={en:{'1L':'1L bottle','20L':'20L jar','250ML':'250ML box'},hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}};
+  return labels[lang]?.[product]||labels.en[product];
+}
+function prepareOrderFromRequest(text){
+  const parsed=parseOrderRequest(text);
+  if(!parsed.product)return null;
+  document.getElementById('oProduct').value=parsed.product;
+  document.getElementById('oQty').value=parsed.qty||1;
+  calcTotal();
+  document.getElementById('order').scrollIntoView({behavior:'smooth',block:'start'});
+  return parsed;
+}
+function smartOrderReply(q,lang){
+  const parsed=parseOrderRequest(q);
+  if(!parsed.product)return null;
+  const qty=parsed.qty||1;
+  const label=productLabel(parsed.product,lang);
+  const total=document.getElementById('oTotal')?.textContent||'';
+  const replies={
+    en:'Got it — I detected '+qty+' × '+label+'. I’ve filled the order form for you (total ₹'+total+'). Add your name, phone and address, then choose WhatsApp, email or call.',
+    hi:'समझ गया — मैंने '+qty+' × '+label+' पहचाना है। मैंने order form भर दिया है (कुल ₹'+total+')। अब नाम, फोन और पता भरकर WhatsApp, email या call चुनें।',
+    or:'ବୁଝିଲି — ମୁଁ '+qty+' × '+label+' ଚିହ୍ନଟ କରିଛି। ମୁଁ order form ଭରିଦେଇଛି (ମୋଟ ₹'+total+')। ଏବେ ନାମ, ଫୋନ୍ ଓ ଠିକଣା ଦେଇ WhatsApp, email କିମ୍ବା call ବାଛନ୍ତୁ।'
+  };
+  return replies[lang];
+}
+function botReply(q){
+  const lang=detectChatLanguage(q);
+  const smart=smartOrderReply(q,lang);
+  if(smart)return smart;
+  const t=q.toLowerCase();
+  let best=null,score=0;
+  CHAT_DATA.forEach(f=>{
+    const keys=f.k[lang]||f.k.en;
+    const s=keys.reduce((n,k)=>n+(t.includes(k.toLowerCase())?1:0),0);
+    if(s>score){score=s;best=f;}
+  });
+  if(/eta|delivery time|when.*deliver|कब.*डिलीवरी|डिलीवरी.*कब|ଡେଲିଭରି.*କେବେ|କେବେ.*ଡେଲିଭରି/.test(t)){
+    return {
+      en:'For a deliverable pincode, the site can show an estimated delivery window. Final ETA is confirmed by TUSSAR after the order is received.',
+      hi:'डिलीवरी वाले पिनकोड के लिए साइट अनुमानित delivery window दिखा सकती है। ऑर्डर मिलने के बाद TUSSAR final ETA confirm करेगा।',
+      or:'ଡେଲିଭରି ଯୋଗ୍ୟ ପିନକୋଡ୍ ପାଇଁ ସାଇଟ୍ ଅନୁମାନିତ delivery window ଦେଖାଇପାରେ। ଅର୍ଡର ମିଳିବା ପରେ TUSSAR final ETA confirm କରିବ।'
+    }[lang];
+  }
+  return best?best.a[lang]||best.a.en:CHAT_TEXT[lang].fallback;
+}
+
+function speakChat(text,lang){
+  if(!voiceReplies || !('speechSynthesis' in window))return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=lang==='or'?'or-IN':lang==='hi'?'hi-IN':'en-IN';
+  const voices=window.speechSynthesis.getVoices();
+  const wanted=lang==='or'?'or':lang==='hi'?'hi':'en';
+  const voice=voices.find(v=>v.lang.toLowerCase().startsWith(wanted));
+  if(voice)u.voice=voice;
+  window.speechSynthesis.speak(u);
+}
+
+function pushMsg(text,cls,lang=chatLanguage){
+  const body=document.getElementById('chatBody');
+  const d=document.createElement('div');
+  d.className='msg '+cls;
+  d.textContent=text;
+  body.appendChild(d);
+  body.scrollTop=body.scrollHeight;
+  if(cls==='bot')speakChat(text,lang);
+}
+
+function sendChat(){
+  const inp=document.getElementById('chatInput');
+  const val=inp.value.trim();
+  if(!val)return;
+  const lang=detectChatLanguage(val);
+  chatLanguage=lang;
+  try{localStorage.setItem('tussar_chat_language',lang);}catch(e){}
+  updateChatLanguageUI();
+  pushMsg(val,'user',lang);
+  inp.value='';
+  setTimeout(()=>pushMsg(botReply(val),'bot',lang),300);
+}
+
+function updateChatLanguageUI(){
+  const d=CHAT_TEXT[chatLanguage];
+  document.getElementById('chatInput').placeholder=d.placeholder;
+  document.getElementById('chatSend').textContent=d.send;
+  document.querySelectorAll('.chat-lang').forEach(b=>b.classList.toggle('active',b.dataset.chatLang===chatLanguage));
+}
+
+function setChatLanguage(lang){
+  if(!CHAT_TEXT[lang])return;
+  chatLanguage=lang;
+  try{localStorage.setItem('tussar_chat_language',lang);}catch(e){}
+  updateChatLanguageUI();
+  // Keep the whole site language in sync with the chat language.
+  setLang(lang,{scrollToTop:false,animate:false});
+  const chips=document.getElementById('chatChips');
+  chips.innerHTML='';
+  getQuickQuestions().forEach(q=>{
+    const b=document.createElement('button');
+    b.className='chip';b.textContent=q.text;
+    b.onclick=()=>{document.getElementById('chatInput').value=q.value;sendChat();};
+    chips.appendChild(b);
+  });
+}
+
+function getQuickQuestions(){
+  return chatLanguage==='hi'
+    ? [{text:'कीमत क्या है?',value:'कीमत क्या है?'},{text:'कैसे ऑर्डर करें?',value:'कैसे ऑर्डर करें?'},{text:'डिलीवरी कहाँ है?',value:'डिलीवरी कहाँ है?'}]
+    : chatLanguage==='or'
+    ? [{text:'ଦାମ କେତେ?',value:'ଦାମ କେତେ?'},{text:'କିପରି ଅର୍ଡର କରିବି?',value:'କିପରି ଅର୍ଡର କରିବି?'},{text:'ଡେଲିଭରି କେଉଁଠି?',value:'ଡେଲିଭରି କେଉଁଠି?'}]
+    : [{text:'What are the prices?',value:'What are the prices?'},{text:'How do I order?',value:'How do I order?'},{text:'Where do you deliver?',value:'Where do you deliver?'}];
+}
+
+function startVoiceChat(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const mic=document.getElementById('chatMic');
+  if(!SR){
+    pushMsg(chatLanguage==='hi'?'आपके ब्राउज़र में voice input उपलब्ध नहीं है।':chatLanguage==='or'?'ଆପଣଙ୍କ ବ୍ରାଉଜରରେ voice input ଉପଲବ୍ଧ ନାହିଁ।':'Voice input is not available in this browser.','bot',chatLanguage);
+    return;
+  }
+  if(recognition){recognition.stop();recognition=null;mic.classList.remove('listening');return;}
+  recognition=new SR();
+  recognition.lang=chatLanguage==='or'?'or-IN':chatLanguage==='hi'?'hi-IN':'en-IN';
+  recognition.interimResults=false;
+  recognition.maxAlternatives=1;
+  recognition.onstart=()=>{mic.classList.add('listening');document.getElementById('chatInput').placeholder=CHAT_TEXT[chatLanguage].listening;};
+  recognition.onresult=e=>{
+    const text=e.results[0][0].transcript;
+    document.getElementById('chatInput').value=text;
+    sendChat();
+  };
+  recognition.onerror=()=>{
+    mic.classList.remove('listening');recognition=null;updateChatLanguageUI();
+  };
+  recognition.onend=()=>{
+    mic.classList.remove('listening');recognition=null;updateChatLanguageUI();
+  };
+  recognition.start();
+}
+function startVoiceOrder(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const status=document.getElementById('voiceOrderStatus');
+  if(!SR){status.textContent='Voice ordering is not available in this browser.';return;}
+  const r=new SR();
+  r.lang=chatLanguage==='or'?'or-IN':chatLanguage==='hi'?'hi-IN':'en-IN';
+  r.interimResults=false;r.maxAlternatives=1;
+  status.textContent=CHAT_TEXT[chatLanguage].listening+' Say the product and quantity.';
+  r.onresult=e=>{
+    const spoken=e.results[0][0].transcript;
+    const parsed=prepareOrderFromRequest(spoken);
+    if(parsed)status.textContent='Voice order detected: '+(parsed.qty||1)+' × '+productLabel(parsed.product,chatLanguage);
+    else status.textContent='I could not detect the product. Try “2 twenty litre jars”.';
+  };
+  r.onerror=()=>{status.textContent=CHAT_TEXT[chatLanguage].fallback;};
+  r.start();
+}
+
+function initChat(){
+  try{
+    const saved=localStorage.getItem('tussar_chat_language');
+    if(saved&&CHAT_TEXT[saved])chatLanguage=saved;
+  }catch(e){}
+  updateChatLanguageUI();
+  document.querySelectorAll('.chat-lang').forEach(b=>b.onclick=()=>setChatLanguage(b.dataset.chatLang));
+  document.getElementById('chatSpeakToggle').onclick=()=>{
+    voiceReplies=!voiceReplies;
+    document.getElementById('chatSpeakToggle').classList.toggle('active',voiceReplies);
+    if(!voiceReplies&&'speechSynthesis' in window)window.speechSynthesis.cancel();
+  };
+  const chips=document.getElementById('chatChips');
+  getQuickQuestions().forEach(q=>{
+    const b=document.createElement('button');
+    b.className='chip';b.textContent=q.text;
+    b.onclick=()=>{document.getElementById('chatInput').value=q.value;sendChat();};
+    chips.appendChild(b);
+  });
+  pushMsg(CHAT_TEXT[chatLanguage].welcome,'bot',chatLanguage);
+}
+initChat();
+
+document.getElementById('chat-toggle').onclick=()=>document.getElementById('chat-panel').classList.toggle('open');
+
+// Order tracking UI — frontend demo until the TUSSAR backend is connected.
+function trackOrder(e){
+  e.preventDefault();
+  const id=document.getElementById('trackOrderId').value.trim().toUpperCase();
+  const result=document.getElementById('trackResult');
+  if(!/^TUS-[A-Z0-9-]+$/.test(id)){
+    result.innerHTML='<p class="track-note">Please enter a valid TUSSAR Order ID.</p>';
+    result.classList.add('show');
+    return false;
+  }
+  const steps=['Order Placed','Order Confirmed','Preparing Order','Out for Delivery','Delivered'];
+  result.innerHTML='<div class="track-id">Order ID: '+id+'</div><div class="track-steps">'+steps.map((s,i)=>'<div class="track-step '+(i===0?'active':'')+'"><span class="track-dot">'+(i===0?'✓':i+1)+'</span><span>'+s+'</span></div>').join('')+'</div><p class="track-note">Current demo status: Order Placed. Live status updates will be connected to the TUSSAR order backend.</p>';
+  result.classList.add('show');
+  return false;
+}
+
+// FAQ accordion
+function toggleFaq(btn){
+  const item=btn.parentElement;
+  const wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f=>f.classList.remove('open'));
+  if(!wasOpen)item.classList.add('open');
+}
+
+// pincode checker — replace this list with your real delivery pincodes
+const DELIVERY_PINCODES=['760001','760002','760003','760004','761001','761002'];
+function showDeliveryEta(pincode){
+  const eta=document.getElementById('deliveryEta');
+  if(!eta)return;
+  eta.textContent=chatLanguage==='hi'
+    ? 'Estimated delivery: 24–48 hours after order confirmation. Final ETA will be confirmed by TUSSAR.'
+    : chatLanguage==='or'
+    ? 'ଅନୁମାନିତ ଡେଲିଭରି: ଅର୍ଡର କନଫର୍ମ ହେବା ପରେ 24–48 ଘଣ୍ଟା। Final ETA TUSSAR କନଫର୍ମ କରିବ।'
+    : 'Estimated delivery: 24–48 hours after order confirmation. Final ETA will be confirmed by TUSSAR.';
+  eta.classList.add('show');
+}
+function checkPincode(){
+  const val=document.getElementById('pinInput').value.trim();
+  const out=document.getElementById('pincodeResult');
+  const eta=document.getElementById('deliveryEta');
+  if(eta)eta.classList.remove('show');
+  if(!/^\d{6}$/.test(val)){out.textContent='Enter a valid 6-digit pincode.';return;}
+  if(DELIVERY_PINCODES.includes(val)){
+    out.textContent='Good news — we deliver to your area. Place your order above.';
+    showDeliveryEta(val);
+  }else{
+    out.textContent="We're not listed there yet — message us on WhatsApp and we'll confirm.";
+  }
+}
+
+// scroll progress
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  document.getElementById('scrollBar').style.width=pct+'%';
+});
+
+// seasonal / referral banner
+(function(){
+  try{
+    if(!localStorage.getItem('tussar_banner_dismissed')) document.getElementById('seasonBanner').style.display='block';
+  }catch(e){ document.getElementById('seasonBanner').style.display='block'; }
+})();
+function dismissBanner(){
+  document.getElementById('seasonBanner').style.display='none';
+  try{localStorage.setItem('tussar_banner_dismissed','1');}catch(e){}
+}
+
+// geolocation delivery check — replace with your real service-area centre
+const SERVICE_CENTER={lat:19.3149,lng:84.7941}; // Berhampur, Odisha
+const SERVICE_RADIUS_KM=15;
+function checkMyLocation(){
+  const out=document.getElementById('pincodeResult');
+  if(!navigator.geolocation){out.textContent='Location isn\'t available on this device — try the pincode field.';return;}
+  out.textContent='Checking your location...';
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const {latitude:lat,longitude:lng}=pos.coords;
+    const R=6371,dLat=(lat-SERVICE_CENTER.lat)*Math.PI/180,dLng=(lng-SERVICE_CENTER.lng)*Math.PI/180;
+    const a=Math.sin(dLat/2)**2+Math.cos(lat*Math.PI/180)*Math.cos(SERVICE_CENTER.lat*Math.PI/180)*Math.sin(dLng/2)**2;
+    const dist=R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+    out.textContent = dist<=SERVICE_RADIUS_KM
+      ? `You're about ${dist.toFixed(1)}km from our base — within our delivery area.`
+      : `You're about ${dist.toFixed(0)}km away — message us on WhatsApp to confirm delivery.`;
+  },()=>{out.textContent='Could not access your location — try the pincode field instead.'});
+}
+
+// language toggle — partial coverage (nav + hero); extend I18N to cover more text
+const I18N={
+  en:{navSource:'Source',navProducts:'Products',navProcess:'Process',navReviews:'Reviews',navOrder:'Order',
+    heroTitle:'Water, the way the spring intended it.',
+    heroLead:"TUSSAR sources from clean natural springs and purifies to strict standards, so every bottle reaches your door pure, mineral‑balanced and fresh — never treated to taste like nothing at all.",
+    heroCta1:'Order on WhatsApp',heroCta2:'View products'},
+  hi:{navSource:'स्रोत',navProducts:'उत्पाद',navProcess:'प्रक्रिया',navReviews:'समीक्षा',navOrder:'ऑर्डर',
+    heroTitle:'पानी, जैसा झरने ने चाहा था।',
+    heroLead:'TUSSAR स्वच्छ प्राकृतिक झरनों से पानी लेकर सख्त मानकों से शुद्ध करता है, ताकि हर बोतल शुद्ध और ताज़ा आपके दरवाज़े तक पहुंचे।',
+    heroCta1:'व्हाट्सएप पर ऑर्डर करें',heroCta2:'उत्पाद देखें'},
+  or:{navSource:'ଉତ୍ସ',navProducts:'ଉତ୍ପାଦ',navProcess:'ପ୍ରକ୍ରିୟା',navReviews:'ସମୀକ୍ଷା',navOrder:'ଅର୍ଡର',
+    heroTitle:'ପାଣି, ଝରଣା ଯେମିତି ଚାହିଁଥିଲା ସେମିତି।',
+    heroLead:'TUSSAR ପରିଷ୍କାର ପ୍ରାକୃତିକ ଝରଣାରୁ ପାଣି ସଂଗ୍ରହ କରି କଠୋର ମାନ ଅନୁଯାୟୀ ଶୁଦ୍ଧ କରିଥାଏ।',
+    heroCta1:'ୱାଟସ୍‌ଆପରେ ଅର୍ଡର କରନ୍ତୁ',heroCta2:'ଉତ୍ପାଦ ଦେଖନ୍ତୁ'}
+};
+
+function getCurrentLanguage(){
+  try{
+    const saved=localStorage.getItem('tussar_language');
+    return I18N[saved] ? saved : 'en';
+  }catch(e){return 'en';}
+}
+
+function openWhatsAppOrder(product){
+  const lang=getCurrentLanguage();
+  const messages={
+    en:{general:"Hi TUSSAR, I'd like to place an order.",'1L':"Hi TUSSAR, I'd like to order 1L bottles.",'20L':"Hi TUSSAR, I'd like to order a 20L jar.",'250ML':"Hi TUSSAR, I'd like to order 250ML boxes."},
+    hi:{general:'नमस्ते TUSSAR, मुझे ऑर्डर करना है।','1L':'नमस्ते TUSSAR, मुझे 1L बोतलें ऑर्डर करनी हैं।','20L':'नमस्ते TUSSAR, मुझे 20L जार ऑर्डर करना है।','250ML':'नमस्ते TUSSAR, मुझे 250ML बॉक्स ऑर्डर करने हैं।'},
+    or:{general:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','1L':'ନମସ୍କାର TUSSAR, ମୁଁ 1L ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','20L':'ନମସ୍କାର TUSSAR, ମୁଁ 20L ଜାର ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','250ML':'ନମସ୍କାର TUSSAR, ମୁଁ 250ML ବକ୍ସ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।'}
+  };
+  const text=messages[lang][product||'general'];
+  window.open('https://wa.me/919348585599?text='+encodeURIComponent(text),'_blank');
+}
+
+function setLang(lang,options={}){
+  if(!I18N[lang])lang='en';
+  try{localStorage.setItem('tussar_language',lang);}catch(e){}
+  if(typeof CHAT_TEXT!=='undefined'){
+    chatLanguage=lang;
+    try{localStorage.setItem('tussar_chat_language',lang);}catch(e){}
+    if(typeof updateChatLanguageUI==='function')updateChatLanguageUI();
+  }
+  const d=I18N[lang];
+  document.documentElement.lang=lang==='or'?'or':lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    if(d[key])el.textContent=d[key];
+  });
+  document.querySelectorAll('.lang-toggle button').forEach(b=>{
+    b.classList.toggle('active',b.dataset.lang===lang);
+    b.classList.remove('lang-selected');
+  });
+  const selected=document.querySelector(`.lang-toggle button[data-lang="${lang}"]`);
+  if(selected){void selected.offsetWidth;selected.classList.add('lang-selected');}
+  if(navLinks){
+    navLinks.classList.remove('open');
+    if(menuBtn)menuBtn.setAttribute('aria-expanded','false');
+  }
+  if(options.scrollToTop!==false)window.scrollTo({top:0,behavior:'smooth'});
+  if(options.animate!==false){
+    const hero=document.querySelector('.hero');
+    if(hero){
+      hero.classList.remove('language-updated');void hero.offsetWidth;
+      hero.classList.add('language-updated');
+      setTimeout(()=>hero.classList.remove('language-updated'),650);
+    }
+  }
+}
+
+// Restore the last language selected by this visitor. It remains until they change it.
+setLang(getCurrentLanguage(),{scrollToTop:false,animate:false});
+
+// Small click feedback for buttons and navigation links.
+document.querySelectorAll('.btn').forEach(btn=>{
+  btn.addEventListener('click',function(e){
+    const r=document.createElement('span');
+    r.className='ripple';
+    const rect=this.getBoundingClientRect();
+    r.style.left=(e.clientX-rect.left-10)+'px';
+    r.style.top=(e.clientY-rect.top-10)+'px';
+    r.style.width=r.style.height='20px';
+    this.appendChild(r);
+    setTimeout(()=>r.remove(),550);
+  });
+});
+document.querySelectorAll('.nav-links a').forEach(link=>{
+  link.addEventListener('click',function(){
+    this.classList.remove('nav-clicked');
+    void this.offsetWidth;
+    this.classList.add('nav-clicked');
+    setTimeout(()=>this.classList.remove('nav-clicked'),400);
+  });
+});
+
+// liquid word fills in when scrolled into view
+const liquidEl=document.getElementById('liquidWord');
+if(liquidEl && 'IntersectionObserver' in window){
+  new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{ if(en.isIntersecting) liquidEl.classList.add('filled'); });
+  },{threshold:.5}).observe(liquidEl);
+}
+
+// freshness badge — shows today's date
+(function(){
+  const el=document.getElementById('freshBadge');
+  if(el){ const d=new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short'});
+    el.textContent='💧 This batch bottled '+d; }
+})();
+
+/* CUSTOMER ACCOUNT */
+let currentCustomer=null;
+function getCustomers(){
+  try{return JSON.parse(localStorage.getItem('tussar_customers')||'[]');}catch(e){return [];}
+}
+function saveCustomers(list){try{localStorage.setItem('tussar_customers',JSON.stringify(list));}catch(e){}}
+function openAuthModal(){
+  document.getElementById('authOverlay').classList.add('open');
+  const logged=localStorage.getItem('tussar_logged_customer');
+  if(logged){
+    try{currentCustomer=JSON.parse(logged);showProfilePanel();}catch(e){showAuthPanel();}
+  }else showAuthPanel();
+}
+function closeAuthModal(){document.getElementById('authOverlay').classList.remove('open');}
+function showAuthPanel(){
+  document.getElementById('authBox').style.display='block';
+  document.getElementById('profilePanel').classList.remove('show');
+}
+function showAuthTab(tab){
+  const login=tab==='login';
+  document.getElementById('loginForm').style.display=login?'grid':'none';
+  document.getElementById('signupForm').style.display=login?'none':'grid';
+  document.getElementById('loginTab').classList.toggle('active',login);
+  document.getElementById('signupTab').classList.toggle('active',!login);
+}
+function signupCustomer(e){
+  e.preventDefault();
+  const name=document.getElementById('signupName').value.trim();
+  const phone=document.getElementById('signupPhone').value.trim();
+  const email=document.getElementById('signupEmail').value.trim().toLowerCase();
+  const password=document.getElementById('signupPassword').value;
+  if(password.length<6){alert('Password must be at least 6 characters.');return false;}
+  const customers=getCustomers();
+  if(customers.some(c=>c.email===email||c.phone===phone)){alert('An account with this email or mobile already exists.');return false;}
+  // Demo-only local account. Do not use this storage approach for production authentication.
+  const customer={id:'CUST-'+Date.now(),name,phone,email,password,orders:[]};
+  customers.push(customer);saveCustomers(customers);
+  currentCustomer={...customer};delete currentCustomer.password;
+  localStorage.setItem('tussar_logged_customer',JSON.stringify(currentCustomer));
+  showProfilePanel();
+  return false;
+}
+function loginCustomer(e){
+  e.preventDefault();
+  const identity=document.getElementById('loginIdentity').value.trim().toLowerCase();
+  const password=document.getElementById('loginPassword').value;
+  const customer=getCustomers().find(c=>(c.email===identity||c.phone===identity)&&c.password===password);
+  if(!customer){alert('Invalid login details.');return false;}
+  currentCustomer={...customer};delete currentCustomer.password;
+  localStorage.setItem('tussar_logged_customer',JSON.stringify(currentCustomer));
+  showProfilePanel();
+  return false;
+}
+function showProfilePanel(){
+  document.getElementById('authBox').style.display='none';
+  document.getElementById('profilePanel').classList.add('show');
+  const c=currentCustomer||{};
+  document.getElementById('profileName').textContent=c.name||'Customer';
+  document.getElementById('profileContact').textContent=c.email||c.phone||'';
+  document.getElementById('profileAvatar').textContent=(c.name||'C').charAt(0).toUpperCase();
+  renderOrderHistory();
+  document.getElementById('accountBtnText').textContent='Profile';
+}
+function renderOrderHistory(){
+  const box=document.getElementById('orderHistory');
+  const orders=currentCustomer?.orders||[];
+  if(!orders.length){box.innerHTML='<div class="history-empty">No orders in your account yet. Your future account-linked orders will appear here.</div>';return;}
+  box.innerHTML=orders.slice().reverse().map(o=>'<div class="history-item"><strong>'+o.id+'</strong><br>'+o.product+' × '+o.qty+' — ₹'+o.total+'<br><span>'+o.date+'</span></div>').join('');
+}
+function logoutCustomer(){
+  localStorage.removeItem('tussar_logged_customer');
+  currentCustomer=null;
+  document.getElementById('accountBtnText').textContent='Login';
+  showAuthPanel();
+  showAuthTab('login');
+}
+function showProfileMessage(msg){
+  document.getElementById('profileMessage').textContent=msg+' will be connected to the customer backend.';
+}
+function attachOrderToCustomer(order){
+  if(!currentCustomer)return;
+  const customers=getCustomers();
+  const idx=customers.findIndex(c=>c.id===currentCustomer.id);
+  if(idx<0)return;
+  customers[idx].orders=customers[idx].orders||[];
+  customers[idx].orders.push(order);
+  saveCustomers(customers);
+  currentCustomer={...customers[idx]};delete currentCustomer.password;
+  localStorage.setItem('tussar_logged_customer',JSON.stringify(currentCustomer));
+  renderOrderHistory();
+}
+(function initCustomerAccount(){
+  try{
+    const saved=localStorage.getItem('tussar_logged_customer');
+    if(saved){currentCustomer=JSON.parse(saved);document.getElementById('accountBtnText').textContent='Profile';}
+  }catch(e){}
+})();
+
+</script>
+<script>(function(){const p=(location.pathname.split('/').pop()||'index.html').toLowerCase();const m={'index.html':'home','about.html':'about','products.html':'products','process.html':'process','reviews.html':'reviews','track.html':'track','order.html':'order'};const c=m[p]||'home';document.addEventListener('DOMContentLoaded',()=>{document.body.classList.add('page-ready');document.querySelectorAll('.nav-links a[data-page]').forEach(a=>{if(a.dataset.page===c)a.classList.add('active');a.addEventListener('click',e=>{e.preventDefault();document.body.classList.add('page-leaving');setTimeout(()=>location.href=a.href,220)})})})})();</script></body>
+</html>
+<style>.hero.language-updated .wrap>div:first-child>*{animation:languageRefresh .6s ease both}
+@keyframes languageRefresh{
+  0%{opacity:.35;transform:translateY(10px)}
+  100%{opacity:1;transform:translateY(0)}
+}</style>
