@@ -952,7 +952,7 @@ function sendOrder(e){
   lines.unshift('Order ID: '+orderId);
   attachOrderToCustomer({id:orderId,product,qty:Number(qty)||1,total,date:new Date().toLocaleString('en-IN')});
   try{localStorage.setItem('tussar_current_order_id',orderId);}catch(err){}
-  window.open('https://wa.me/919348585599?text='+encodeURIComponent(lines.join('\\n')),'_blank');
+  window.open('https://wa.me/919348585599'+encodeURIComponent(lines.join('\\n')),'_blank');
   document.getElementById('rcpDate').textContent=new Date().toLocaleString();
   document.getElementById('rcpBody').innerHTML=`${labels.name}: ${name}<br>${labels.phone}: ${phone}<br>${labels.product}: ${displayProduct}<br>${labels.qty}: ${qty}<br>${labels.total}: ₹${total}<br>${day?`${labels.day}: ${day}<br>`:''}${labels.address}: ${addr}`;
   return false;
@@ -1446,7 +1446,7 @@ function openWhatsAppOrder(product){
     or:{general:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','1L':'ନମସ୍କାର TUSSAR, ମୁଁ 1L ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','20L':'ନମସ୍କାର TUSSAR, ମୁଁ 20L ଜାର ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','250ML':'ନମସ୍କାର TUSSAR, ମୁଁ 250ML ବକ୍ସ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।'}
   };
   const text=messages[lang][product||'general'];
-  window.open('https://wa.me/919348585599?text='+encodeURIComponent(text),'_blank');
+  window.open('https://wa.me/919348585599'+encodeURIComponent(text),'_blank');
 }
 
 function setLang(lang,options={}){
