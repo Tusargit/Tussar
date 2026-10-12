@@ -441,6 +441,47 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
 
 .badge-fresh{display:inline-flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--gold);
   border:1px solid var(--gold);padding:.3rem .7rem;border-radius:20px;margin-top:1rem}
+
+/* INTERACTIVE TUSSAR PRODUCT CONFIGURATOR */
+.product-configurator{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2rem;align-items:center;margin:2rem 0 3rem;padding:clamp(1.1rem,3vw,2rem);background:linear-gradient(145deg,#0b2e20,#123d2a 60%,#174a35);color:#f7faf8;border:1px solid rgba(198,161,91,.45);box-shadow:0 20px 45px rgba(11,46,32,.14);overflow:hidden}
+.pc-preview{min-height:340px;display:flex;align-items:center;justify-content:center;position:relative;background:radial-gradient(ellipse at 50% 42%,rgba(232,240,233,.13),transparent 58%)}
+.pc-preview:after{content:"";position:absolute;bottom:25px;width:180px;height:20px;background:rgba(0,0,0,.22);filter:blur(12px);border-radius:50%}
+.pc-bottle{width:min(100%,280px);height:330px;position:relative;z-index:1;transition:transform .35s ease,filter .35s ease;filter:drop-shadow(0 20px 16px rgba(0,0,0,.25))}
+.pc-bottle svg{width:100%;height:100%;overflow:visible}
+.pc-bottle.jug{width:min(100%,320px);height:300px}
+.pc-bottle.box{width:min(100%,260px);height:260px}
+.pc-preview-caption{position:absolute;left:0;right:0;bottom:0;text-align:center;font-size:.75rem;letter-spacing:.13em;text-transform:uppercase;color:#c9dad0;z-index:2}
+.pc-controls{min-width:0}
+.pc-kicker{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#d6b96f;font-weight:600}
+.pc-controls h3{color:#fff;font-size:clamp(1.7rem,3vw,2.3rem);margin:.35rem 0 .2rem}
+.pc-description{color:#c9dad0;font-size:.9rem;margin-bottom:1.4rem}
+.pc-label{display:block;font-size:.78rem;font-weight:600;color:#e9f0eb;margin:1.1rem 0 .55rem}
+.pc-options{display:flex;flex-wrap:wrap;gap:.55rem}
+.pc-option{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.04);color:#f7faf8;padding:.65rem .8rem;font:600 .82rem "Work Sans",sans-serif;cursor:pointer;transition:all .2s ease}
+.pc-option:hover{border-color:#d6b96f;transform:translateY(-1px)}
+.pc-option[aria-pressed="true"]{border-color:#d6b96f;background:#d6b96f;color:#10291d;box-shadow:0 0 0 2px rgba(214,185,111,.18)}
+.pc-colors{display:flex;gap:.7rem;flex-wrap:wrap}
+.pc-color{display:flex;align-items:center;gap:.4rem;background:transparent;border:1px solid transparent;color:#e9f0eb;padding:.35rem .45rem;cursor:pointer;font:500 .78rem "Work Sans",sans-serif}
+.pc-color[aria-pressed="true"]{border-color:#d6b96f}
+.pc-swatch{display:inline-block;width:22px;height:22px;border-radius:50%;background:var(--swatch);border:2px solid rgba(255,255,255,.75);box-shadow:0 0 0 1px rgba(0,0,0,.15)}
+.pc-color[aria-pressed="true"] .pc-swatch{outline:2px solid #d6b96f;outline-offset:3px}
+.pc-color-note{font-size:.72rem;color:#b6c9bd;margin-top:.45rem}
+.pc-qty-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:1.3rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.15)}
+.pc-qty-label{font-size:.85rem;color:#e9f0eb}
+.pc-qty-control{display:flex;align-items:center;border:1px solid rgba(255,255,255,.3)}
+.pc-qty-control button{width:38px;height:38px;border:0;background:transparent;color:#fff;font-size:1.2rem;cursor:pointer}
+.pc-qty-control button:hover{background:rgba(255,255,255,.1)}
+.pc-qty-control output{min-width:38px;text-align:center;font-weight:600}
+.pc-total{display:flex;align-items:end;justify-content:space-between;gap:1rem;margin:1rem 0 1.2rem}
+.pc-total small{display:block;color:#b6c9bd;font-size:.75rem}
+.pc-total strong{font-family:"Fraunces",Georgia,serif;font-size:2rem;line-height:1.1;color:#fff}
+.pc-add{width:100%;justify-content:center;background:#d6b96f;color:#10291d;font-weight:700;padding:1rem}
+.pc-add:hover{background:#ead39a}
+.pc-feedback{min-height:1.2rem;margin-top:.55rem;color:#e5d5a6;font-size:.76rem}
+.pc-configurator .pc-price-note{font-size:.75rem;color:#b6c9bd;margin-top:.65rem}
+@media(max-width:760px){.product-configurator{grid-template-columns:1fr;gap:1rem}.pc-preview{min-height:280px}.pc-bottle{height:275px;width:220px}.pc-bottle.jug{height:250px;width:270px}.pc-bottle.box{height:220px;width:220px}.pc-preview-caption{bottom:0}.pc-controls{padding-top:.6rem}}
+@media(prefers-reduced-motion:reduce){.pc-bottle,.pc-option{transition:none}}
+
 </style>
 <style>
 body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform .42s ease}body.page-ready{opacity:1;transform:none}body.page-leaving{opacity:0;transform:translateY(-8px)}
@@ -513,6 +554,65 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
   <div class="wrap">
     <p class="eyebrow">What we offer</p>
     <h2>Three sizes, one standard of purity</h2>
+
+    <section class="product-configurator" id="tussarConfigurator" aria-labelledby="pcTitle">
+      <div class="pc-preview">
+        <div class="pc-bottle" id="pcBottle" aria-label="Live preview of the selected TUSSAR package">
+          <svg viewBox="0 0 240 340" role="img" aria-label="TUSSAR bottle preview">
+            <defs><linearGradient id="pcGlass" x1="0" x2="1"><stop offset="0" stop-color="#d9f1ed" stop-opacity=".55"/><stop offset=".35" stop-color="#fff" stop-opacity=".8"/><stop offset=".7" stop-color="#a7d5cd" stop-opacity=".45"/><stop offset="1" stop-color="#fff" stop-opacity=".72"/></linearGradient><linearGradient id="pcWater" x1="0" x2="1"><stop offset="0" stop-color="#b9e7e6" stop-opacity=".5"/><stop offset=".5" stop-color="#e8ffff" stop-opacity=".8"/><stop offset="1" stop-color="#83c9d0" stop-opacity=".45"/></linearGradient></defs>
+            <ellipse cx="120" cy="319" rx="57" ry="8" fill="#000" opacity=".15"/>
+            <rect x="103" y="15" width="34" height="24" rx="5" fill="#cbd9d4" stroke="#9aaca4" stroke-width="1.5"/>
+            <rect x="101" y="8" width="38" height="13" rx="4" fill="#123d2a" stroke="#d6b96f" stroke-width="1.5"/>
+            <path d="M104 38 L136 38 L136 55 Q138 63 151 77 Q168 96 168 119 L168 282 Q168 306 146 310 L94 310 Q72 306 72 282 L72 119 Q72 96 89 77 Q102 63 104 55 Z" fill="url(#pcGlass)" stroke="#d5f0e8" stroke-width="2"/>
+            <path d="M80 132 Q120 142 160 132 L160 281 Q160 301 143 304 L97 304 Q80 301 80 281 Z" fill="url(#pcWater)" opacity=".55"/>
+            <path d="M78 158 Q120 165 162 158 L162 228 Q120 236 78 228 Z" fill="#123d2a" stroke="#d6b96f" stroke-width="2" id="pcLabelShape"/>
+            <path d="M86 174 Q120 181 154 174" fill="none" stroke="#d6b96f" stroke-width="1" opacity=".9"/>
+            <text x="120" y="192" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="#fff" id="pcLogoText">TUSSAR</text>
+            <text x="120" y="207" text-anchor="middle" font-family="Arial,sans-serif" font-size="6.5" letter-spacing="1.3" fill="#e8f0e9">MINERAL WATER</text>
+            <path d="M90 244 Q100 257 90 270 M150 244 Q140 257 150 270" stroke="#fff" stroke-opacity=".45" stroke-width="2" fill="none"/>
+            <path d="M87 75 Q95 59 104 53" stroke="#fff" stroke-opacity=".7" stroke-width="3" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="pc-preview-caption" id="pcPreviewCaption">TUSSAR · 1L bottle · Bottle green</div>
+      </div>
+      <div class="pc-controls">
+        <div class="pc-kicker">Make it yours</div>
+        <h3 id="pcTitle">Choose your TUSSAR</h3>
+        <p class="pc-description">Preview the package, choose a size and label colour, then set your quantity.</p>
+
+        <span class="pc-label" id="pcSizeLabel">1. Choose size / pack</span>
+        <div class="pc-options" role="group" aria-label="Choose bottle size or pack">
+          <button class="pc-option" type="button" data-pc-product="250ML" aria-pressed="false">250ML box</button>
+          <button class="pc-option" type="button" data-pc-product="1L" aria-pressed="true">1L bottle</button>
+          <button class="pc-option" type="button" data-pc-product="20L" aria-pressed="false">20L jar</button>
+        </div>
+
+        <span class="pc-label" id="pcColorLabel">2. Choose label colour</span>
+        <div class="pc-colors" role="group" aria-label="Preview label colour">
+          <button class="pc-color" type="button" data-pc-color="green" aria-pressed="true"><span class="pc-swatch" style="--swatch:#123d2a"></span>Bottle green</button>
+          <button class="pc-color" type="button" data-pc-color="aqua" aria-pressed="false"><span class="pc-swatch" style="--swatch:#167c91"></span>Aqua</button>
+          <button class="pc-color" type="button" data-pc-color="white" aria-pressed="false"><span class="pc-swatch" style="--swatch:#f4f5ed"></span>Ivory</button>
+        </div>
+        <p class="pc-color-note">Green is the current TUSSAR concept. Other colours are previews; confirm production availability before ordering.</p>
+
+        <div class="pc-qty-row">
+          <span class="pc-qty-label">3. Quantity <small id="pcUnitText">(bottles)</small></span>
+          <div class="pc-qty-control" aria-label="Quantity controls">
+            <button type="button" id="pcQtyMinus" aria-label="Decrease quantity">−</button>
+            <output id="pcQty" aria-live="polite">1</output>
+            <button type="button" id="pcQtyPlus" aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+        <div class="pc-total">
+          <div><small id="pcPriceEach">₹20 per bottle</small><small id="pcMinimumNote">Minimum order: 1 bottle</small></div>
+          <div style="text-align:right"><small>Estimated total</small><strong id="pcTotal" aria-live="polite">₹20</strong></div>
+        </div>
+        <button class="btn pc-add" type="button" id="pcOrderBtn">Continue on WhatsApp ↗</button>
+        <p class="pc-feedback" id="pcFeedback" role="status" aria-live="polite"></p>
+        <p class="pc-price-note">Estimated product total only. Delivery fees, if any, are confirmed separately.</p>
+      </div>
+    </section>
+
     <div class="grid3">
 
       <div class="card tint-blue">
@@ -590,6 +690,79 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
 </div>
 
 <script>
+
+/* Interactive product preview, price and quantity selector */
+(function initTussarConfigurator(){
+  const root=document.getElementById('tussarConfigurator');
+  if(!root)return;
+  const catalog={
+    '250ML':{name:'250ML box of 24',unit:'boxes',price:200,min:2,shape:'box',caption:'250ML box · 24 bottles'},
+    '1L':{name:'1L bottle',unit:'bottles',price:20,min:1,shape:'bottle',caption:'1L bottle'},
+    '20L':{name:'20L jar',unit:'jars',price:60,min:1,shape:'jug',caption:'20L jar'}
+  };
+  const colours={
+    green:{name:'Bottle green',hex:'#123d2a',text:'#ffffff'},
+    aqua:{name:'Aqua',hex:'#167c91',text:'#ffffff'},
+    white:{name:'Ivory',hex:'#f4f5ed',text:'#123d2a'}
+  };
+  let product='1L',colour='green',qty=1;
+  const qtyOut=root.querySelector('#pcQty'),totalOut=root.querySelector('#pcTotal');
+  const priceEach=root.querySelector('#pcPriceEach'),unitText=root.querySelector('#pcUnitText');
+  const minNote=root.querySelector('#pcMinimumNote'),caption=root.querySelector('#pcPreviewCaption');
+  const bottle=root.querySelector('#pcBottle'),labelShape=root.querySelector('#pcLabelShape'),logoText=root.querySelector('#pcLogoText');
+  const feedback=root.querySelector('#pcFeedback');
+  const money=n=>'₹'+Number(n).toLocaleString('en-IN');
+  function renderShape(){
+    const item=catalog[product];
+    bottle.className='pc-bottle'+(item.shape==='jug'?' jug':item.shape==='box'?' box':'');
+    if(item.shape==='jug'){
+      bottle.innerHTML='<svg viewBox="0 0 300 300" role="img" aria-label="TUSSAR 20 litre jar preview"><defs><linearGradient id="pcJugGlass" x1="0" x2="1"><stop offset="0" stop-color="#c9e9e5" stop-opacity=".45"/><stop offset=".45" stop-color="#fff" stop-opacity=".8"/><stop offset="1" stop-color="#9bcfc7" stop-opacity=".55"/></linearGradient></defs><ellipse cx="150" cy="280" rx="100" ry="10" fill="#000" opacity=".17"/><rect x="124" y="16" width="52" height="26" rx="5" fill="#123d2a" stroke="#d6b96f" stroke-width="2"/><path d="M126 40 L174 40 L174 53 Q192 58 208 79 Q226 101 226 125 L226 242 Q226 267 200 271 L100 271 Q74 267 74 242 L74 125 Q74 101 92 79 Q108 58 126 53 Z" fill="url(#pcJugGlass)" stroke="#d5f0e8" stroke-width="2"/><path d="M82 145 Q150 154 218 145 L218 242 Q218 261 198 264 L102 264 Q82 261 82 242 Z" fill="#d9f4ef" opacity=".42"/><path d="M82 155 Q150 164 218 155 L218 215 Q150 224 82 215 Z" fill="'+colours[colour].hex+'" stroke="#d6b96f" stroke-width="2"/><text x="150" y="182" text-anchor="middle" font-family="Georgia,serif" font-size="23" font-weight="bold" fill="'+colours[colour].text+'">TUSSAR</text><text x="150" y="198" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" letter-spacing="1.5" fill="'+colours[colour].text+'">MINERAL WATER</text><path d="M97 84 Q107 63 125 55" stroke="#fff" stroke-opacity=".7" stroke-width="4" fill="none" stroke-linecap="round"/></svg>';
+    }else if(item.shape==='box'){
+      bottle.innerHTML='<svg viewBox="0 0 260 260" role="img" aria-label="TUSSAR 250 millilitre box pack preview"><defs><linearGradient id="pcBoxGlass" x1="0" x2="1"><stop offset="0" stop-color="#d9f1ed"/><stop offset=".5" stop-color="#fff"/><stop offset="1" stop-color="#b7ddd5"/></linearGradient></defs><ellipse cx="130" cy="238" rx="78" ry="8" fill="#000" opacity=".15"/><path d="M70 45 L190 45 L206 66 L206 220 Q206 230 196 230 L64 230 Q54 230 54 220 L54 66 Z" fill="url(#pcBoxGlass)" stroke="#d5f0e8" stroke-width="2"/><path d="M70 45 L130 67 L190 45" fill="none" stroke="#d5f0e8" stroke-width="2"/><path d="M54 112 L206 112 L206 177 L54 177 Z" fill="'+colours[colour].hex+'" stroke="#d6b96f" stroke-width="2"/><text x="130" y="139" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="bold" fill="'+colours[colour].text+'">TUSSAR</text><text x="130" y="155" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" letter-spacing="1.2" fill="'+colours[colour].text+'">250ML · PACK OF 24</text><path d="M69 80 L69 103" stroke="#fff" stroke-width="4" stroke-opacity=".7" stroke-linecap="round"/></svg>';
+    }else{
+      bottle.innerHTML='<svg viewBox="0 0 240 340" role="img" aria-label="TUSSAR 1 litre bottle preview"><defs><linearGradient id="pcGlass" x1="0" x2="1"><stop offset="0" stop-color="#d9f1ed" stop-opacity=".55"/><stop offset=".35" stop-color="#fff" stop-opacity=".8"/><stop offset=".7" stop-color="#a7d5cd" stop-opacity=".45"/><stop offset="1" stop-color="#fff" stop-opacity=".72"/></linearGradient><linearGradient id="pcWater" x1="0" x2="1"><stop offset="0" stop-color="#b9e7e6" stop-opacity=".5"/><stop offset=".5" stop-color="#e8ffff" stop-opacity=".8"/><stop offset="1" stop-color="#83c9d0" stop-opacity=".45"/></linearGradient></defs><ellipse cx="120" cy="319" rx="57" ry="8" fill="#000" opacity=".15"/><rect x="103" y="15" width="34" height="24" rx="5" fill="#cbd9d4" stroke="#9aaca4" stroke-width="1.5"/><rect x="101" y="8" width="38" height="13" rx="4" fill="#123d2a" stroke="#d6b96f" stroke-width="1.5"/><path d="M104 38 L136 38 L136 55 Q138 63 151 77 Q168 96 168 119 L168 282 Q168 306 146 310 L94 310 Q72 306 72 282 L72 119 Q72 96 89 77 Q102 63 104 55 Z" fill="url(#pcGlass)" stroke="#d5f0e8" stroke-width="2"/><path d="M80 132 Q120 142 160 132 L160 281 Q160 301 143 304 L97 304 Q80 301 80 281 Z" fill="url(#pcWater)" opacity=".55"/><path d="M78 158 Q120 165 162 158 L162 228 Q120 236 78 228 Z" fill="'+colours[colour].hex+'" stroke="#d6b96f" stroke-width="2"/><text x="120" y="192" text-anchor="middle" font-family="Georgia,serif" font-size="18" font-weight="bold" fill="'+colours[colour].text+'">TUSSAR</text><text x="120" y="207" text-anchor="middle" font-family="Arial,sans-serif" font-size="6.5" letter-spacing="1.3" fill="'+colours[colour].text+'">MINERAL WATER</text><path d="M90 244 Q100 257 90 270 M150 244 Q140 257 150 270" stroke="#fff" stroke-opacity=".45" stroke-width="2" fill="none"/><path d="M87 75 Q95 59 104 53" stroke="#fff" stroke-opacity=".7" stroke-width="3" fill="none" stroke-linecap="round"/></svg>';
+    }
+  }
+  function update(){
+    const item=catalog[product],shade=colours[colour];
+    qty=Math.max(item.min,Math.floor(Number(qty)||item.min));
+    qtyOut.textContent=qty;
+    totalOut.textContent=money(item.price*qty);
+    priceEach.textContent=money(item.price)+(product==='250ML'?' per box':' per '+(product==='20L'?'jar':'bottle'));
+    unitText.textContent='('+item.unit+')';
+    minNote.textContent='Minimum order: '+item.min+' '+item.unit;
+    caption.textContent='TUSSAR · '+item.caption+' · '+shade.name;
+    root.querySelectorAll('[data-pc-product]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.pcProduct===product)));
+    root.querySelectorAll('[data-pc-color]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.pcColor===colour)));
+    root.querySelector('#pcQtyMinus').disabled=qty<=item.min;
+    root.querySelector('#pcQtyMinus').style.opacity=qty<=item.min?'.4':'1';
+    renderShape();
+  }
+  root.querySelectorAll('[data-pc-product]').forEach(b=>b.addEventListener('click',()=>{
+    product=b.dataset.pcProduct;qty=catalog[product].min;feedback.textContent='';update();
+  }));
+  root.querySelectorAll('[data-pc-color]').forEach(b=>b.addEventListener('click',()=>{
+    colour=b.dataset.pcColor;feedback.textContent='';update();
+  }));
+  root.querySelector('#pcQtyMinus').addEventListener('click',()=>{qty=Math.max(catalog[product].min,qty-1);update();});
+  root.querySelector('#pcQtyPlus').addEventListener('click',()=>{qty+=1;update();});
+  root.querySelector('#pcOrderBtn').addEventListener('click',()=>{
+    const item=catalog[product],shade=colours[colour];
+    const message=[
+      'Hi TUSSAR, I would like to order:',
+      'Product: '+item.name,
+      'Label colour preference: '+shade.name,
+      'Quantity: '+qty+' '+item.unit,
+      'Estimated product total: '+money(item.price*qty),
+      colour==='green'?'Design: TUSSAR bottle-green concept':'Note: selected colour is a preview preference; please confirm availability',
+      'Please confirm delivery availability and any delivery charges.'
+    ].join('\n');
+    feedback.textContent='Opening WhatsApp with your selection…';
+    window.open('https://wa.me/919348585599?text='+encodeURIComponent(message),'_blank','noopener');
+  });
+  update();
+})();
+
 // mobile nav
 const menuBtn=document.getElementById('menuBtn');
 const navLinks=document.getElementById('navLinks');
