@@ -4,9 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Products — TUSSAR</title>
-<meta name="description" content="TUSSAR packaged drinking water — 1L bottles, 20L jars and 250ML box packs, sourced from natural springs and delivered fresh across your area. Order on WhatsApp." />
+<meta name="description" content="TUSSAR packaged drinking water — 250ML, 600ML and 1L bottles, plus 20L jars. Choose your label and order on WhatsApp." />
 <meta property="og:title" content="TUSSAR — Water From the Source" />
-<meta property="og:description" content="TUSSAR packaged drinking water. 600ML bottles ₹15, 1L bottles ₹20, 20L jars ₹60 and 250ML box packs ₹200." />
+<meta property="og:description" content="TUSSAR packaged drinking water. 250ML bottles ₹8.33 each (minimum 24), 600ML bottles ₹15, 1L bottles ₹20 and 20L jars ₹60." />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="TUSSAR — Water From the Source" />
@@ -618,7 +618,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
 
         <span class="pc-label" id="pcSizeLabel">1. Choose size / pack</span>
         <div class="pc-options" role="group" aria-label="Choose bottle size or pack">
-          <button class="pc-option" type="button" data-pc-product="250ML" aria-pressed="false">250ML box</button>
+          <button class="pc-option" type="button" data-pc-product="250ML" aria-pressed="false">250ML bottle</button>
           <button class="pc-option" type="button" data-pc-product="600ML" aria-pressed="false">600ML bottle</button>
           <button class="pc-option" type="button" data-pc-product="1L" aria-pressed="true">1L bottle</button>
           <button class="pc-option" type="button" data-pc-product="20L" aria-pressed="false">20L jar</button>
@@ -694,12 +694,12 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
 
       <div class="card tint-green">
         <svg class="icon" viewBox="0 0 64 64"><rect x="10" y="18" width="44" height="30" rx="2" fill="none" stroke="#124953" stroke-width="2"/><path d="M10 28h44M22 18v30M42 18v30" stroke="#C6A15B" stroke-width="1.6"/></svg>
-        <h3>250ML Box</h3>
-        <div class="price">₹200 <small>/ box of 24</small></div>
+        <h3>250ML Bottle</h3>
+        <div class="price">₹8.33 <small>/ bottle</small></div>
         <ul>
-          <li>Built for events &amp; parties</li>
-          <li>Minimum order: 2 boxes</li>
-          <li>Bulk pricing for large events</li>
+          <li>Great for events, parties &amp; gatherings</li>
+          <li>Minimum order: 24 bottles</li>
+          <li>24 bottles priced at ₹200</li>
         </ul>
         <a class="btn" href="https://wa.me/919348585599" target="_blank" rel="noopener" onclick="openWhatsAppOrder('250ML'); return false;">Order now</a>
       </div>
@@ -765,6 +765,24 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
   </div>
 </div>
 
+<script id="tussar-chat-toggle-guard">
+(function(){
+  const button=document.getElementById('chat-toggle');
+  const panel=document.getElementById('chat-panel');
+  if(!button||!panel||button.dataset.toggleBound==='true')return;
+  button.dataset.toggleBound='true';
+  button.setAttribute('aria-expanded','false');
+  button.addEventListener('click',function(){
+    const isOpen=panel.classList.toggle('open');
+    button.setAttribute('aria-expanded',String(isOpen));
+  });
+  document.addEventListener('keydown',function(event){
+    if(event.key==='Escape'&&panel.classList.contains('open')){
+      panel.classList.remove('open');button.setAttribute('aria-expanded','false');
+    }
+  });
+})();
+</script>
 <script>
 
 /* Interactive product preview, price and quantity selector */
@@ -772,7 +790,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
   const root=document.getElementById('tussarConfigurator');
   if(!root)return;
   const catalog={
-    '250ML':{name:'250ML box of 24',unit:'boxes',price:200,min:2,shape:'box',caption:'250ML box · 24 bottles'},
+    '250ML':{name:'250ML bottle',unit:'bottles',price:200/24,min:24,shape:'bottle',caption:'250ML bottle'},
     '600ML':{name:'600ML bottle',unit:'bottles',price:15,min:1,shape:'bottle',caption:'600ML bottle'},
     '1L':{name:'1L bottle',unit:'bottles',price:20,min:1,shape:'bottle',caption:'1L bottle'},
     '20L':{name:'20L jar',unit:'jars',price:60,min:1,shape:'jug',caption:'20L jar'}
@@ -790,7 +808,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
   const money=n=>'₹'+Number(n).toLocaleString('en-IN');
   function renderShape(){
     const item=catalog[product];
-    bottle.className='pc-bottle'+(item.shape==='jug'?' jug':item.shape==='box'?' box':product==='600ML'?' small-bottle':'');
+    bottle.className='pc-bottle'+(item.shape==='jug'?' jug':(product==='250ML'||product==='600ML')?' small-bottle':'');
     if(item.shape==='jug'){
       bottle.innerHTML='<svg viewBox="0 0 300 300" role="img" aria-label="TUSSAR 20 litre jar preview"><defs><linearGradient id="pcJugGlass" x1="0" x2="1"><stop offset="0" stop-color="#c9e9e5" stop-opacity=".45"/><stop offset=".45" stop-color="#fff" stop-opacity=".8"/><stop offset="1" stop-color="#9bcfc7" stop-opacity=".55"/></linearGradient></defs><ellipse cx="150" cy="280" rx="100" ry="10" fill="#000" opacity=".17"/><rect x="124" y="16" width="52" height="26" rx="5" fill="#123d2a" stroke="#d6b96f" stroke-width="2"/><path d="M126 40 L174 40 L174 53 Q192 58 208 79 Q226 101 226 125 L226 242 Q226 267 200 271 L100 271 Q74 267 74 242 L74 125 Q74 101 92 79 Q108 58 126 53 Z" fill="url(#pcJugGlass)" stroke="#d5f0e8" stroke-width="2"/><path d="M82 145 Q150 154 218 145 L218 242 Q218 261 198 264 L102 264 Q82 261 82 242 Z" fill="#d9f4ef" opacity=".42"/><path class="pc-label-shape" d="M82 155 Q150 164 218 155 L218 215 Q150 224 82 215 Z" fill="'+colours[colour].hex+'" stroke="#d6b96f" stroke-width="2"/><text x="150" y="182" text-anchor="middle" font-family="Georgia,serif" font-size="23" font-weight="bold" fill="'+colours[colour].text+'">TUSSAR</text><text x="150" y="198" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" letter-spacing="1.5" fill="'+colours[colour].text+'">MINERAL WATER</text><path d="M97 84 Q107 63 125 55" stroke="#fff" stroke-opacity=".7" stroke-width="4" fill="none" stroke-linecap="round"/></svg>';
     }else if(item.shape==='box'){
@@ -839,7 +857,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
     qty=Math.max(item.min,Math.floor(Number(qty)||item.min));
     qtyOut.textContent=qty;
     totalOut.textContent=item.price==null?'Confirm price':money(item.price*qty);
-    priceEach.textContent=item.price==null?'Price to be confirmed':money(item.price)+(product==='250ML'?' per box':' per '+(product==='20L'?'jar':'bottle'));
+    priceEach.textContent=item.price==null?'Price to be confirmed':(product==='250ML'?'₹8.33 per bottle':money(item.price)+' per '+(product==='20L'?'jar':'bottle'));
     unitText.textContent='('+item.unit+')';
     minNote.textContent='Minimum order: '+item.min+' '+item.unit;
     caption.textContent='TUSSAR · '+item.caption+' · '+shade.name+' · '+(wrapStyle==='full'?'Full wrap':'Half wrap');
@@ -945,9 +963,9 @@ function sendOrder(e){
   const total=document.getElementById('oTotal').textContent;
   const lang=getCurrentLanguage();
   const productNames={
-    en:{'1L':'1L Bottle','20L':'20L Jar','250ML':'250ML Box'},
-    hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},
-    or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}
+    en:{'1L':'1L Bottle','20L':'20L Jar','250ML':'250ML Bottle'},
+    hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बोतल'},
+    or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବୋତଲ'}
   };
   const labels={
     en:{intro:"Hi TUSSAR, I'd like to place an order.",name:'Name',phone:'Phone',product:'Product',qty:'Quantity',total:'Total',day:'Preferred day',address:'Address'},
@@ -1076,7 +1094,7 @@ const CHAT_DATA=[
       hi:"TUSSAR प्राकृतिक झरनों से प्राप्त और सख्त मानकों के अनुसार शुद्ध किया गया पैकेज्ड ड्रिंकिंग वाटर है। हमारे पास 1L बोतल, 20L जार और 250ML बॉक्स पैक हैं।",
       or:"TUSSAR ପ୍ରାକୃତିକ ଝରଣାରୁ ଆସିଥିବା ଏବଂ କଠୋର ମାନ ଅନୁଯାୟୀ ଶୁଦ୍ଧ କରାଯାଇଥିବା ପ୍ୟାକେଜ୍ଡ ପାନୀୟ ଜଳ। 1L ବୋତଲ, 20L ଜାର ଏବଂ 250ML ବକ୍ସ ପ୍ୟାକ୍ ମିଳେ।"}},
   {k:{en:['price','cost','rate','how much','₹'],hi:['कीमत','दाम','रेट','कितना','मूल्य'],or:['ଦାମ','ମୂଲ୍ୟ','କେତେ','ରେଟ']},
-   a:{en:"1L Bottle: ₹20 · 20L Jar: ₹60 · 250ML Box (24 bottles): ₹200 per box, minimum 2 boxes. Bulk pricing is available.",
+   a:{en:"250ML Bottle: ₹8.33 each (minimum 24 bottles, ₹200 per 24); 600ML Bottle: ₹15; 1L Bottle: ₹20; 20L Jar: ₹60.",
       hi:"1L बोतल: ₹20 · 20L जार: ₹60 · 250ML बॉक्स (24 बोतल): ₹200 प्रति बॉक्स, न्यूनतम 2 बॉक्स। बड़े ऑर्डर पर बेहतर रेट मिल सकता है।",
       or:"1L ବୋତଲ: ₹20 · 20L ଜାର: ₹60 · 250ML ବକ୍ସ (24 ବୋତଲ): ପ୍ରତି ବକ୍ସ ₹200, ସର୍ବନିମ୍ନ 2 ବକ୍ସ। ବଲ୍କ ଅର୍ଡର ପାଇଁ ଭଲ ରେଟ୍ ମିଳିପାରେ।"}},
   {k:{en:['where','location','address','area','deliver','serve'],hi:['कहां','कहाँ','लोकेशन','पता','डिलीवरी','पहुंच'],or:['କେଉଁଠି','ସ୍ଥାନ','ଠିକଣା','ଡେଲିଭରି','ପହଞ୍ଚ']},
@@ -1112,7 +1130,7 @@ const CHAT_DATA=[
       hi:"1L बोतल ₹20 की है — रोज़ाना पीने के लिए सुविधाजनक।",
       or:"1L ବୋତଲର ଦାମ ₹20 — ଦୈନିକ ପାଣି ପିଇବା ପାଇଁ ଭଲ।"}},
   {k:{en:['box','250','event pack'],hi:['बॉक्स','250','इवेंट पैक'],or:['ବକ୍ସ','250','ଇଭେଣ୍ଟ ପ୍ୟାକ୍']},
-   a:{en:"The 250ML Box has 24 bottles and costs ₹200 per box, with a minimum order of 2 boxes.",
+   a:{en:"The 250ML bottle costs ₹8.33 each. Minimum order is 24 bottles (₹200 for 24 bottles).",
       hi:"250ML बॉक्स में 24 बोतलें होती हैं और कीमत ₹200 प्रति बॉक्स है। न्यूनतम ऑर्डर 2 बॉक्स है।",
       or:"250ML ବକ୍ସରେ 24ଟି ବୋତଲ ଥାଏ ଏବଂ ପ୍ରତି ବକ୍ସ ₹200। ସର୍ବନିମ୍ନ ଅର୍ଡର 2ଟି ବକ୍ସ।"}},
   {k:{en:['quality','safe','pure','mineral','clean'],hi:['गुणवत्ता','सुरक्षित','शुद्ध','मिनरल','साफ'],or:['ଗୁଣବତ୍ତା','ସୁରକ୍ଷିତ','ଶୁଦ୍ଧ','ମିନେରାଲ୍','ସଫା']},
@@ -1128,7 +1146,7 @@ const CHAT_DATA=[
       hi:"20L जार के लिए Weekly Home Refill plan और ऑफिस व बड़े खरीदारों के लिए custom recurring schedules उपलब्ध हैं।",
       or:"20L ଜାର ପାଇଁ Weekly Home Refill plan ଏବଂ ଅଫିସ୍ ଓ ବଡ଼ କ୍ରେତାଙ୍କ ପାଇଁ custom recurring schedule ମିଳେ।"}},
   {k:{en:['pincode','pin code','minimum order','return jar','weekend'],hi:['पिनकोड','पिन कोड','न्यूनतम ऑर्डर','जार वापस','वीकेंड'],or:['ପିନକୋଡ୍','ପିନ କୋଡ୍','ସର୍ବନିମ୍ନ ଅର୍ଡର','ଜାର ଫେରାଇବା','ସପ୍ତାହାନ୍ତ']},
-   a:{en:"Use the pincode checker in the Order section. The 20L jar is returnable, 250ML boxes have a minimum of 2, and delivery is available on weekends.",
+   a:{en:"Use the pincode checker in the Order section. Minimum orders are 24 bottles for 250ML, 12 bottles for 600ML, 6 bottles for 1L, and 1 jar for 20L. Delivery is available on weekends.",
       hi:"Order section में pincode checker इस्तेमाल करें। 20L जार returnable है, 250ML बॉक्स के लिए न्यूनतम 2 बॉक्स हैं और weekend delivery उपलब्ध है।",
       or:"Order section ରେ pincode checker ବ୍ୟବହାର କରନ୍ତୁ। 20L ଜାର ଫେରାଇପାରିବେ, 250ML ବକ୍ସର ସର୍ବନିମ୍ନ 2ଟି ଏବଂ weekend delivery ଉପଲବ୍ଧ।"}}
 ];
@@ -1163,7 +1181,7 @@ function parseOrderRequest(text){
   return {product,qty:qty||null};
 }
 function productLabel(product,lang){
-  const labels={en:{'1L':'1L bottle','20L':'20L jar','250ML':'250ML box'},hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}};
+  const labels={en:{'1L':'1L bottle','20L':'20L jar','250ML':'250ML bottle'},hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}};
   return labels[lang]?.[product]||labels.en[product];
 }
 function prepareOrderFromRequest(text){
@@ -1343,7 +1361,7 @@ function initChat(){
 }
 initChat();
 
-document.getElementById('chat-toggle').onclick=()=>document.getElementById('chat-panel').classList.toggle('open');
+
 
 // Order tracking UI — frontend demo until the TUSSAR backend is connected.
 function trackOrder(e){
