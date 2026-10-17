@@ -4,9 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Place an Order — TUSSAR</title>
-<meta name="description" content="TUSSAR packaged drinking water — 1L bottles, 20L jars and 250ML box packs, sourced from natural springs and delivered fresh across your area. Order on WhatsApp." />
+<meta name="description" content="TUSSAR packaged drinking water — 250ML, 600ML and 1L bottles, plus 20L jars. Order directly on WhatsApp." />
 <meta property="og:title" content="TUSSAR — Water From the Source" />
-<meta property="og:description" content="TUSSAR packaged drinking water. 600ML bottles ₹15, 1L bottles ₹20, 20L jars ₹60 and 250ML box packs ₹200." />
+<meta property="og:description" content="TUSSAR packaged drinking water. 250ML bottles ₹8.33 each (minimum 24), 600ML bottles ₹15 (minimum 12), 1L bottles ₹20 (minimum 6), and 20L jars ₹60." />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="TUSSAR — Water From the Source" />
@@ -730,9 +730,9 @@ function sendOrderByEmail(){
   const orderId=generateOrderId();
   try{localStorage.setItem('tussar_current_order_id',orderId);}catch(e){}
   const productNames={
-    en:{'600ML':'600ML Bottle','1L':'1L Bottle','20L':'20L Jar','250ML':'250ML Box'},
-    hi:{'600ML':'600ML बोतल','1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},
-    or:{'600ML':'600ML ବୋତଲ','1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}
+    en:{'250ML':'250ML Bottle','600ML':'600ML Bottle','1L':'1L Bottle','20L':'20L Jar'},
+    hi:{'250ML':'250ML बोतल','600ML':'600ML बोतल','1L':'1L बोतल','20L':'20L जार'},
+    or:{'250ML':'250ML ବୋତଲ','600ML':'600ML ବୋତଲ','1L':'1L ବୋତଲ','20L':'20L ଜାର'}
   };
   const labels={
     en:{subject:'TUSSAR Water Order',intro:"I'd like to place an order.",name:'Name',phone:'Phone',product:'Product',qty:'Quantity',total:'Total',day:'Preferred day',address:'Delivery address'},
