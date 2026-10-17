@@ -6,7 +6,7 @@
 <title>Products — TUSSAR</title>
 <meta name="description" content="TUSSAR packaged drinking water — 1L bottles, 20L jars and 250ML box packs, sourced from natural springs and delivered fresh across your area. Order on WhatsApp." />
 <meta property="og:title" content="TUSSAR — Water From the Source" />
-<meta property="og:description" content="Pure, spring-sourced packaged drinking water, delivered fresh. 1L bottles ₹20, 20L jars ₹60, 250ML box packs ₹200." />
+<meta property="og:description" content="TUSSAR packaged drinking water. 600ML bottles ₹15, 1L bottles ₹20, 20L jars ₹60 and 250ML box packs ₹200." />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="TUSSAR — Water From the Source" />
@@ -488,7 +488,42 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
 body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform .42s ease}body.page-ready{opacity:1;transform:none}body.page-leaving{opacity:0;transform:translateY(-8px)}
 .nav-links a{position:relative;transition:color .25s ease,transform .25s ease}.nav-links a::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .28s ease}.nav-links a:hover{transform:translateY(-2px)}.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}.nav-links a.active{color:#fff}
 .page-intro{padding:2.4rem 0 0;background:var(--paper)}.page-intro .wrap{display:flex;align-items:end;gap:2rem}.page-intro .kicker{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600}.page-intro h1{font-size:clamp(2rem,5vw,3.4rem);margin-top:.25rem}.page-intro p{max-width:50ch;color:var(--stone);margin-top:.5rem}.explore-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:2rem auto 0;max-width:1120px;padding:0 6vw 4rem}.explore-card{padding:1.35rem;background:#fff;border:1px solid #dfe6e2;text-decoration:none;transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease}.explore-card:hover{transform:translateY(-6px);box-shadow:0 16px 35px rgba(11,46,51,.10);border-color:var(--gold)}.explore-card span{font-size:.72rem;color:var(--gold);font-weight:600;letter-spacing:.08em}.explore-card h3{margin:.35rem 0;font-size:1.15rem}.explore-card p{font-size:.82rem;color:var(--stone)}@media(max-width:760px){.page-intro .wrap{display:block}.explore-grid{grid-template-columns:1fr 1fr}}@media(max-width:480px){.explore-grid{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){body,.nav-links a,.nav-links a::after,.explore-card{transition:none!important}}
-</style></head><div class="auth-overlay" id="authOverlay" onclick="if(event.target===this)closeAuthModal()">
+</style><style>
+/* TUSSAR event planner and premium product interactions */
+.product-configurator{border-radius:22px;position:relative;isolation:isolate}
+.product-configurator:before{content:"";position:absolute;inset:-35% auto auto -10%;width:260px;height:260px;border-radius:50%;background:rgba(198,161,91,.12);filter:blur(8px);z-index:-1;pointer-events:none}
+.pc-preview{border-radius:18px;background:radial-gradient(ellipse at 50% 38%,rgba(230,248,238,.13),transparent 62%)}
+.pc-bottle{filter:drop-shadow(0 18px 18px rgba(0,0,0,.2));transition:transform .35s ease,filter .35s ease}
+.pc-bottle:hover{transform:translateY(-5px) rotate(-1deg);filter:drop-shadow(0 23px 20px rgba(0,0,0,.28))}
+.pc-option,.pc-color,.pc-wrap-option{transition:transform .18s ease,box-shadow .18s ease}
+.pc-option:hover,.pc-color:hover,.pc-wrap-option:hover{transform:translateY(-2px)}
+.grid3 .card{border-radius:16px;box-shadow:0 8px 24px rgba(11,46,32,.04);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.grid3 .card:hover{transform:translateY(-6px);box-shadow:0 18px 38px rgba(11,46,32,.12);border-color:rgba(198,161,91,.8)}
+.event-planner{padding:clamp(1.25rem,3vw,2.4rem);background:linear-gradient(135deg,#eef5ef,#fffdf7);border:1px solid #d8e4dc;border-radius:22px;margin:2.5rem 0 1rem;box-shadow:0 14px 34px rgba(11,46,32,.06)}
+.event-planner-head{display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;flex-wrap:wrap}
+.event-planner-kicker{font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:#8a6c31;font-weight:700}
+.event-planner h2{font-size:clamp(1.6rem,3vw,2.25rem);max-width:20ch;margin:.3rem 0}
+.event-planner-intro{max-width:54ch;color:#526b60;font-size:.93rem}
+.event-planner-tag{background:#e3eee6;color:#24513b;padding:.45rem .75rem;border-radius:999px;font-size:.75rem;font-weight:700;white-space:nowrap}
+.event-planner-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.6rem}
+.event-fields{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.event-field{display:grid;gap:.4rem}
+.event-field label{font-size:.78rem;font-weight:700;color:#345849}
+.event-field input,.event-field select{width:100%;min-width:0;padding:.8rem .85rem;border:1px solid #cddbd1;border-radius:10px;background:#fff;color:#10291d;font:inherit}
+.event-results{padding:1.25rem;border-radius:16px;background:#0b2e20;color:#f7faf8;display:flex;flex-direction:column;justify-content:space-between;gap:1rem}
+.event-results small{color:#bdd0c5}
+.event-total{font:500 clamp(2rem,4vw,2.7rem) Fraunces,Georgia,serif;color:#e6c77d;line-height:1.2}
+.event-metrics{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.event-metric{padding:.8rem;border:1px solid rgba(255,255,255,.14);border-radius:10px;background:rgba(255,255,255,.04)}
+.event-metric strong{display:block;font-size:1.05rem;color:#fff}
+.event-actions{display:flex;gap:.6rem;flex-wrap:wrap}
+.event-actions .btn{flex:1;justify-content:center;border-radius:9px;min-width:160px}
+.event-note{font-size:.75rem;color:#6a7e73;margin-top:.8rem}
+@media(max-width:760px){.event-planner-grid{grid-template-columns:1fr}.event-fields{grid-template-columns:1fr 1fr}.event-results{min-height:245px}}
+@media(max-width:420px){.event-fields{grid-template-columns:1fr}.event-actions .btn{width:100%}}
+@media(prefers-reduced-motion:reduce){.pc-bottle,.pc-option,.pc-color,.pc-wrap-option,.grid3 .card{transition:none}.pc-bottle:hover,.grid3 .card:hover{transform:none}}
+</style>
+</head><div class="auth-overlay" id="authOverlay" onclick="if(event.target===this)closeAuthModal()">
   <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
     <button class="auth-close" type="button" onclick="closeAuthModal()" aria-label="Close">×</button>
     <h2 id="authTitle">Your TUSSAR Account</h2>
@@ -636,13 +671,13 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
       <div class="card tint-green">
         <svg class="icon" viewBox="0 0 64 64"><path d="M24 8h16v10l6 6v28a4 4 0 0 1-4 4H22a4 4 0 0 1-4-4V24l6-6V8z" fill="none" stroke="#124953" stroke-width="2"/><path d="M20 30h24" stroke="#C6A15B" stroke-width="2"/></svg>
         <h3>600ML Bottle</h3>
-        <div class="price">Price to confirm</div>
+        <div class="price">₹15 <small>/ bottle</small></div>
         <ul>
-          <li>Compact everyday hydration</li>
-          <li>Green or ivory label concept</li>
-          <li>Confirm price and availability on WhatsApp</li>
+          <li>Compact, easy-carry everyday hydration</li>
+          <li>Choose bottle-green or ivory label</li>
+          <li>Ideal for commutes, meetings &amp; outings</li>
         </ul>
-        <a class="btn" href="https://wa.me/919348585599" target="_blank" rel="noopener" onclick="openWhatsAppOrder('600ML'); return false;">Confirm price</a>
+        <a class="btn" href="https://wa.me/919348585599" target="_blank" rel="noopener" onclick="openWhatsAppOrder('600ML'); return false;">Order now</a>
       </div>
 
       <div class="card tint-gold">
@@ -671,7 +706,30 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
 
     </div>
   </div>
-</section><div id="receipt">
+</section><section class="wrap" aria-labelledby="eventPlannerTitle">
+  <div class="event-planner" id="eventPlanner">
+    <div class="event-planner-head">
+      <div><p class="event-planner-kicker">A smarter way to plan</p><h2 id="eventPlannerTitle">Plan water for your next event</h2>
+      <p class="event-planner-intro">Enter your guest count and bottles per guest to estimate your requirement and product total. Great for office meetings, family functions, trips and celebrations.</p></div>
+      <span class="event-planner-tag">Instant estimate · WhatsApp ready</span>
+    </div>
+    <div class="event-planner-grid">
+      <div class="event-fields">
+        <div class="event-field"><label for="eventGuests">Number of guests</label><input id="eventGuests" type="number" min="1" max="10000" value="50" inputmode="numeric"></div>
+        <div class="event-field"><label for="eventBottlesPerGuest">Bottles per guest</label><select id="eventBottlesPerGuest"><option value="1">1 bottle each</option><option value="2" selected>2 bottles each</option><option value="3">3 bottles each</option><option value="4">4 bottles each</option></select></div>
+        <div class="event-field"><label for="eventBottleSize">Bottle size</label><select id="eventBottleSize"><option value="600ML" selected>600ML bottle — ₹15</option><option value="1L">1L bottle — ₹20</option></select></div>
+        <div class="event-field"><label for="eventBuffer">Extra bottles</label><select id="eventBuffer"><option value="0">No extra bottles</option><option value="5" selected>+5 bottles</option><option value="10">+10 bottles</option><option value="15">+15 bottles</option><option value="20">+20 bottles</option></select></div>
+      </div>
+      <div class="event-results" aria-live="polite">
+        <div><small>Estimated product total</small><div class="event-total" id="eventTotal">₹1,575</div><small id="eventTotalNote">105 bottles × ₹15 each</small></div>
+        <div class="event-metrics"><div class="event-metric"><small>Suggested quantity</small><strong id="eventBottleCount">105 bottles</strong></div><div class="event-metric"><small>Selected pack</small><strong id="eventPackLabel">600ML bottle</strong></div></div>
+        <div class="event-actions"><button type="button" class="btn btn-gold" id="eventWhatsAppBtn">Build event order ↗</button><button type="button" class="btn btn-ghost" id="eventResetBtn">Reset</button></div>
+      </div>
+    </div>
+    <p class="event-note">Planning estimate only. Delivery charges, stock and final order details are confirmed by TUSSAR on WhatsApp.</p>
+  </div>
+</section>
+<div id="receipt">
   <h2 style="font-family:Georgia">TUSSAR — Order Receipt</h2>
   <p id="rcpDate"></p><hr style="margin:1rem 0">
   <p id="rcpBody"></p>
@@ -715,7 +773,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
   if(!root)return;
   const catalog={
     '250ML':{name:'250ML box of 24',unit:'boxes',price:200,min:2,shape:'box',caption:'250ML box · 24 bottles'},
-    '600ML':{name:'600ML bottle',unit:'bottles',price:null,min:1,shape:'bottle',caption:'600ML bottle'},
+    '600ML':{name:'600ML bottle',unit:'bottles',price:15,min:1,shape:'bottle',caption:'600ML bottle'},
     '1L':{name:'1L bottle',unit:'bottles',price:20,min:1,shape:'bottle',caption:'1L bottle'},
     '20L':{name:'20L jar',unit:'jars',price:60,min:1,shape:'jug',caption:'20L jar'}
   };
@@ -1581,7 +1639,32 @@ function attachOrderToCustomer(order){
 })();
 
 </script>
-<script>(function(){const p=(location.pathname.split('/').pop()||'index.html').toLowerCase();const m={'index.html':'home','about.html':'about','products.html':'products','process.html':'process','reviews.html':'reviews','track.html':'track','order.html':'order'};const c=m[p]||'home';document.addEventListener('DOMContentLoaded',()=>{document.body.classList.add('page-ready');document.querySelectorAll('.nav-links a[data-page]').forEach(a=>{if(a.dataset.page===c)a.classList.add('active');a.addEventListener('click',e=>{e.preventDefault();document.body.classList.add('page-leaving');setTimeout(()=>location.href=a.href,220)})})})})();</script></body>
+<script>(function(){const p=(location.pathname.split('/').pop()||'index.html').toLowerCase();const m={'index.html':'home','about.html':'about','products.html':'products','process.html':'process','reviews.html':'reviews','track.html':'track','order.html':'order'};const c=m[p]||'home';document.addEventListener('DOMContentLoaded',()=>{document.body.classList.add('page-ready');document.querySelectorAll('.nav-links a[data-page]').forEach(a=>{if(a.dataset.page===c)a.classList.add('active');a.addEventListener('click',e=>{e.preventDefault();document.body.classList.add('page-leaving');setTimeout(()=>location.href=a.href,220)})})})})();</script><script>
+(function initTussarEventPlanner(){
+  const root=document.getElementById('eventPlanner');if(!root)return;
+  const $=id=>document.getElementById(id),money=n=>'₹'+Number(n).toLocaleString('en-IN');
+  const fields=['eventGuests','eventBottlesPerGuest','eventBottleSize','eventBuffer'];
+  function calculate(){
+    const guests=Math.min(10000,Math.max(1,Math.floor(Number($('eventGuests').value)||1)));
+    $('eventGuests').value=guests;
+    const perGuest=Number($('eventBottlesPerGuest').value)||1,buffer=Number($('eventBuffer').value)||0,size=$('eventBottleSize').value;
+    const price=size==='1L'?20:15,count=guests*perGuest+buffer,total=count*price;
+    $('eventBottleCount').textContent=count.toLocaleString('en-IN')+' bottles';
+    $('eventPackLabel').textContent=size==='1L'?'1L bottle':'600ML bottle';
+    $('eventTotal').textContent=money(total);
+    $('eventTotalNote').textContent=count.toLocaleString('en-IN')+' bottles × '+money(price)+' each';
+    return {guests,perGuest,buffer,size,price,count,total};
+  }
+  fields.forEach(id=>$(id).addEventListener('input',calculate));
+  $('eventWhatsAppBtn').addEventListener('click',()=>{
+    const d=calculate(),msg='Hi TUSSAR! I am planning an event order.\nGuests: '+d.guests+'\nRequirement: '+d.guests+' guests × '+d.perGuest+' bottle(s) per guest + '+d.buffer+' extra\nProduct: '+(d.size==='1L'?'1L bottle':'600ML bottle')+'\nTotal quantity: '+d.count+' bottles\nEstimated product total: '+money(d.total)+'\nPlease confirm availability and delivery.';
+    window.open('https://wa.me/919348585599?text='+encodeURIComponent(msg),'_blank','noopener');
+  });
+  $('eventResetBtn').addEventListener('click',()=>{$('eventGuests').value=50;$('eventBottlesPerGuest').value='2';$('eventBottleSize').value='600ML';$('eventBuffer').value='5';calculate()});
+  calculate();
+})();
+</script>
+</body>
 </html>
 <style>.hero.language-updated .wrap>div:first-child>*{animation:languageRefresh .6s ease both}
 @keyframes languageRefresh{
