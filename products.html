@@ -1470,22 +1470,12 @@ function dismissBanner(){
   try{localStorage.setItem('tussar_banner_dismissed','1');}catch(e){}
 }
 
-// geolocation delivery check — replace with your real service-area centre
-const SERVICE_CENTER={lat:19.3149,lng:84.7941}; // Berhampur, Odisha
-const SERVICE_RADIUS_KM=15;
+// Distance is estimated by the customer against the displayed factory address.
 function checkMyLocation(){
   const out=document.getElementById('pincodeResult');
-  if(!navigator.geolocation){out.textContent='Location isn\'t available on this device — try the pincode field.';return;}
-  out.textContent='Checking your location...';
-  navigator.geolocation.getCurrentPosition(pos=>{
-    const {latitude:lat,longitude:lng}=pos.coords;
-    const R=6371,dLat=(lat-SERVICE_CENTER.lat)*Math.PI/180,dLng=(lng-SERVICE_CENTER.lng)*Math.PI/180;
-    const a=Math.sin(dLat/2)**2+Math.cos(lat*Math.PI/180)*Math.cos(SERVICE_CENTER.lat*Math.PI/180)*Math.sin(dLng/2)**2;
-    const dist=R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
-    out.textContent = dist<=SERVICE_RADIUS_KM
-      ? `You're about ${dist.toFixed(1)}km from our base — within our delivery area.`
-      : `You're about ${dist.toFixed(0)}km away — message us on WhatsApp to confirm delivery.`;
-  },()=>{out.textContent='Could not access your location — try the pincode field instead.'});
+  out.textContent='Please estimate road distance from the TUSSAR factory (Kusupur, Odisha 752110) using Google Maps, then choose the matching distance band in the order form or product configurator. Beyond 5 km, minimum quantities increase and delivery depends on a planned route. Factory pickup is available; TUSSAR confirms the final route day and charges.';
+  const link=document.querySelector('.delivery-base a');
+  if(link)window.open(link.href,'_blank','noopener');
 }
 
 // language toggle — partial coverage (nav + hero); extend I18N to cover more text
