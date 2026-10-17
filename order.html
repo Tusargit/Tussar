@@ -530,16 +530,24 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
         </div>
         <div><label>Quantity</label><input id="oQty" type="number" min="12" value="12" step="1" inputmode="numeric" oninput="calcTotal()">
           <small id="oQtyHint">Minimum order: 12 bottles</small></div>
-        <div><label>Preferred weekly refill day (optional)</label>
-          <select id="oDay"><option value="">No fixed schedule</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select>
+        <div><label for="oDay">Preferred delivery / route day (optional)</label>
+          <select id="oDay"><option value="">No preferred day</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select>
         </div>
-        <label>Delivery option</label>
-<div class="delivery-options">
-<label class="delivery-option"><input type="radio" name="deliveryMode" value="standard" checked onchange="calcTotal()"><span><strong>Standard delivery</strong><small>Same-day for the Kusupur-area zone; next-day for other supported areas.</small></span></label>
-<label class="delivery-option"><input type="radio" name="deliveryMode" value="priority" onchange="calcTotal()"><span><strong>Priority delivery <span id="priorityFeeLabel">(+₹20)</span></strong><small>Extra charge depends on order quantity and is added to the total.</small></span></label>
-</div>
-<div class="delivery-base">Delivery base: <strong>X2W5+9P5, Kusupur, Odisha 752110</strong> · <a href="https://www.google.com/maps/search/?api=1&query=X2W5%2B9P5%2C%20Kusupur%2C%20Odisha%20752110" target="_blank" rel="noopener">Open in Maps</a></div>
-<div class="delivery-breakdown">Product subtotal: ₹<span id="oSubtotal">20</span> · Priority charge: <span id="deliveryFee">₹0</span></div>
+        <div class="delivery-zone-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.85rem;margin:1rem 0">
+          <div><label for="oDistance">Approx. distance from factory</label>
+            <select id="oDistance" onchange="calcTotal()" style="width:100%;padding:.75rem;border:1px solid #cfd9d5;background:#fff;color:#163d32;font:inherit;border-radius:6px">
+              <option value="0-5">0–5 km — local</option><option value="5-10">5–10 km — 2× minimum</option><option value="10-20">10–20 km — 3× minimum</option><option value="20-plus">Over 20 km — 5× minimum</option>
+            </select>
+          </div>
+          <div><label for="oFulfilment">How would you like to receive it?</label>
+            <select id="oFulfilment" onchange="calcTotal()" style="width:100%;padding:.75rem;border:1px solid #cfd9d5;background:#fff;color:#163d32;font:inherit;border-radius:6px">
+              <option value="delivery">Delivery / planned route</option><option value="pickup">Factory pickup</option>
+            </select>
+          </div>
+        </div>
+        <p id="deliveryPolicyNote" role="status" aria-live="polite" style="padding:.8rem;border-left:3px solid #c6a15b;background:rgba(198,161,91,.08);font-size:.86rem;line-height:1.55">Nearby orders use standard minimums. For farther areas, minimums increase and delivery is scheduled when a bulk route is planned. Final route day and delivery charges are confirmed by TUSSAR.</p>
+<div class="delivery-base">Factory: <strong>X2W5+9P5, Kusupur, Odisha 752110</strong> · <a href="https://www.google.com/maps/search/?api=1&query=X2W5%2B9P5%2C%20Kusupur%2C%20Odisha%20752110" target="_blank" rel="noopener">Open in Maps</a></div>
+<div class="delivery-breakdown">Product subtotal: ₹<span id="oSubtotal">180</span> · Delivery charge: <span id="deliveryFee">Confirmed separately</span></div>
 <div class="total-row">Total: ₹<span id="oTotal">20</span></div>
         <div><label>Delivery address</label><textarea id="oAddr" rows="2" required></textarea></div>
         <div class="order-actions">
@@ -632,29 +640,39 @@ document.addEventListener('click',e=>{
 });
 
 // order total + whatsapp
-function getDeliveryMode(){return document.querySelector('input[name="deliveryMode"]:checked')?.value||'standard';}
-function getPriorityDeliveryFee(qty){const q=Math.max(1,Number(qty)||1);return Math.max(20,20+Math.max(0,Math.ceil((q-5)/5))*10);}
-function getMinimumOrder(product){
- return ({'250ML':24,'600ML':12,'1L':6,'20L':1})[product]||1;
+function getDeliveryZone(){return document.getElementById('oDistance')?.value||'0-5';}
+function getFulfilment(){return document.getElementById('oFulfilment')?.value||'delivery';}
+function getMinimumOrder(product){return ({'250ML':24,'600ML':12,'1L':6,'20L':1})[product]||1;}
+function getEffectiveMinimumOrder(product){
+ const base=getMinimumOrder(product);
+ if(getFulfilment()==='pickup')return base;
+ const factor=({'0-5':1,'5-10':2,'10-20':3,'20-plus':5})[getDeliveryZone()]||1;
+ return base*factor;
 }
 function calcTotal(){
  const sel=document.getElementById('oProduct');
- if(!sel)return {subtotal:0,priority:0,total:0};
+ if(!sel)return {subtotal:0,delivery:0,total:0};
  const qtyInput=document.getElementById('oQty');
- const minimum=getMinimumOrder(sel.value);
+ const minimum=getEffectiveMinimumOrder(sel.value);
  qtyInput.min=String(minimum);
  const qty=Math.max(minimum,Math.floor(Number(qtyInput.value)||minimum));
  qtyInput.value=String(qty);
  const hint=document.getElementById('oQtyHint');
- if(hint)hint.textContent='Minimum order: '+minimum+' '+(sel.value==='20L'?'jar'+(minimum>1?'s':''):'bottles');
+ if(hint)hint.textContent='Minimum order: '+minimum+' '+(sel.value==='20L'?'jar'+(minimum>1?'s':''):'bottles')+(getFulfilment()==='pickup'?' (factory pickup)':'');
+ const note=document.getElementById('deliveryPolicyNote');
+ if(note){
+  if(getFulfilment()==='pickup')note.textContent='Factory pickup selected: standard product minimums apply regardless of distance. We will confirm collection timing after your order.';
+  else if(getDeliveryZone()==='0-5')note.textContent='0–5 km: standard minimums apply. Delivery timing and any charge are confirmed by TUSSAR.';
+  else if(getDeliveryZone()==='5-10')note.textContent='5–10 km: minimum quantity doubles. Delivery depends on order size and whether a route is planned for your direction.';
+  else if(getDeliveryZone()==='10-20')note.textContent='10–20 km: minimum quantity triples. Delivery is preferred on a planned bulk route; TUSSAR will confirm the route day.';
+  else note.textContent='Over 20 km: minimum quantity is five times the local minimum. Delivery requires confirmation of a bulk route; otherwise choose factory pickup.';
+ }
  const price=+sel.options[sel.selectedIndex].dataset.price;
  const subtotal=Math.round(price*qty);
- const priority=getDeliveryMode()==='priority'?getPriorityDeliveryFee(qty):0;
  const subtotalEl=document.getElementById('oSubtotal');if(subtotalEl)subtotalEl.textContent=subtotal;
- const feeEl=document.getElementById('deliveryFee');if(feeEl)feeEl.textContent='₹'+priority;
- const label=document.getElementById('priorityFeeLabel');if(label)label.textContent='(+'+'₹'+getPriorityDeliveryFee(qty)+')';
- document.getElementById('oTotal').textContent=subtotal+priority;
- return {subtotal,priority,total:subtotal+priority};
+ const feeEl=document.getElementById('deliveryFee');if(feeEl)feeEl.textContent='Confirmed separately';
+ document.getElementById('oTotal').textContent=subtotal;
+ return {subtotal,delivery:null,total:subtotal};
 }
 calcTotal();
 function generateOrderId(){
@@ -671,6 +689,9 @@ function sendOrder(e){
   const product=sel.value;
   const qty=document.getElementById('oQty').value;
   const day=document.getElementById('oDay').value;
+  const distance=getDeliveryZone();
+  const fulfilment=getFulfilment();
+  const minimum=getEffectiveMinimumOrder(product);
   const addr=document.getElementById('oAddr').value;
   const total=document.getElementById('oTotal').textContent;
   const lang=getCurrentLanguage();
@@ -685,10 +706,14 @@ function sendOrder(e){
     or:{intro:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।',name:'ନାମ',phone:'ଫୋନ୍',product:'ଉତ୍ପାଦ',qty:'ପରିମାଣ',total:'ମୋଟ',day:'ପସନ୍ଦର ଦିନ',address:'ଠିକଣା'}
   }[lang];
   const displayProduct=productNames[lang][product];
-  const order={name,phone,product,qty,addr,day,lang};
+  const order={name,phone,product,qty,addr,day,distance,fulfilment,lang};
   try{localStorage.setItem('tussar_last_order',JSON.stringify(order));}catch(err){}
-  const lines=[labels.intro,`${labels.name}: ${name}`,`${labels.phone}: ${phone}`,`${labels.product}: ${displayProduct}`,`${labels.qty}: ${qty}`,`${labels.total}: ₹${total}`];
+  const lines=[labels.intro,`${labels.name}: ${name}`,`${labels.phone}: ${phone}`,`${labels.product}: ${displayProduct}`,`${labels.qty}: ${qty}`,`${labels.total}: ₹${total} (delivery charge, if any, confirmed separately)`];
   if(day)lines.push(`${labels.day}: ${day}`);
+  lines.push('Approx. factory distance: '+({'0-5':'0–5 km','5-10':'5–10 km','10-20':'10–20 km','20-plus':'Over 20 km'}[distance]));
+  lines.push('Fulfilment: '+(fulfilment==='pickup'?'Factory pickup':'Delivery / planned route'));
+  lines.push('Minimum quantity applied: '+minimum);
+  lines.push('Route note: '+(fulfilment==='pickup'?'Please confirm factory collection timing.':distance==='0-5'?'Local delivery; please confirm timing and charges.':distance==='5-10'?'Double local minimum; route availability to be confirmed.':distance==='10-20'?'Triple local minimum; planned bulk route and day to be confirmed.':'Five times local minimum; bulk route confirmation required, otherwise factory pickup.'));
   lines.push(`${labels.address}: ${addr}`);
   const orderId=generateOrderId();
   lines.unshift('Order ID: '+orderId);
@@ -696,7 +721,7 @@ function sendOrder(e){
   try{localStorage.setItem('tussar_current_order_id',orderId);}catch(err){}
   window.open('https://wa.me/919348585599?text='+encodeURIComponent(lines.join('\\n')),'_blank');
   document.getElementById('rcpDate').textContent=new Date().toLocaleString();
-  document.getElementById('rcpBody').innerHTML=`${labels.name}: ${name}<br>${labels.phone}: ${phone}<br>${labels.product}: ${displayProduct}<br>${labels.qty}: ${qty}<br>${labels.total}: ₹${total}<br>${day?`${labels.day}: ${day}<br>`:''}${labels.address}: ${addr}`;
+  document.getElementById('rcpBody').innerHTML=`${labels.name}: ${name}<br>${labels.phone}: ${phone}<br>${labels.product}: ${displayProduct}<br>${labels.qty}: ${qty}<br>${labels.total}: ₹${total}<br>Distance: ${({'0-5':'0–5 km','5-10':'5–10 km','10-20':'10–20 km','20-plus':'Over 20 km'}[distance])}<br>Fulfilment: ${fulfilment==='pickup'?'Factory pickup':'Delivery / planned route'}<br>${day?`${labels.day}: ${day}<br>`:''}${labels.address}: ${addr}`;
   return false;
 }
 function repeatOrder(){
