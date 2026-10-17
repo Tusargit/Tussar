@@ -645,7 +645,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
           </div>
         </div>
         <div class="pc-total">
-          <div><small id="pcPriceEach">₹20 per bottle</small><small id="pcMinimumNote">Minimum order: 1 bottle</small></div>
+          <div><small id="pcPriceEach">₹20 per bottle</small><small id="pcMinimumNote">Minimum order: 6 bottles</small></div>
           <div style="text-align:right"><small>Estimated total</small><strong id="pcTotal" aria-live="polite">₹120</strong></div>
         </div>
         <button class="btn pc-add" type="button" id="pcOrderBtn">Continue on WhatsApp ↗</button>
@@ -662,7 +662,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
         <div class="price">₹20 <small>/ bottle</small></div>
         <ul>
           <li>Daily hydration, home &amp; office</li>
-          <li>Resealable, BPA-free bottle</li>
+          <li>Minimum order: 6 bottles</li>
           <li>Doorstep delivery available</li>
         </ul>
         <a class="btn" href="https://wa.me/919348585599" target="_blank" rel="noopener" onclick="openWhatsAppOrder('1L'); return false;">Order now</a>
@@ -674,7 +674,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
         <div class="price">₹15 <small>/ bottle</small></div>
         <ul>
           <li>Compact, easy-carry everyday hydration</li>
-          <li>Choose bottle-green or ivory label</li>
+          <li>Minimum order: 12 bottles</li>
           <li>Ideal for commutes, meetings &amp; outings</li>
         </ul>
         <a class="btn" href="https://wa.me/919348585599" target="_blank" rel="noopener" onclick="openWhatsAppOrder('600ML'); return false;">Order now</a>
@@ -686,14 +686,14 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
         <div class="price">₹60 <small>/ jar</small></div>
         <ul>
           <li>Built for families &amp; offices</li>
-          <li>Reusable, returnable container</li>
+          <li>Minimum order: 1 jar</li>
           <li>Set up a regular delivery cycle</li>
         </ul>
         <a class="btn" href="https://wa.me/919348585599" target="_blank" rel="noopener" onclick="openWhatsAppOrder('20L'); return false;">Order now</a>
       </div>
 
       <div class="card tint-green">
-        <svg class="icon" viewBox="0 0 64 64"><rect x="10" y="18" width="44" height="30" rx="2" fill="none" stroke="#124953" stroke-width="2"/><path d="M10 28h44M22 18v30M42 18v30" stroke="#C6A15B" stroke-width="1.6"/></svg>
+        <svg class="icon" viewBox="0 0 64 64" role="img" aria-label="250ML bottle"><path d="M25 7h14v9l5 6v29a5 5 0 0 1-5 5H25a5 5 0 0 1-5-5V22l5-6V7z" fill="none" stroke="#124953" stroke-width="2"/><path d="M20 31h24M20 40h24" stroke="#C6A15B" stroke-width="1.6"/></svg>
         <h3>250ML Bottle</h3>
         <div class="price">₹8.33 <small>/ bottle</small></div>
         <ul>
@@ -1095,8 +1095,8 @@ const CHAT_DATA=[
       or:"TUSSAR ପ୍ରାକୃତିକ ଝରଣାରୁ ଆସିଥିବା ଏବଂ କଠୋର ମାନ ଅନୁଯାୟୀ ଶୁଦ୍ଧ କରାଯାଇଥିବା ପ୍ୟାକେଜ୍ଡ ପାନୀୟ ଜଳ। 1L ବୋତଲ, 20L ଜାର ଏବଂ 250ML ବକ୍ସ ପ୍ୟାକ୍ ମିଳେ।"}},
   {k:{en:['price','cost','rate','how much','₹'],hi:['कीमत','दाम','रेट','कितना','मूल्य'],or:['ଦାମ','ମୂଲ୍ୟ','କେତେ','ରେଟ']},
    a:{en:"250ML Bottle: ₹8.33 each (minimum 24 bottles, ₹200 per 24); 600ML Bottle: ₹15; 1L Bottle: ₹20; 20L Jar: ₹60.",
-      hi:"1L बोतल: ₹20 · 20L जार: ₹60 · 250ML बॉक्स (24 बोतल): ₹200 प्रति बॉक्स, न्यूनतम 2 बॉक्स। बड़े ऑर्डर पर बेहतर रेट मिल सकता है।",
-      or:"1L ବୋତଲ: ₹20 · 20L ଜାର: ₹60 · 250ML ବକ୍ସ (24 ବୋତଲ): ପ୍ରତି ବକ୍ସ ₹200, ସର୍ବନିମ୍ନ 2 ବକ୍ସ। ବଲ୍କ ଅର୍ଡର ପାଇଁ ଭଲ ରେଟ୍ ମିଳିପାରେ।"}},
+      hi:"250ML बोतल: ₹8.33 प्रति बोतल (न्यूनतम 24, 24 बोतलों के ₹200); 600ML बोतल: ₹15 (न्यूनतम 12); 1L बोतल: ₹20 (न्यूनतम 6); 20L जार: ₹60 (न्यूनतम 1)।",
+      or:"250ML ବୋତଲ: ପ୍ରତିଟି ₹8.33 (ସର୍ବନିମ୍ନ 24, 24 ବୋତଲ ପାଇଁ ₹200); 600ML ବୋତଲ: ₹15 (ସର୍ବନିମ୍ନ 12); 1L ବୋତଲ: ₹20 (ସର୍ବନିମ୍ନ 6); 20L ଜାର: ₹60 (ସର୍ବନିମ୍ନ 1)।"}},
   {k:{en:['where','location','address','area','deliver','serve'],hi:['कहां','कहाँ','लोकेशन','पता','डिलीवरी','पहुंच'],or:['କେଉଁଠି','ସ୍ଥାନ','ଠିକଣା','ଡେଲିଭରି','ପହଞ୍ଚ']},
    a:{en:"We deliver to homes, offices and events across our local service area. Share your address on WhatsApp and we'll confirm the delivery zone.",
       hi:"हम अपने स्थानीय सेवा क्षेत्र में घरों, ऑफिस और इवेंट्स तक डिलीवरी करते हैं। WhatsApp पर पता भेजें, हम डिलीवरी क्षेत्र की पुष्टि करेंगे।",
@@ -1131,8 +1131,8 @@ const CHAT_DATA=[
       or:"1L ବୋତଲର ଦାମ ₹20 — ଦୈନିକ ପାଣି ପିଇବା ପାଇଁ ଭଲ।"}},
   {k:{en:['box','250','event pack'],hi:['बॉक्स','250','इवेंट पैक'],or:['ବକ୍ସ','250','ଇଭେଣ୍ଟ ପ୍ୟାକ୍']},
    a:{en:"The 250ML bottle costs ₹8.33 each. Minimum order is 24 bottles (₹200 for 24 bottles).",
-      hi:"250ML बॉक्स में 24 बोतलें होती हैं और कीमत ₹200 प्रति बॉक्स है। न्यूनतम ऑर्डर 2 बॉक्स है।",
-      or:"250ML ବକ୍ସରେ 24ଟି ବୋତଲ ଥାଏ ଏବଂ ପ୍ରତି ବକ୍ସ ₹200। ସର୍ବନିମ୍ନ ଅର୍ଡର 2ଟି ବକ୍ସ।"}},
+      hi:"250ML बोतल की कीमत ₹8.33 प्रति बोतल है। न्यूनतम ऑर्डर 24 बोतलें (24 बोतलों के ₹200) है।",
+      or:"250ML ବୋତଲର ଦାମ ପ୍ରତିଟି ₹8.33। ସର୍ବନିମ୍ନ ଅର୍ଡର 24 ବୋତଲ (24 ବୋତଲ ପାଇଁ ₹200)।"}},
   {k:{en:['quality','safe','pure','mineral','clean'],hi:['गुणवत्ता','सुरक्षित','शुद्ध','मिनरल','साफ'],or:['ଗୁଣବତ୍ତା','ସୁରକ୍ଷିତ','ଶୁଦ୍ଧ','ମିନେରାଲ୍','ସଫା']},
    a:{en:"Our water is spring-sourced and purified through a multi-stage process, with quality testing before dispatch.",
       hi:"हमारा पानी प्राकृतिक झरनों से प्राप्त होता है और मल्टी-स्टेज प्रक्रिया से शुद्ध किया जाता है, फिर गुणवत्ता जांच के बाद भेजा जाता है।",
@@ -1147,8 +1147,8 @@ const CHAT_DATA=[
       or:"20L ଜାର ପାଇଁ Weekly Home Refill plan ଏବଂ ଅଫିସ୍ ଓ ବଡ଼ କ୍ରେତାଙ୍କ ପାଇଁ custom recurring schedule ମିଳେ।"}},
   {k:{en:['pincode','pin code','minimum order','return jar','weekend'],hi:['पिनकोड','पिन कोड','न्यूनतम ऑर्डर','जार वापस','वीकेंड'],or:['ପିନକୋଡ୍','ପିନ କୋଡ୍','ସର୍ବନିମ୍ନ ଅର୍ଡର','ଜାର ଫେରାଇବା','ସପ୍ତାହାନ୍ତ']},
    a:{en:"Use the pincode checker in the Order section. Minimum orders are 24 bottles for 250ML, 12 bottles for 600ML, 6 bottles for 1L, and 1 jar for 20L. Delivery is available on weekends.",
-      hi:"Order section में pincode checker इस्तेमाल करें। 20L जार returnable है, 250ML बॉक्स के लिए न्यूनतम 2 बॉक्स हैं और weekend delivery उपलब्ध है।",
-      or:"Order section ରେ pincode checker ବ୍ୟବହାର କରନ୍ତୁ। 20L ଜାର ଫେରାଇପାରିବେ, 250ML ବକ୍ସର ସର୍ବନିମ୍ନ 2ଟି ଏବଂ weekend delivery ଉପଲବ୍ଧ।"}}
+      hi:"Order section में pincode checker इस्तेमाल करें। न्यूनतम ऑर्डर: 250ML की 24 बोतलें, 600ML की 12 बोतलें, 1L की 6 बोतलें और 20L का 1 जार।",
+      or:"Order section ରେ pincode checker ବ୍ୟବହାର କରନ୍ତୁ। ସର୍ବନିମ୍ନ ଅର୍ଡର: 250MLର 24 ବୋତଲ, 600MLର 12 ବୋତଲ, 1Lର 6 ବୋତଲ ଏବଂ 20Lର 1 ଜାର।"}}
 ];
 
 const CHAT_TEXT={
