@@ -640,13 +640,13 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
           <span class="pc-qty-label">4. Quantity <small id="pcUnitText">(bottles)</small></span>
           <div class="pc-qty-control" aria-label="Quantity controls">
             <button type="button" id="pcQtyMinus" aria-label="Decrease quantity">−</button>
-            <output id="pcQty" aria-live="polite">1</output>
+            <output id="pcQty" aria-live="polite">6</output>
             <button type="button" id="pcQtyPlus" aria-label="Increase quantity">+</button>
           </div>
         </div>
         <div class="pc-total">
           <div><small id="pcPriceEach">₹20 per bottle</small><small id="pcMinimumNote">Minimum order: 1 bottle</small></div>
-          <div style="text-align:right"><small>Estimated total</small><strong id="pcTotal" aria-live="polite">₹20</strong></div>
+          <div style="text-align:right"><small>Estimated total</small><strong id="pcTotal" aria-live="polite">₹120</strong></div>
         </div>
         <button class="btn pc-add" type="button" id="pcOrderBtn">Continue on WhatsApp ↗</button>
         <p class="pc-feedback" id="pcFeedback" role="status" aria-live="polite"></p>
@@ -1020,8 +1020,8 @@ function sendOrderByEmail(){
   try{localStorage.setItem('tussar_current_order_id',orderId);}catch(e){}
   const productNames={
     en:{'250ML':'250ML Bottle','600ML':'600ML Bottle','1L':'1L Bottle','20L':'20L Jar'},
-    hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},
-    or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}
+    hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बोतल'},
+    or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବୋତଲ'}
   };
   const labels={
     en:{subject:'TUSSAR Water Order',intro:"I'd like to place an order.",name:'Name',phone:'Phone',product:'Product',qty:'Quantity',total:'Total',day:'Preferred day',address:'Delivery address'},
@@ -1170,18 +1170,20 @@ function detectChatLanguage(text){
 function parseOrderRequest(text){
   const t=String(text||'').toLowerCase();
   let product=null;
-  if(/250\s*ml|250ml|box|boxes|ବକ୍ସ|बॉक्स/.test(t)) product='250ML';
+  if(/250\s*ml|250ml/.test(t)) product='250ML';
+  else if(/600\s*ml|600ml/.test(t)) product='600ML';
   else if(/20\s*l|20l|20\s*litre|20\s*liter|jar|जार|ଜାର/.test(t)) product='20L';
   else if(/1\s*l|1l|1\s*litre|1\s*liter|bottle|बोतल|ବୋତଲ/.test(t)) product='1L';
-  const digit=t.match(/(?:^|\D)(\d{1,3})(?:\D|$)/);
+  const quantityText=t.replace(/\b(?:250|600)\s*ml\b|\b(?:20|1)\s*l\b/gi,' ');
+  const digit=quantityText.match(/(?:^|\D)(\d{1,3})(?:\D|$)/);
   const wordNums={one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,एक:1,दो:2,तीन:3,चार:4,पांच:5,पाँच:5,छह:6,सात:7,आठ:8,नौ:9,दस:10,ଏକ:1,ଦୁଇ:2,ତିନି:3,ଚାରି:4,ପାଞ୍ଚ:5,ଛଅ:6,ସାତ:7,ଆଠ:8,ନଅ:9,ଦଶ:10};
   let qty=digit?Number(digit[1]):null;
   if(!qty){for(const [word,n] of Object.entries(wordNums)){if(t.includes(word)){qty=n;break;}}}
-  if(product==='250ML' && (!qty || qty<2)) qty=qty||2;
+  const minimums={'250ML':24,'600ML':12,'1L':6,'20L':1}; if(product && (!qty || qty<minimums[product])) qty=minimums[product];
   return {product,qty:qty||null};
 }
 function productLabel(product,lang){
-  const labels={en:{'1L':'1L bottle','20L':'20L jar','250ML':'250ML bottle'},hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}};
+  const labels={en:{'1L':'1L bottle','20L':'20L jar','250ML':'250ML bottle'},hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बोतल'},or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବୋତଲ'}};
   return labels[lang]?.[product]||labels.en[product];
 }
 function prepareOrderFromRequest(text){
@@ -1475,8 +1477,8 @@ function getCurrentLanguage(){
 function openWhatsAppOrder(product){
   const lang=getCurrentLanguage();
   const messages={
-    en:{general:"Hi TUSSAR, I'd like to place an order.",'1L':"Hi TUSSAR, I'd like to order 1L bottles.",'600ML':"Hi TUSSAR, I'd like to order 600ML bottles at ₹15 each.",'20L':"Hi TUSSAR, I'd like to order a 20L jar.",'250ML':"Hi TUSSAR, I'd like to order 250ML bottles (minimum 24 bottles, ₹200 per 24)."},
-    hi:{general:'नमस्ते TUSSAR, मुझे ऑर्डर करना है।','1L':'नमस्ते TUSSAR, मुझे 1L बोतलें ऑर्डर करनी हैं।','600ML':'नमस्ते TUSSAR, मुझे ₹15 प्रति बोतल की दर से 600ML बोतलें ऑर्डर करनी हैं।','20L':'नमस्ते TUSSAR, मुझे 20L जार ऑर्डर करना है।','250ML':'नमस्ते TUSSAR, मुझे 250ML बोतलें ऑर्डर करनी हैं (न्यूनतम 24 बोतलें)।'},
+    en:{general:"Hi TUSSAR, I'd like to place an order.",'1L':"Hi TUSSAR, I'd like to order 1L bottles (minimum 6 bottles, ₹20 each).",'600ML':"Hi TUSSAR, I'd like to order 600ML bottles at ₹15 each (minimum 12 bottles).",'20L':"Hi TUSSAR, I'd like to order a 20L jar at ₹60 (minimum 1 jar).",'250ML':"Hi TUSSAR, I'd like to order 250ML bottles (minimum 24 bottles, ₹200 per 24)."},
+    hi:{general:'नमस्ते TUSSAR, मुझे ऑर्डर करना है।','1L':'नमस्ते TUSSAR, मुझे 1L बोतलें ऑर्डर करनी हैं (न्यूनतम 6 बोतलें)।','600ML':'नमस्ते TUSSAR, मुझे ₹15 प्रति बोतल की दर से 600ML बोतलें ऑर्डर करनी हैं।','20L':'नमस्ते TUSSAR, मुझे 20L जार ऑर्डर करना है।','250ML':'नमस्ते TUSSAR, मुझे 250ML बोतलें ऑर्डर करनी हैं (न्यूनतम 24 बोतलें)।'},
     or:{general:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','1L':'ନମସ୍କାର TUSSAR, ମୁଁ 1L ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','600ML':'ନମସ୍କାର TUSSAR, ପ୍ରତି ବୋତଲ ₹15 ଦରରେ 600ML ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','20L':'ନମସ୍କାର TUSSAR, ମୁଁ 20L ଜାର ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','250ML':'ନମସ୍କାର TUSSAR, ମୁଁ 250ML ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି (ସର୍ବନିମ୍ନ 24 ବୋତଲ)।'}
   };
   const text=messages[lang][product||'general'];
@@ -1666,11 +1668,11 @@ function attachOrderToCustomer(order){
     const guests=Math.min(10000,Math.max(1,Math.floor(Number($('eventGuests').value)||1)));
     $('eventGuests').value=guests;
     const perGuest=Number($('eventBottlesPerGuest').value)||1,buffer=Number($('eventBuffer').value)||0,size=$('eventBottleSize').value;
-    const price=size==='1L'?20:15,count=guests*perGuest+buffer,total=count*price;
+    const price=size==='1L'?20:15,requested=guests*perGuest+buffer,minimum=size==='1L'?6:12,count=Math.max(requested,minimum),total=count*price;
     $('eventBottleCount').textContent=count.toLocaleString('en-IN')+' bottles';
     $('eventPackLabel').textContent=size==='1L'?'1L bottle':'600ML bottle';
     $('eventTotal').textContent=money(total);
-    $('eventTotalNote').textContent=count.toLocaleString('en-IN')+' bottles × '+money(price)+' each';
+    $('eventTotalNote').textContent=count.toLocaleString('en-IN')+' bottles × '+money(price)+' each'+(count>requested?' · minimum order applied':'');
     return {guests,perGuest,buffer,size,price,count,total};
   }
   fields.forEach(id=>$(id).addEventListener('input',calculate));
