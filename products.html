@@ -791,8 +791,8 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
   if(!root)return;
   const catalog={
     '250ML':{name:'250ML bottle',unit:'bottles',price:200/24,min:24,shape:'bottle',caption:'250ML bottle'},
-    '600ML':{name:'600ML bottle',unit:'bottles',price:15,min:1,shape:'bottle',caption:'600ML bottle'},
-    '1L':{name:'1L bottle',unit:'bottles',price:20,min:1,shape:'bottle',caption:'1L bottle'},
+    '600ML':{name:'600ML bottle',unit:'bottles',price:15,min:12,shape:'bottle',caption:'600ML bottle'},
+    '1L':{name:'1L bottle',unit:'bottles',price:20,min:6,shape:'bottle',caption:'1L bottle'},
     '20L':{name:'20L jar',unit:'jars',price:60,min:1,shape:'jug',caption:'20L jar'}
   };
   const colours={
@@ -1019,7 +1019,7 @@ function sendOrderByEmail(){
   const orderId=generateOrderId();
   try{localStorage.setItem('tussar_current_order_id',orderId);}catch(e){}
   const productNames={
-    en:{'1L':'1L Bottle','20L':'20L Jar','250ML':'250ML Box'},
+    en:{'250ML':'250ML Bottle','600ML':'600ML Bottle','1L':'1L Bottle','20L':'20L Jar'},
     hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},
     or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}
   };
@@ -1090,7 +1090,7 @@ loadReviews();
 // chatbot
 const CHAT_DATA=[
   {k:{en:['what','product','sell','offer','water'],hi:['क्या','उत्पाद','प्रोडक्ट','बेच','पानी'],or:['କଣ','ଉତ୍ପାଦ','ପାଣି','ବିକ୍ରି']},
-   a:{en:"TUSSAR is packaged drinking water sourced from natural springs, purified to strict standards. We offer 1L bottles, 20L jars and 250ML box packs.",
+   a:{en:"TUSSAR is packaged drinking water. Available: 250ML bottle (₹8.33 each, min 24), 600ML bottle (₹15, min 12), 1L bottle (₹20, min 6), and 20L jar (₹60, min 1).",
       hi:"TUSSAR प्राकृतिक झरनों से प्राप्त और सख्त मानकों के अनुसार शुद्ध किया गया पैकेज्ड ड्रिंकिंग वाटर है। हमारे पास 1L बोतल, 20L जार और 250ML बॉक्स पैक हैं।",
       or:"TUSSAR ପ୍ରାକୃତିକ ଝରଣାରୁ ଆସିଥିବା ଏବଂ କଠୋର ମାନ ଅନୁଯାୟୀ ଶୁଦ୍ଧ କରାଯାଇଥିବା ପ୍ୟାକେଜ୍ଡ ପାନୀୟ ଜଳ। 1L ବୋତଲ, 20L ଜାର ଏବଂ 250ML ବକ୍ସ ପ୍ୟାକ୍ ମିଳେ।"}},
   {k:{en:['price','cost','rate','how much','₹'],hi:['कीमत','दाम','रेट','कितना','मूल्य'],or:['ଦାମ','ମୂଲ୍ୟ','କେତେ','ରେଟ']},
@@ -1475,9 +1475,9 @@ function getCurrentLanguage(){
 function openWhatsAppOrder(product){
   const lang=getCurrentLanguage();
   const messages={
-    en:{general:"Hi TUSSAR, I'd like to place an order.",'1L':"Hi TUSSAR, I'd like to order 1L bottles.",'600ML':"Hi TUSSAR, I'd like to order 600ML bottles at ₹15 each.",'20L':"Hi TUSSAR, I'd like to order a 20L jar.",'250ML':"Hi TUSSAR, I'd like to order 250ML boxes."},
-    hi:{general:'नमस्ते TUSSAR, मुझे ऑर्डर करना है।','1L':'नमस्ते TUSSAR, मुझे 1L बोतलें ऑर्डर करनी हैं।','600ML':'नमस्ते TUSSAR, मुझे ₹15 प्रति बोतल की दर से 600ML बोतलें ऑर्डर करनी हैं।','20L':'नमस्ते TUSSAR, मुझे 20L जार ऑर्डर करना है।','250ML':'नमस्ते TUSSAR, मुझे 250ML बॉक्स ऑर्डर करने हैं।'},
-    or:{general:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','1L':'ନମସ୍କାର TUSSAR, ମୁଁ 1L ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','600ML':'ନମସ୍କାର TUSSAR, ପ୍ରତି ବୋତଲ ₹15 ଦରରେ 600ML ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','20L':'ନମସ୍କାର TUSSAR, ମୁଁ 20L ଜାର ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','250ML':'ନମସ୍କାର TUSSAR, ମୁଁ 250ML ବକ୍ସ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।'}
+    en:{general:"Hi TUSSAR, I'd like to place an order.",'1L':"Hi TUSSAR, I'd like to order 1L bottles.",'600ML':"Hi TUSSAR, I'd like to order 600ML bottles at ₹15 each.",'20L':"Hi TUSSAR, I'd like to order a 20L jar.",'250ML':"Hi TUSSAR, I'd like to order 250ML bottles (minimum 24 bottles, ₹200 per 24)."},
+    hi:{general:'नमस्ते TUSSAR, मुझे ऑर्डर करना है।','1L':'नमस्ते TUSSAR, मुझे 1L बोतलें ऑर्डर करनी हैं।','600ML':'नमस्ते TUSSAR, मुझे ₹15 प्रति बोतल की दर से 600ML बोतलें ऑर्डर करनी हैं।','20L':'नमस्ते TUSSAR, मुझे 20L जार ऑर्डर करना है।','250ML':'नमस्ते TUSSAR, मुझे 250ML बोतलें ऑर्डर करनी हैं (न्यूनतम 24 बोतलें)।'},
+    or:{general:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','1L':'ନମସ୍କାର TUSSAR, ମୁଁ 1L ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','600ML':'ନମସ୍କାର TUSSAR, ପ୍ରତି ବୋତଲ ₹15 ଦରରେ 600ML ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','20L':'ନମସ୍କାର TUSSAR, ମୁଁ 20L ଜାର ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','250ML':'ନମସ୍କାର TUSSAR, ମୁଁ 250ML ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି (ସର୍ବନିମ୍ନ 24 ବୋତଲ)।'}
   };
   const text=messages[lang][product||'general'];
   window.open('https://wa.me/919348585599?text='+encodeURIComponent(text),'_blank');
