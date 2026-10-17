@@ -483,6 +483,65 @@ a,button,.btn,.chip,.faq-q{cursor:url('data:image/svg+xml;utf8,<svg xmlns="http:
 @media(max-width:760px){.product-configurator{grid-template-columns:1fr;gap:1rem}.pc-preview{min-height:280px}.pc-bottle{height:275px;width:220px}.pc-bottle.jug{height:250px;width:270px}.pc-bottle.box{height:220px;width:220px}.pc-preview-caption{bottom:0}.pc-controls{padding-top:.6rem}}
 @media(prefers-reduced-motion:reduce){.pc-bottle,.pc-option{transition:none}}
 
+
+/* PRODUCT PAGE COMPACT REDESIGN */
+.products-intro, .product-intro { margin-bottom: 1rem; }
+.grid3{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:1rem;
+  margin-top:1.2rem;
+  align-items:stretch;
+}
+.grid3 .card{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  padding:1.1rem 1rem 1rem;
+  border-radius:12px;
+  box-shadow:0 4px 14px rgba(11,46,51,.05);
+}
+.grid3 .card .icon{
+  display:block;
+  width:100%;
+  height:112px;
+  margin:0 auto .7rem;
+  padding:.5rem;
+  background:rgba(18,73,83,.045);
+  border-radius:9px;
+}
+.grid3 .card h3{font-size:1.08rem;line-height:1.25;margin:.1rem 0}
+.grid3 .card .price{font-size:1.5rem;line-height:1.25;margin:.35rem 0 .5rem}
+.grid3 .card .price small{font-size:.78rem}
+.grid3 .card ul{font-size:.82rem;line-height:1.45;margin:.25rem 0 .9rem;padding-left:1rem;flex:1}
+.grid3 .card ul li{margin-bottom:.2rem}
+.grid3 .card .btn{padding:.7rem .8rem;font-size:.85rem;border-radius:6px}
+.grid3 .card.tint-blue{border-top:3px solid #3b8bb0}
+.grid3 .card.tint-green{border-top:3px solid #36856a}
+.grid3 .card.tint-gold{border-top:3px solid var(--gold)}
+.grid3 .card:nth-child(1) .icon{background:linear-gradient(145deg,#e9f4f7,#f7faf8)}
+.grid3 .card:nth-child(2) .icon{background:linear-gradient(145deg,#e8f4ed,#f7faf8)}
+.grid3 .card:nth-child(3) .icon{background:linear-gradient(145deg,#fbf0d8,#f7faf8)}
+.grid3 .card:nth-child(4) .icon{background:linear-gradient(145deg,#e8f4ed,#f7faf8)}
+/* Trim oversized section whitespace on this page */
+body:has(.grid3) .section{padding:2.5rem 0}
+body:has(.grid3) .section .wrap{padding-left:clamp(16px,3vw,36px);padding-right:clamp(16px,3vw,36px)}
+body:has(.grid3) .section h2{margin-bottom:.4rem}
+@media(max-width:900px){
+  .grid3{grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}
+  .grid3 .card{padding:.9rem}
+  .grid3 .card .icon{height:100px}
+}
+@media(max-width:520px){
+  .grid3{grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}
+  .grid3 .card{padding:.7rem;border-radius:9px}
+  .grid3 .card .icon{height:82px;padding:.3rem;margin-bottom:.5rem}
+  .grid3 .card h3{font-size:.95rem}
+  .grid3 .card .price{font-size:1.25rem}
+  .grid3 .card .price small{display:block;font-size:.7rem}
+  .grid3 .card ul{font-size:.74rem;padding-left:.9rem}
+  .grid3 .card .btn{font-size:.76rem;padding:.65rem .4rem}
+}
+
 </style>
 <style>
 body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform .42s ease}body.page-ready{opacity:1;transform:none}body.page-leaving{opacity:0;transform:translateY(-8px)}
@@ -663,7 +722,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
     <div class="grid3">
 
       <div class="card tint-blue">
-        <svg class="icon" viewBox="0 0 64 64"><path d="M24 8h16v10l6 6v28a4 4 0 0 1-4 4H22a4 4 0 0 1-4-4V24l6-6V8z" fill="none" stroke="#124953" stroke-width="2"/><path d="M20 30h24" stroke="#C6A15B" stroke-width="2"/></svg>
+        <svg class="icon" viewBox="0 0 100 120" role="img" aria-label="Tall 1 litre bottle"><rect x="39" y="8" width="22" height="12" rx="2" fill="#C6A15B"/><path d="M39 20h22v13l8 12v55a6 6 0 0 1-6 6H37a6 6 0 0 1-6-6V45l8-12z" fill="#d8eee7" stroke="#124953" stroke-width="3"/><rect x="31" y="59" width="38" height="24" rx="2" fill="#064b3b"/><path d="M36 65h28M36 71h20" stroke="#f4f5ed" stroke-width="2"/></svg>
         <h3>1L Bottle</h3>
         <div class="price">₹20 <small>/ bottle</small></div>
         <ul>
@@ -675,7 +734,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
       </div>
 
       <div class="card tint-green">
-        <svg class="icon" viewBox="0 0 64 64"><path d="M24 8h16v10l6 6v28a4 4 0 0 1-4 4H22a4 4 0 0 1-4-4V24l6-6V8z" fill="none" stroke="#124953" stroke-width="2"/><path d="M20 30h24" stroke="#C6A15B" stroke-width="2"/></svg>
+        <svg class="icon" viewBox="0 0 100 120" role="img" aria-label="Compact 600 millilitre bottle"><rect x="40" y="14" width="20" height="10" rx="2" fill="#C6A15B"/><path d="M40 24h20v12l7 10v48a6 6 0 0 1-6 6H39a6 6 0 0 1-6-6V46l7-10z" fill="#d8eee7" stroke="#124953" stroke-width="3"/><rect x="33" y="58" width="34" height="21" rx="2" fill="#237d63"/><path d="M38 64h24M38 70h17" stroke="#fff" stroke-width="2"/></svg>
         <h3>600ML Bottle</h3>
         <div class="price">₹15 <small>/ bottle</small></div>
         <ul>
@@ -687,7 +746,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
       </div>
 
       <div class="card tint-gold">
-        <svg class="icon" viewBox="0 0 64 64"><path d="M18 14h28v6l4 4v30a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4V24l4-4v-6z" fill="none" stroke="#124953" stroke-width="2"/><path d="M14 26h36" stroke="#C6A15B" stroke-width="2"/></svg>
+        <svg class="icon" viewBox="0 0 100 120" role="img" aria-label="20 litre water jar"><path d="M35 9h30v12l8 7 5 13v57a8 8 0 0 1-8 8H30a8 8 0 0 1-8-8V41l5-13 8-7z" fill="#d8eee7" stroke="#124953" stroke-width="3"/><rect x="33" y="8" width="34" height="13" rx="3" fill="#C6A15B"/><rect x="23" y="53" width="54" height="29" rx="3" fill="#064b3b"/><path d="M30 61h40M30 69h31" stroke="#f4f5ed" stroke-width="2"/></svg>
         <h3>20L Jar</h3>
         <div class="price">₹60 <small>/ jar</small></div>
         <ul>
@@ -699,7 +758,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
       </div>
 
       <div class="card tint-green">
-        <svg class="icon" viewBox="0 0 64 64" role="img" aria-label="250ML bottle"><path d="M25 7h14v9l5 6v29a5 5 0 0 1-5 5H25a5 5 0 0 1-5-5V22l5-6V7z" fill="none" stroke="#124953" stroke-width="2"/><path d="M20 31h24M20 40h24" stroke="#C6A15B" stroke-width="1.6"/></svg>
+        <svg class="icon" viewBox="0 0 100 120" role="img" aria-label="Box of 24 small 250 millilitre bottles"><rect x="13" y="37" width="74" height="61" rx="5" fill="#d8eee7" stroke="#124953" stroke-width="3"/><path d="M13 51h74" stroke="#124953" stroke-width="2"/><g fill="#237d63" stroke="#124953" stroke-width="1.5"><path d="M22 22h8v8l3 4v28h-14V34l3-4z"/><path d="M42 22h8v8l3 4v28H39V34l3-4z"/><path d="M62 22h8v8l3 4v28H59V34l3-4z"/></g><g fill="#C6A15B"><rect x="23" y="18" width="6" height="5" rx="1"/><rect x="43" y="18" width="6" height="5" rx="1"/><rect x="63" y="18" width="6" height="5" rx="1"/></g><text x="50" y="83" text-anchor="middle" font-size="11" font-family="Arial" font-weight="700" fill="#064b3b">24 PACK</text></svg>
         <h3>250ML Bottle Box</h3>
         <div class="price">₹200 <small>/ box of 24</small></div>
         <ul>
