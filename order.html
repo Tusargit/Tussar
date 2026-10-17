@@ -523,12 +523,12 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
           <label>Product</label>
           <select id="oProduct" onchange="calcTotal()" required>
             <option value="250ML" data-price="8.333333333333334">250ML Bottle — ₹8.33 each (min 24)</option>
-            <option value="600ML" data-price="15">600ML Bottle — ₹15 (min 12)</option>
+            <option value="600ML" data-price="15" selected>600ML Bottle — ₹15 (min 12)</option>
             <option value="1L" data-price="20">1L Bottle — ₹20 (min 6)</option>
             <option value="20L" data-price="60">20L Jar — ₹60 (min 1)</option>
           </select>
         </div>
-        <div><label>Quantity</label><input id="oQty" type="number" min="12" value="12" step="1" inputmode="numeric" onchange="calcTotal()">
+        <div><label>Quantity</label><input id="oQty" type="number" min="12" value="12" step="1" inputmode="numeric" oninput="calcTotal()">
           <small id="oQtyHint">Minimum order: 12 bottles</small></div>
         <div><label>Preferred weekly refill day (optional)</label>
           <select id="oDay"><option value="">No fixed schedule</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select>
@@ -664,6 +664,7 @@ function generateOrderId(){
 }
 function sendOrder(e){
   e.preventDefault();
+  calcTotal();
   const name=document.getElementById('oName').value;
   const phone=document.getElementById('oPhone').value;
   const sel=document.getElementById('oProduct');
@@ -893,7 +894,7 @@ function parseOrderRequest(text){
   return {product,qty:qty||null};
 }
 function productLabel(product,lang){
-  const labels={en:{'600ML':'600ML bottle','1L':'1L bottle','20L':'20L jar','250ML':'250ML box'},hi:{'600ML':'600ML बोतल','1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},or:{'600ML':'600ML ବୋତଲ','1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}};
+  const labels={en:{'600ML':'600ML bottle','1L':'1L bottle','20L':'20L jar','250ML':'250ML bottle'},hi:{'600ML':'600ML बोतल','1L':'1L बोतल','20L':'20L जार','250ML':'250ML बोतल'},or:{'600ML':'600ML ବୋତଲ','1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବୋତଲ'}};
   return labels[lang]?.[product]||labels.en[product];
 }
 function prepareOrderFromRequest(text){
@@ -1187,7 +1188,7 @@ function getCurrentLanguage(){
 function openWhatsAppOrder(product){
   const lang=getCurrentLanguage();
   const messages={
-    en:{general:"Hi TUSSAR, I'd like to place an order.",'600ML':"Hi TUSSAR, I'd like to order 600ML bottles.",'1L':"Hi TUSSAR, I'd like to order 1L bottles.",'20L':"Hi TUSSAR, I'd like to order a 20L jar.",'250ML':"Hi TUSSAR, I'd like to order 250ML bottles (minimum 24 bottles, ₹200 per 24)."},
+    en:{general:"Hi TUSSAR, I'd like to place an order.",'600ML':"Hi TUSSAR, I'd like to order 600ML bottles at ₹15 each (minimum 12 bottles).",'1L':"Hi TUSSAR, I'd like to order 1L bottles (minimum 6 bottles, ₹20 each).",'20L':"Hi TUSSAR, I'd like to order a 20L jar at ₹60 (minimum 1 jar).",'250ML':"Hi TUSSAR, I'd like to order 250ML bottles (minimum 24 bottles, ₹200 per 24)."},
     hi:{general:'नमस्ते TUSSAR, मुझे ऑर्डर करना है।','600ML':'नमस्ते TUSSAR, मुझे 600ML बोतलें ऑर्डर करनी हैं।','1L':'नमस्ते TUSSAR, मुझे 1L बोतलें ऑर्डर करनी हैं।','20L':'नमस्ते TUSSAR, मुझे 20L जार ऑर्डर करना है।','250ML':'नमस्ते TUSSAR, मुझे 250ML बोतलें ऑर्डर करनी हैं (न्यूनतम 24 बोतलें)।'},
     or:{general:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','600ML':'ନମସ୍କାର TUSSAR, ମୁଁ 600ML ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','1L':'ନମସ୍କାର TUSSAR, ମୁଁ 1L ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','20L':'ନମସ୍କାର TUSSAR, ମୁଁ 20L ଜାର ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','250ML':'ନମସ୍କାର TUSSAR, ମୁଁ 250ML ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି (ସର୍ବନିମ୍ନ 24 ବୋତଲ)।'}
   };
