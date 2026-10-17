@@ -719,9 +719,9 @@ function sendOrderByEmail(){
   const orderId=generateOrderId();
   try{localStorage.setItem('tussar_current_order_id',orderId);}catch(e){}
   const productNames={
-    en:{'1L':'1L Bottle','20L':'20L Jar','250ML':'250ML Box'},
-    hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},
-    or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}
+    en:{'600ML':'600ML Bottle','1L':'1L Bottle','20L':'20L Jar','250ML':'250ML Box'},
+    hi:{'600ML':'600ML बोतल','1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},
+    or:{'600ML':'600ML ବୋତଲ','1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}
   };
   const labels={
     en:{subject:'TUSSAR Water Order',intro:"I'd like to place an order.",name:'Name',phone:'Phone',product:'Product',qty:'Quantity',total:'Total',day:'Preferred day',address:'Delivery address'},
@@ -871,6 +871,7 @@ function parseOrderRequest(text){
   const t=String(text||'').toLowerCase();
   let product=null;
   if(/250\s*ml|250ml|box|boxes|ବକ୍ସ|बॉक्स/.test(t)) product='250ML';
+  else if(/600\s*ml|600ml/.test(t)) product='600ML';
   else if(/20\s*l|20l|20\s*litre|20\s*liter|jar|जार|ଜାର/.test(t)) product='20L';
   else if(/1\s*l|1l|1\s*litre|1\s*liter|bottle|बोतल|ବୋତଲ/.test(t)) product='1L';
   const digit=t.match(/(?:^|\D)(\d{1,3})(?:\D|$)/);
@@ -1175,9 +1176,9 @@ function getCurrentLanguage(){
 function openWhatsAppOrder(product){
   const lang=getCurrentLanguage();
   const messages={
-    en:{general:"Hi TUSSAR, I'd like to place an order.",'1L':"Hi TUSSAR, I'd like to order 1L bottles.",'20L':"Hi TUSSAR, I'd like to order a 20L jar.",'250ML':"Hi TUSSAR, I'd like to order 250ML boxes."},
-    hi:{general:'नमस्ते TUSSAR, मुझे ऑर्डर करना है।','1L':'नमस्ते TUSSAR, मुझे 1L बोतलें ऑर्डर करनी हैं।','20L':'नमस्ते TUSSAR, मुझे 20L जार ऑर्डर करना है।','250ML':'नमस्ते TUSSAR, मुझे 250ML बॉक्स ऑर्डर करने हैं।'},
-    or:{general:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','1L':'ନମସ୍କାର TUSSAR, ମୁଁ 1L ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','20L':'ନମସ୍କାର TUSSAR, ମୁଁ 20L ଜାର ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','250ML':'ନମସ୍କାର TUSSAR, ମୁଁ 250ML ବକ୍ସ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।'}
+    en:{general:"Hi TUSSAR, I'd like to place an order.",'600ML':"Hi TUSSAR, I'd like to order 600ML bottles.",'1L':"Hi TUSSAR, I'd like to order 1L bottles.",'20L':"Hi TUSSAR, I'd like to order a 20L jar.",'250ML':"Hi TUSSAR, I'd like to order 250ML boxes."},
+    hi:{general:'नमस्ते TUSSAR, मुझे ऑर्डर करना है।','600ML':'नमस्ते TUSSAR, मुझे 600ML बोतलें ऑर्डर करनी हैं।','1L':'नमस्ते TUSSAR, मुझे 1L बोतलें ऑर्डर करनी हैं।','20L':'नमस्ते TUSSAR, मुझे 20L जार ऑर्डर करना है।','250ML':'नमस्ते TUSSAR, मुझे 250ML बॉक्स ऑर्डर करने हैं।'},
+    or:{general:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','600ML':'ନମସ୍କାର TUSSAR, ମୁଁ 600ML ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','1L':'ନମସ୍କାର TUSSAR, ମୁଁ 1L ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','20L':'ନମସ୍କାର TUSSAR, ମୁଁ 20L ଜାର ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','250ML':'ନମସ୍କାର TUSSAR, ମୁଁ 250ML ବକ୍ସ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।'}
   };
   const text=messages[lang][product||'general'];
   window.open('https://wa.me/919348585599?text='+encodeURIComponent(text),'_blank');
