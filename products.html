@@ -211,6 +211,8 @@ footer span{color:var(--gold)}
 .chat-head span{display:block;font-size:.78rem;color:#a9c2bc}
 .chat-icon-btn{border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;border-radius:50%;width:32px;height:32px;cursor:pointer}
 .chat-icon-btn.active{background:var(--gold);color:var(--deep)}
+.chat-close-btn{font-size:1.5rem;line-height:1;color:#fff;background:rgba(255,255,255,.08)}
+.chat-close-btn:hover{background:var(--gold);color:var(--deep)}
 .chat-languages{display:flex;gap:.35rem;margin-top:.55rem}
 .chat-lang{border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;padding:.25rem .5rem;border-radius:14px;font-size:.7rem;cursor:pointer}
 .chat-lang.active{background:var(--gold);border-color:var(--gold);color:var(--deep)}
@@ -812,7 +814,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
   <div class="chat-head">
     <div class="chat-head-row">
       <b id="chatTitle">TUSSAR Assistant</b>
-      <button id="chatSpeakToggle" class="chat-icon-btn" type="button" title="Voice replies" aria-label="Toggle voice replies">🔊</button>
+      <div style="display:flex;align-items:center;gap:.4rem"><button id="chatSpeakToggle" class="chat-icon-btn" type="button" title="Voice replies" aria-label="Toggle voice replies">🔊</button><button id="chatClose" class="chat-icon-btn chat-close-btn" type="button" title="Close chat" aria-label="Close chatbot">×</button></div>
     </div>
     <span id="chatSubtitle">Ask in English, Hindi or Odia — type or speak.</span>
     <div class="chat-languages" role="group" aria-label="Chat language">
@@ -841,6 +843,8 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
     const isOpen=panel.classList.toggle('open');
     button.setAttribute('aria-expanded',String(isOpen));
   });
+  const closeButton=document.getElementById('chatClose');
+  if(closeButton){closeButton.addEventListener('click',function(){panel.classList.remove('open');button.setAttribute('aria-expanded','false');button.focus();});}
   document.addEventListener('keydown',function(event){
     if(event.key==='Escape'&&panel.classList.contains('open')){
       panel.classList.remove('open');button.setAttribute('aria-expanded','false');
@@ -856,7 +860,7 @@ try {
   const root=document.getElementById('tussarConfigurator');
   if(!root)return;
   const catalog={
-    '250ML':{name:'250ML bottle',unit:'bottles',price:200/24,min:24,shape:'bottle',caption:'250ML bottle'},
+    '250ML':{name:'250ML bottle box (24 bottles)',unit:'boxes',price:200,min:1,shape:'box',caption:'250ML bottle box (24 bottles)'},
     '600ML':{name:'600ML bottle',unit:'bottles',price:15,min:12,shape:'bottle',caption:'600ML bottle'},
     '1L':{name:'1L bottle',unit:'bottles',price:20,min:6,shape:'bottle',caption:'1L bottle'},
     '20L':{name:'20L jar',unit:'jars',price:60,min:1,shape:'jug',caption:'20L jar'}
@@ -865,7 +869,7 @@ try {
     green:{name:'Bottle green',hex:'#064b3b',text:'#ffffff'},
     white:{name:'Ivory / white',hex:'#f4f5ed',text:'#123d2a'}
   };
-  let product='1L',colour='green',wrapStyle='full',qty=1,distanceZone='0-5',fulfilment='delivery';
+  let product='1L',colour='green',wrapStyle='full',qty=6,distanceZone='0-5',fulfilment='delivery';
   const qtyOut=root.querySelector('#pcQty'),totalOut=root.querySelector('#pcTotal');
   const priceEach=root.querySelector('#pcPriceEach'),unitText=root.querySelector('#pcUnitText');
   const minNote=root.querySelector('#pcMinimumNote'),caption=root.querySelector('#pcPreviewCaption');
@@ -879,8 +883,10 @@ try {
   }
   function renderShape(){
     const item=catalog[product];
-    bottle.className='pc-bottle'+(item.shape==='jug'?' jug':(product==='250ML'||product==='600ML')?' small-bottle':'');
-    if(item.shape==='jug'){
+    bottle.className='pc-bottle'+(item.shape==='jug'?' jug':item.shape==='box'?' pack':product==='600ML'?' small-bottle':'');
+    if(item.shape==='box'){
+      bottle.innerHTML='<svg viewBox="0 0 300 300" role="img" aria-label="Box of 24 TUSSAR 250 millilitre bottles"><rect x="35" y="108" width="230" height="145" rx="12" fill="#d8eee7" stroke="#124953" stroke-width="4"/><path d="M35 142h230" stroke="#124953" stroke-width="3"/><g fill="#237d63" stroke="#124953" stroke-width="2"><path d="M65 55h22v18l8 13v66H57V86l8-13z"/><path d="M112 55h22v18l8 13v66h-38V86l8-13z"/><path d="M159 55h22v18l8 13v66h-38V86l8-13z"/><path d="M206 55h22v18l8 13v66h-38V86l8-13z"/></g><g fill="#C6A15B"><rect x="67" y="47" width="18" height="9" rx="2"/><rect x="114" y="47" width="18" height="9" rx="2"/><rect x="161" y="47" width="18" height="9" rx="2"/><rect x="208" y="47" width="18" height="9" rx="2"/></g><text x="150" y="195" text-anchor="middle" font-size="24" font-weight="700" fill="#064b3b">TUSSAR</text><text x="150" y="225" text-anchor="middle" font-size="17" fill="#064b3b">24 BOTTLES</text></svg>';
+    }else if(item.shape==='jug'){
       bottle.innerHTML='<svg viewBox="0 0 300 300" role="img" aria-label="TUSSAR 20 litre jar preview"><defs><linearGradient id="pcJugGlass" x1="0" x2="1"><stop offset="0" stop-color="#c9e9e5" stop-opacity=".45"/><stop offset=".45" stop-color="#fff" stop-opacity=".8"/><stop offset="1" stop-color="#9bcfc7" stop-opacity=".55"/></linearGradient></defs><ellipse cx="150" cy="280" rx="100" ry="10" fill="#000" opacity=".17"/><rect x="124" y="16" width="52" height="26" rx="5" fill="#123d2a" stroke="#d6b96f" stroke-width="2"/><path d="M126 40 L174 40 L174 53 Q192 58 208 79 Q226 101 226 125 L226 242 Q226 267 200 271 L100 271 Q74 267 74 242 L74 125 Q74 101 92 79 Q108 58 126 53 Z" fill="url(#pcJugGlass)" stroke="#d5f0e8" stroke-width="2"/><path d="M82 145 Q150 154 218 145 L218 242 Q218 261 198 264 L102 264 Q82 261 82 242 Z" fill="#d9f4ef" opacity=".42"/><path class="pc-label-shape" d="M82 155 Q150 164 218 155 L218 215 Q150 224 82 215 Z" fill="'+colours[colour].hex+'" stroke="#d6b96f" stroke-width="2"/><text x="150" y="182" text-anchor="middle" font-family="Georgia,serif" font-size="23" font-weight="bold" fill="'+colours[colour].text+'">TUSSAR</text><text x="150" y="198" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" letter-spacing="1.5" fill="'+colours[colour].text+'">MINERAL WATER</text><path d="M97 84 Q107 63 125 55" stroke="#fff" stroke-opacity=".7" stroke-width="4" fill="none" stroke-linecap="round"/></svg>';
     }else if(item.shape==='box'){
       bottle.innerHTML='<svg viewBox="0 0 260 260" role="img" aria-label="TUSSAR 250 millilitre box pack preview"><defs><linearGradient id="pcBoxGlass" x1="0" x2="1"><stop offset="0" stop-color="#d9f1ed"/><stop offset=".5" stop-color="#fff"/><stop offset="1" stop-color="#b7ddd5"/></linearGradient></defs><ellipse cx="130" cy="238" rx="78" ry="8" fill="#000" opacity=".15"/><path d="M70 45 L190 45 L206 66 L206 220 Q206 230 196 230 L64 230 Q54 230 54 220 L54 66 Z" fill="url(#pcBoxGlass)" stroke="#d5f0e8" stroke-width="2"/><path d="M70 45 L130 67 L190 45" fill="none" stroke="#d5f0e8" stroke-width="2"/><path class="pc-label-shape" d="M54 112 L206 112 L206 177 L54 177 Z" fill="'+colours[colour].hex+'" stroke="#d6b96f" stroke-width="2"/><text x="130" y="139" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="bold" fill="'+colours[colour].text+'">TUSSAR</text><text x="130" y="155" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" letter-spacing="1.2" fill="'+colours[colour].text+'">250ML · PACK OF 24</text><path d="M69 80 L69 103" stroke="#fff" stroke-width="4" stroke-opacity=".7" stroke-linecap="round"/></svg>';
@@ -929,7 +935,7 @@ try {
     qty=Math.max(minQty,Math.floor(Number(qty)||minQty));
     qtyOut.textContent=qty;
     totalOut.textContent=item.price==null?'Confirm price':money(item.price*qty);
-    priceEach.textContent=item.price==null?'Price to be confirmed':(product==='250ML'?'₹8.33 per bottle':money(item.price)+' per '+(product==='20L'?'jar':'bottle'));
+    priceEach.textContent=item.price==null?'Price to be confirmed':money(item.price)+' per '+(product==='250ML'?'box of 24 bottles':product==='20L'?'jar':'bottle');
     unitText.textContent='('+item.unit+')';
     minNote.textContent='Minimum order: '+minQty+' '+item.unit+(fulfilment==='pickup'?' (factory pickup)':'');
     const note=root.querySelector('#pcDeliveryNote');
