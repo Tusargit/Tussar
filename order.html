@@ -1150,7 +1150,7 @@ function checkPincode(){
   if(eta)eta.classList.remove('show');
   if(!/^\d{6}$/.test(val)){out.textContent='Enter a valid 6-digit pincode.';return;}
   if(DELIVERY_PINCODES.includes(val)){
-    out.textContent='Good news — we deliver to your area. Place your order above.';
+    out.textContent='Your pincode is in our current coverage list. Delivery still depends on distance, minimum quantity and a planned route; TUSSAR will confirm the route day and any charge.';
     showDeliveryEta(val);
   }else{
     out.textContent="We're not listed there yet — message us on WhatsApp and we'll confirm.";
