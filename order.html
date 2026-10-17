@@ -549,7 +549,8 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
 <div class="delivery-base">Factory: <strong>X2W5+9P5, Kusupur, Odisha 752110</strong> · <a href="https://www.google.com/maps/search/?api=1&query=X2W5%2B9P5%2C%20Kusupur%2C%20Odisha%20752110" target="_blank" rel="noopener">Open in Maps</a></div>
 <div class="delivery-breakdown">Product subtotal: ₹<span id="oSubtotal">180</span> · Delivery charge: <span id="deliveryFee">Confirmed separately</span></div>
 <div class="total-row">Total: ₹<span id="oTotal">20</span></div>
-        <div><label>Delivery address</label><textarea id="oAddr" rows="2" required></textarea></div>
+        <div><label for="oArea">Delivery area / village / locality</label><input id="oArea" required maxlength="120" placeholder="e.g. Kusupur, market area or nearby village"></div>
+        <div><label>Full delivery address</label><textarea id="oAddr" rows="2" required></textarea></div>
         <div class="order-actions">
   <button class="btn btn-gold" type="submit">📦 Submit & Place Order</button>
   <button class="btn btn-mail" type="button" onclick="sendOrderByEmail()">✉️ Order by Email</button>
@@ -693,6 +694,8 @@ function sendOrder(e){
   const fulfilment=getFulfilment();
   const minimum=getEffectiveMinimumOrder(product);
   const addr=document.getElementById('oAddr').value;
+  const area=document.getElementById('oArea').value.trim();
+  const subtotal=Number(document.getElementById('oSubtotal').textContent)||0;
   const total=document.getElementById('oTotal').textContent;
   const lang=getCurrentLanguage();
   const productNames={
@@ -706,10 +709,11 @@ function sendOrder(e){
     or:{intro:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।',name:'ନାମ',phone:'ଫୋନ୍',product:'ଉତ୍ପାଦ',qty:'ପରିମାଣ',total:'ମୋଟ',day:'ପସନ୍ଦର ଦିନ',address:'ଠିକଣା'}
   }[lang];
   const displayProduct=productNames[lang][product];
-  const order={name,phone,product,qty,addr,day,distance,fulfilment,lang};
+  const order={name,phone,product,qty,addr,area,day,distance,fulfilment,lang};
   try{localStorage.setItem('tussar_last_order',JSON.stringify(order));}catch(err){}
   const lines=[labels.intro,`${labels.name}: ${name}`,`${labels.phone}: ${phone}`,`${labels.product}: ${displayProduct}`,`${labels.qty}: ${qty}`,`${labels.total}: ₹${total} (delivery charge, if any, confirmed separately)`];
   if(day)lines.push(`${labels.day}: ${day}`);
+  lines.push('Delivery area / village: '+area);
   lines.push('Approx. factory distance: '+({'0-5':'0–5 km','5-10':'5–10 km','10-20':'10–20 km','20-plus':'Over 20 km'}[distance]));
   lines.push('Fulfilment: '+(fulfilment==='pickup'?'Factory pickup':'Delivery / planned route'));
   lines.push('Minimum quantity applied: '+minimum);
@@ -719,6 +723,10 @@ function sendOrder(e){
   lines.unshift('Order ID: '+orderId);
   attachOrderToCustomer({id:orderId,product,qty:Number(qty)||1,total,date:new Date().toLocaleString('en-IN')});
   try{localStorage.setItem('tussar_current_order_id',orderId);}catch(err){}
+  if(typeof window.saveTussarRouteRequest==='function'){
+    window.saveTussarRouteRequest({order_code:orderId,customer_name:name,phone:phone,product:product,quantity:qty,subtotal:subtotal,preferred_day:day,distance_band:distance,fulfilment:fulfilment,area:area,address:addr})
+      .then(function(result){if(!result.saved)console.warn('Order sent to WhatsApp but not stored in the shared route dashboard.',result.reason);});
+  }
   window.open('https://wa.me/919348585599?text='+encodeURIComponent(lines.join('\\n')),'_blank');
   document.getElementById('rcpDate').textContent=new Date().toLocaleString();
   document.getElementById('rcpBody').innerHTML=`${labels.name}: ${name}<br>${labels.phone}: ${phone}<br>${labels.product}: ${displayProduct}<br>${labels.qty}: ${qty}<br>${labels.total}: ₹${total}<br>Distance: ${({'0-5':'0–5 km','5-10':'5–10 km','10-20':'10–20 km','20-plus':'Over 20 km'}[distance])}<br>Fulfilment: ${fulfilment==='pickup'?'Factory pickup':'Delivery / planned route'}<br>${day?`${labels.day}: ${day}<br>`:''}${labels.address}: ${addr}`;
@@ -736,6 +744,7 @@ function repeatOrder(){
     if(document.getElementById('oDistance'))document.getElementById('oDistance').value=o.distance||'0-5';
     if(document.getElementById('oFulfilment'))document.getElementById('oFulfilment').value=o.fulfilment||'delivery';
     document.getElementById('oAddr').value=o.addr||'';
+    if(document.getElementById('oArea'))document.getElementById('oArea').value=o.area||'';
     calcTotal();
   }catch(e){}
 }
@@ -1391,7 +1400,7 @@ function attachOrderToCustomer(order){
 })();
 
 </script>
-<script>(function(){const p=(location.pathname.split('/').pop()||'index.html').toLowerCase();const m={'index.html':'home','about.html':'about','products.html':'products','process.html':'process','reviews.html':'reviews','track.html':'track','order.html':'order'};const c=m[p]||'home';document.addEventListener('DOMContentLoaded',()=>{document.body.classList.add('page-ready');document.querySelectorAll('.nav-links a[data-page]').forEach(a=>{if(a.dataset.page===c)a.classList.add('active');a.addEventListener('click',e=>{e.preventDefault();document.body.classList.add('page-leaving');setTimeout(()=>location.href=a.href,220)})})})})();</script></body>
+<script>(function(){const p=(location.pathname.split('/').pop()||'index.html').toLowerCase();const m={'index.html':'home','about.html':'about','products.html':'products','process.html':'process','reviews.html':'reviews','track.html':'track','order.html':'order'};const c=m[p]||'home';document.addEventListener('DOMContentLoaded',()=>{document.body.classList.add('page-ready');document.querySelectorAll('.nav-links a[data-page]').forEach(a=>{if(a.dataset.page===c)a.classList.add('active');a.addEventListener('click',e=>{e.preventDefault();document.body.classList.add('page-leaving');setTimeout(()=>location.href=a.href,220)})})})})();</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="route-booking.js"></script></body>
 </html>
 <style>.hero.language-updated .wrap>div:first-child>*{animation:languageRefresh .6s ease both}
 @keyframes languageRefresh{
