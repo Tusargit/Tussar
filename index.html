@@ -714,9 +714,9 @@ function sendOrderByEmail(){
   const orderId=generateOrderId();
   try{localStorage.setItem('tussar_current_order_id',orderId);}catch(e){}
   const productNames={
-    en:{'1L':'1L Bottle','20L':'20L Jar','250ML':'250ML Box'},
-    hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},
-    or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}
+    en:{'250ML':'250ML Bottle','600ML':'600ML Bottle','1L':'1L Bottle','20L':'20L Jar'},
+    hi:{'250ML':'250ML बोतल','600ML':'600ML बोतल','1L':'1L बोतल','20L':'20L जार'},
+    or:{'250ML':'250ML ବୋତଲ','600ML':'600ML ବୋତଲ','1L':'1L ବୋତଲ','20L':'20L ଜାର'}
   };
   const labels={
     en:{subject:'TUSSAR Water Order',intro:"I'd like to place an order.",name:'Name',phone:'Phone',product:'Product',qty:'Quantity',total:'Total',day:'Preferred day',address:'Delivery address'},
