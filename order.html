@@ -6,7 +6,7 @@
 <title>Place an Order — TUSSAR</title>
 <meta name="description" content="TUSSAR packaged drinking water — 1L bottles, 20L jars and 250ML box packs, sourced from natural springs and delivered fresh across your area. Order on WhatsApp." />
 <meta property="og:title" content="TUSSAR — Water From the Source" />
-<meta property="og:description" content="Pure, spring-sourced packaged drinking water, delivered fresh. 1L bottles ₹20, 20L jars ₹60, 250ML box packs ₹200." />
+<meta property="og:description" content="TUSSAR packaged drinking water. 600ML bottles ₹15, 1L bottles ₹20, 20L jars ₹60 and 250ML box packs ₹200." />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="TUSSAR — Water From the Source" />
@@ -522,6 +522,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
         <div>
           <label>Product</label>
           <select id="oProduct" onchange="calcTotal()" required>
+            <option value="600ML" data-price="15">600ML Bottle — ₹15</option>
             <option value="1L" data-price="20">1L Bottle — ₹20</option>
             <option value="20L" data-price="60">20L Jar — ₹60</option>
             <option value="250ML" data-price="200">250ML Box (min 2) — ₹200</option>
@@ -662,9 +663,9 @@ function sendOrder(e){
   const total=document.getElementById('oTotal').textContent;
   const lang=getCurrentLanguage();
   const productNames={
-    en:{'1L':'1L Bottle','20L':'20L Jar','250ML':'250ML Box'},
-    hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},
-    or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}
+    en:{'600ML':'600ML Bottle','1L':'1L Bottle','20L':'20L Jar','250ML':'250ML Box'},
+    hi:{'600ML':'600ML बोतल','1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},
+    or:{'600ML':'600ML ବୋତଲ','1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}
   };
   const labels={
     en:{intro:"Hi TUSSAR, I'd like to place an order.",name:'Name',phone:'Phone',product:'Product',qty:'Quantity',total:'Total',day:'Preferred day',address:'Address'},
@@ -880,7 +881,7 @@ function parseOrderRequest(text){
   return {product,qty:qty||null};
 }
 function productLabel(product,lang){
-  const labels={en:{'1L':'1L bottle','20L':'20L jar','250ML':'250ML box'},hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}};
+  const labels={en:{'600ML':'600ML bottle','1L':'1L bottle','20L':'20L jar','250ML':'250ML box'},hi:{'600ML':'600ML बोतल','1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},or:{'600ML':'600ML ବୋତଲ','1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}};
   return labels[lang]?.[product]||labels.en[product];
 }
 function prepareOrderFromRequest(text){
