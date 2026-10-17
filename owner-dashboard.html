@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TUSSAR | Owner Route Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<style>
+:root{--deep:#0b2e33;--teal:#124953;--mist:#eff5f2;--paper:#f7faf8;--gold:#c6a15b;--ink:#102b29;--line:#dbe5df}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 "Work Sans",sans-serif}
+header{background:var(--deep);color:#fff;padding:22px max(20px,calc((100vw - 1160px)/2));display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{font:500 25px Fraunces,serif;letter-spacing:.05em}.brand span{color:var(--gold)}header a{color:#fff;text-decoration:none}
+main{max-width:1160px;margin:28px auto;padding:0 20px}.eyebrow{text-transform:uppercase;letter-spacing:.15em;font-size:11px;font-weight:700;color:#56756d}
+h1,h2{font-family:Fraunces,serif;font-weight:500;color:var(--deep)}h1{font-size:clamp(30px,4vw,44px);margin:5px 0}h2{font-size:24px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin:18px 0;box-shadow:0 8px 28px #0b2e3308}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:end}.field{display:grid;gap:6px;flex:1;min-width:200px}label{font-size:13px;font-weight:600}
+input,select{font:inherit;border:1px solid #c7d5cf;border-radius:8px;padding:12px;background:#fff;width:100%}
+button,.btn{font:600 14px "Work Sans",sans-serif;border:0;border-radius:8px;background:var(--deep);color:#fff;padding:12px 16px;cursor:pointer;text-decoration:none;display:inline-block}
+button.secondary{background:#edf4f0;color:var(--deep);border:1px solid var(--line)}button:disabled{opacity:.55;cursor:wait}
+.status{padding:12px 14px;border-radius:8px;background:#edf4f0;margin:12px 0}.status.error{background:#fff0ec;color:#8d2e1b}.status.success{background:#e5f6ea;color:#185b34}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px}.metric{border:1px solid var(--line);border-radius:10px;padding:16px}.metric strong{font:500 30px Fraunces,serif;display:block;color:var(--deep)}.metric small{color:#58716b}
+table{width:100%;border-collapse:collapse;min-width:850px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:12px;color:#58716b;text-transform:uppercase;letter-spacing:.06em}
+.table-wrap{overflow:auto}td select{min-width:145px;padding:8px}.muted{color:#627873;font-size:13px}.hidden{display:none!important}
+@media(max-width:600px){.panel{padding:15px}header{padding:18px 20px}}
+</style>
+</head>
+<body>
+<header><a class="brand" href="index.html">TUSSAR<span>.</span></a><a href="order.html">← Back to orders</a></header>
+<main>
+<p class="eyebrow">Private operations</p><h1>Route & order dashboard</h1>
+<p class="muted">Review incoming requests, group delivery demand by area and preferred weekday, and confirm routes manually. A preferred day is a request—not a confirmed delivery promise.</p>
+<div id="status" class="status">Checking backend configuration…</div>
+<section id="authPanel" class="panel">
+<h2>Owner sign in</h2><p class="muted">Use the owner account created in Supabase Authentication. Customer accounts cannot view the dashboard unless explicitly added as an owner.</p>
+<form id="loginForm" class="row"><div class="field"><label for="email">Owner email</label><input id="email" type="email" required autocomplete="username"></div><div class="field"><label for="password">Password</label><input id="password" type="password" required autocomplete="current-password"></div><button id="loginBtn">Sign in</button></form>
+<button id="logoutBtn" class="secondary hidden" type="button">Sign out</button>
+</section>
+<section id="dashboard" class="hidden">
+<div class="cards"><div class="metric"><strong id="totalOrders">0</strong><small>Open requests</small></div><div class="metric"><strong id="routeCount">0</strong><small>Area / day groups</small></div><div class="metric"><strong id="unitsTotal">0</strong><small>Requested units</small></div><div class="metric"><strong id="newCount">0</strong><small>New requests</small></div></div>
+<section class="panel"><div class="row" style="justify-content:space-between"><div><p class="eyebrow">Route planning</p><h2>Demand by area & weekday</h2></div><button id="refreshBtn" class="secondary" type="button">Refresh data</button></div><p class="muted">Groups are based on the area customers enter. Review map/direction manually before combining areas into a route.</p><div class="table-wrap"><table><thead><tr><th>Area</th><th>Preferred day</th><th>Distance</th><th>Orders</th><th>Total units</th><th>Subtotal</th></tr></thead><tbody id="demandRows"><tr><td colspan="6">Loading…</td></tr></tbody></table></div></section>
+<section class="panel"><p class="eyebrow">Order management</p><h2>Incoming orders</h2><div class="table-wrap"><table><thead><tr><th>Received</th><th>Order code</th><th>Customer</th><th>Phone</th><th>Product × qty</th><th>Area / distance</th><th>Preferred day</th><th>Status</th></tr></thead><tbody id="orderRows"><tr><td colspan="8">Loading…</td></tr></tbody></table></div></section>
+</section>
+</main>
+<script>
+(function(){
+ const cfg=window.TUSSAR_BACKEND||{};
+ const configured=typeof window.supabase!=='undefined' && /^https:\/\//.test(cfg.supabaseUrl||'') && cfg.supabaseAnonKey && !String(cfg.supabaseAnonKey).startsWith('PASTE_');
+ const statusEl=document.getElementById('status'), auth=document.getElementById('authPanel'), dashboard=document.getElementById('dashboard');
+ if(!configured){statusEl.className='status error';statusEl.textContent='Backend not connected yet. Follow SUPABASE_SETUP.md and add the project URL + anon public key to supabase-config.js. The public WhatsApp order flow remains available.';document.getElementById('loginBtn').disabled=true;return;}
+ const db=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey);
+ let owner=false;
+ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ function setStatus(msg,kind=''){statusEl.className='status '+kind;statusEl.textContent=msg;}
+ async function checkOwner(){
+  const {data:{user},error}=await db.auth.getUser();
+  if(error||!user){auth.classList.remove('hidden');dashboard.classList.add('hidden');document.getElementById('logoutBtn').classList.add('hidden');return false;}
+  const {data:rows,error:ownerErr}=await db.from('owner_accounts').select('user_id,is_active').eq('user_id',user.id).eq('is_active',true).limit(1);
+  if(ownerErr||!rows||!rows.length){await db.auth.signOut();setStatus('This account is not authorised as a TUSSAR owner. Add its auth user UUID to owner_accounts using the setup guide.','error');return false;}
+  owner=true;auth.classList.add('hidden');dashboard.classList.remove('hidden');document.getElementById('logoutBtn').classList.remove('hidden');return true;
+ }
+ async function loadData(){
+  if(!owner && !(await checkOwner()))return;
+  setStatus('Refreshing route demand and orders…');
+  const [demandRes,ordersRes]=await Promise.all([
+   db.rpc('get_route_demand'),
+   db.from('route_requests').select('id,order_code,customer_name,phone,product,quantity,area,distance_band,fulfilment,preferred_day,status,created_at,subtotal').order('created_at',{ascending:false}).limit(500)
+  ]);
+  if(demandRes.error||ordersRes.error){setStatus('Could not load data: '+(demandRes.error||ordersRes.error).message,'error');return;}
+  const demand=demandRes.data||[], orders=ordersRes.data||[];
+  const active=orders.filter(o=>!['completed','cancelled'].includes(o.status));
+  document.getElementById('totalOrders').textContent=active.length;
+  document.getElementById('routeCount').textContent=demand.length;
+  document.getElementById('unitsTotal').textContent=active.reduce((n,o)=>n+Number(o.quantity||0),0);
+  document.getElementById('newCount').textContent=orders.filter(o=>o.status==='new').length;
+  document.getElementById('demandRows').innerHTML=demand.length?demand.map(d=>'<tr><td>'+esc(d.area)+'</td><td>'+esc(d.preferred_day)+'</td><td>'+esc(d.distance_band)+'</td><td>'+esc(d.order_count)+'</td><td>'+esc(d.total_units)+'</td><td>₹'+Number(d.estimated_subtotal||0).toLocaleString('en-IN')+'</td></tr>').join(''):'<tr><td colspan="6">No delivery route demand yet.</td></tr>';
+  document.getElementById('orderRows').innerHTML=orders.length?orders.map(o=>'<tr><td>'+esc(new Date(o.created_at).toLocaleString('en-IN'))+'</td><td>'+esc(o.order_code)+'</td><td>'+esc(o.customer_name)+'</td><td>'+esc(o.phone)+'</td><td>'+esc(o.product)+' × '+esc(o.quantity)+'</td><td>'+esc(o.area)+' / '+esc(o.distance_band)+' km</td><td>'+esc(o.preferred_day||'No preference')+'</td><td><select data-id="'+esc(o.id)+'" class="status-select">'+['new','reviewing','route-planned','confirmed','completed','cancelled'].map(s=>'<option value="'+s+'" '+(s===o.status?'selected':'')+'>'+s+'</option>').join('')+'</select></td></tr>').join(''):'<tr><td colspan="8">No orders stored yet. Make sure the Supabase config is set and submit a test order.</td></tr>';
+  document.querySelectorAll('.status-select').forEach(sel=>sel.addEventListener('change',async e=>{
+   const {error}=await db.from('route_requests').update({status:e.target.value}).eq('id',e.target.dataset.id);
+   if(error){setStatus('Status update failed: '+error.message,'error');return;}
+   setStatus('Order status updated.','success');await loadData();
+  }));
+  setStatus('Connected. '+orders.length+' requests loaded.','success');
+ }
+ document.getElementById('loginForm').addEventListener('submit',async e=>{e.preventDefault();const btn=document.getElementById('loginBtn');btn.disabled=true;const {error}=await db.auth.signInWithPassword({email:document.getElementById('email').value.trim(),password:document.getElementById('password').value});btn.disabled=false;if(error){setStatus('Sign-in failed: '+error.message,'error');return;}owner=false;await loadData();});
+ document.getElementById('logoutBtn').addEventListener('click',async()=>{await db.auth.signOut();owner=false;dashboard.classList.add('hidden');auth.classList.remove('hidden');document.getElementById('logoutBtn').classList.add('hidden');setStatus('Signed out.');});
+ document.getElementById('refreshBtn').addEventListener('click',loadData);
+ db.auth.getSession().then(({data})=>{if(data.session)loadData();else setStatus('Sign in with your owner account.');});
+})();
+</script>
+</body></html>
