@@ -869,7 +869,8 @@ function parseOrderRequest(text){
   else if(/600\s*ml|600ml/.test(t)) product='600ML';
   else if(/20\s*l|20l|20\s*litre|20\s*liter|jar|जार|ଜାର/.test(t)) product='20L';
   else if(/1\s*l|1l|1\s*litre|1\s*liter|bottle|बोतल|ବୋତଲ/.test(t)) product='1L';
-  const digit=t.match(/(?:^|\D)(\d{1,3})(?:\D|$)/);
+  const quantityText=t.replace(/\b(?:250|600)\s*ml\b|\b(?:20|1)\s*l\b/gi,' ');
+  const digit=quantityText.match(/(?:^|\D)(\d{1,3})(?:\D|$)/);
   const wordNums={one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,एक:1,दो:2,तीन:3,चार:4,पांच:5,पाँच:5,छह:6,सात:7,आठ:8,नौ:9,दस:10,ଏକ:1,ଦୁଇ:2,ତିନି:3,ଚାରି:4,ପାଞ୍ଚ:5,ଛଅ:6,ସାତ:7,ଆଠ:8,ନଅ:9,ଦଶ:10};
   let qty=digit?Number(digit[1]):null;
   if(!qty){for(const [word,n] of Object.entries(wordNums)){if(t.includes(word)){qty=n;break;}}}
