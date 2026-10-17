@@ -4,9 +4,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Water From the Source — TUSSAR</title>
-<meta name="description" content="TUSSAR packaged drinking water — 1L bottles, 20L jars and 250ML box packs, sourced from natural springs and delivered fresh across your area. Order on WhatsApp." />
+<meta name="description" content="TUSSAR packaged drinking water — 250ML, 600ML and 1L bottles, plus 20L jars. Order directly on WhatsApp." />
 <meta property="og:title" content="TUSSAR — Water From the Source" />
-<meta property="og:description" content="TUSSAR packaged drinking water. 600ML bottles ₹15, 1L bottles ₹20, 20L jars ₹60 and 250ML box packs ₹200." />
+<meta property="og:description" content="TUSSAR packaged drinking water. 250ML bottles ₹8.33 each (minimum 24), 600ML bottles ₹15 (minimum 12), 1L bottles ₹20 (minimum 6), and 20L jars ₹60." />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="TUSSAR — Water From the Source" />
@@ -545,7 +545,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
   </div>
 </div><div class="section" style="text-align:center;padding-top:3rem;padding-bottom:1rem">
   <h2 class="liquid" id="liquidWord">TUSSAR</h2>
-</div><section class="section" style="padding-top:2.5rem"><div class="wrap"><p class="eyebrow">Explore TUSSAR</p><h2>Everything you need, one step away</h2></div></section><div class="explore-grid"><a class="explore-card" href="about.html"><span>01 · SOURCE</span><h3>Our story</h3><p>Discover the source, standards and thinking behind TUSSAR.</p></a><a class="explore-card" href="products.html"><span>02 · PRODUCTS</span><h3>Choose your size</h3><p>600ML, 1L, 20L and 250ML options for everyday needs.</p></a><a class="explore-card" href="process.html"><span>03 · PROCESS</span><h3>How it reaches you</h3><p>Follow the journey from source to doorstep.</p></a><a class="explore-card" href="order.html"><span>04 · ORDER</span><h3>Order your way</h3><p>WhatsApp, email, delivery preferences and tracking.</p></a></div><section class="section about">
+</div><section class="section" style="padding-top:2.5rem"><div class="wrap"><p class="eyebrow">Explore TUSSAR</p><h2>Everything you need, one step away</h2></div></section><div class="explore-grid"><a class="explore-card" href="about.html"><span>01 · SOURCE</span><h3>Our story</h3><p>Discover the source, standards and thinking behind TUSSAR.</p></a><a class="explore-card" href="products.html"><span>02 · PRODUCTS</span><h3>Choose your size</h3><p>250ML, 600ML, 1L and 20L options for everyday needs.</p></a><a class="explore-card" href="process.html"><span>03 · PROCESS</span><h3>How it reaches you</h3><p>Follow the journey from source to doorstep.</p></a><a class="explore-card" href="order.html"><span>04 · ORDER</span><h3>Order your way</h3><p>WhatsApp, email, delivery preferences and tracking.</p></a></div><section class="section about">
   <div class="wrap">
     <p class="eyebrow">Why TUSSAR</p>
     <h2>What stays consistent, order after order</h2>
@@ -656,9 +656,11 @@ function sendOrder(e){
   const total=document.getElementById('oTotal').textContent;
   const lang=getCurrentLanguage();
   const productNames={
-    en:{'1L':'1L Bottle','20L':'20L Jar','250ML':'250ML Box'},
-    hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},
-    or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}
+    en:{'250ML':'250ML Bottle','600ML':'600ML Bottle','1L':'1L Bottle','20L':'20L Jar'},
+    
+    hi:{'250ML':'250ML बोतल','600ML':'600ML बोतल','1L':'1L बोतल','20L':'20L जार'},
+    
+    or:{'250ML':'250ML ବୋତଲ','600ML':'600ML ବୋତଲ','1L':'1L ବୋତଲ','20L':'20L ଜାର'}
   };
   const labels={
     en:{intro:"Hi TUSSAR, I'd like to place an order.",name:'Name',phone:'Phone',product:'Product',qty:'Quantity',total:'Total',day:'Preferred day',address:'Address'},
@@ -783,11 +785,11 @@ loadReviews();
 // chatbot
 const CHAT_DATA=[
   {k:{en:['what','product','sell','offer','water'],hi:['क्या','उत्पाद','प्रोडक्ट','बेच','पानी'],or:['କଣ','ଉତ୍ପାଦ','ପାଣି','ବିକ୍ରି']},
-   a:{en:"TUSSAR is packaged drinking water sourced from natural springs, purified to strict standards. We offer 1L bottles, 20L jars and 250ML box packs.",
+   a:{en:"TUSSAR offers 250ML bottles (₹8.33 each, min 24), 600ML bottles (₹15, min 12), 1L bottles (₹20, min 6), and 20L jars (₹60, min 1).",
       hi:"TUSSAR प्राकृतिक झरनों से प्राप्त और सख्त मानकों के अनुसार शुद्ध किया गया पैकेज्ड ड्रिंकिंग वाटर है। हमारे पास 1L बोतल, 20L जार और 250ML बॉक्स पैक हैं।",
       or:"TUSSAR ପ୍ରାକୃତିକ ଝରଣାରୁ ଆସିଥିବା ଏବଂ କଠୋର ମାନ ଅନୁଯାୟୀ ଶୁଦ୍ଧ କରାଯାଇଥିବା ପ୍ୟାକେଜ୍ଡ ପାନୀୟ ଜଳ। 1L ବୋତଲ, 20L ଜାର ଏବଂ 250ML ବକ୍ସ ପ୍ୟାକ୍ ମିଳେ।"}},
   {k:{en:['price','cost','rate','how much','₹'],hi:['कीमत','दाम','रेट','कितना','मूल्य'],or:['ଦାମ','ମୂଲ୍ୟ','କେତେ','ରେଟ']},
-   a:{en:"1L Bottle: ₹20 · 20L Jar: ₹60 · 250ML Box (24 bottles): ₹200 per box, minimum 2 boxes. Bulk pricing is available.",
+   a:{en:"250ML Bottle: ₹8.33 each (minimum 24 bottles, ₹200 for 24); 600ML Bottle: ₹15 (minimum 12); 1L Bottle: ₹20 (minimum 6); 20L Jar: ₹60 (minimum 1).",
       hi:"1L बोतल: ₹20 · 20L जार: ₹60 · 250ML बॉक्स (24 बोतल): ₹200 प्रति बॉक्स, न्यूनतम 2 बॉक्स। बड़े ऑर्डर पर बेहतर रेट मिल सकता है।",
       or:"1L ବୋତଲ: ₹20 · 20L ଜାର: ₹60 · 250ML ବକ୍ସ (24 ବୋତଲ): ପ୍ରତି ବକ୍ସ ₹200, ସର୍ବନିମ୍ନ 2 ବକ୍ସ। ବଲ୍କ ଅର୍ଡର ପାଇଁ ଭଲ ରେଟ୍ ମିଳିପାରେ।"}},
   {k:{en:['where','location','address','area','deliver','serve'],hi:['कहां','कहाँ','लोकेशन','पता','डिलीवरी','पहुंच'],or:['କେଉଁଠି','ସ୍ଥାନ','ଠିକଣା','ଡେଲିଭରି','ପହଞ୍ଚ']},
@@ -823,7 +825,7 @@ const CHAT_DATA=[
       hi:"1L बोतल ₹20 की है — रोज़ाना पीने के लिए सुविधाजनक।",
       or:"1L ବୋତଲର ଦାମ ₹20 — ଦୈନିକ ପାଣି ପିଇବା ପାଇଁ ଭଲ।"}},
   {k:{en:['box','250','event pack'],hi:['बॉक्स','250','इवेंट पैक'],or:['ବକ୍ସ','250','ଇଭେଣ୍ଟ ପ୍ୟାକ୍']},
-   a:{en:"The 250ML Box has 24 bottles and costs ₹200 per box, with a minimum order of 2 boxes.",
+   a:{en:"The 250ML bottle costs ₹8.33 each. Minimum order is 24 bottles (₹200 for 24 bottles).",
       hi:"250ML बॉक्स में 24 बोतलें होती हैं और कीमत ₹200 प्रति बॉक्स है। न्यूनतम ऑर्डर 2 बॉक्स है।",
       or:"250ML ବକ୍ସରେ 24ଟି ବୋତଲ ଥାଏ ଏବଂ ପ୍ରତି ବକ୍ସ ₹200। ସର୍ବନିମ୍ନ ଅର୍ଡର 2ଟି ବକ୍ସ।"}},
   {k:{en:['quality','safe','pure','mineral','clean'],hi:['गुणवत्ता','सुरक्षित','शुद्ध','मिनरल','साफ'],or:['ଗୁଣବତ୍ତା','ସୁରକ୍ଷିତ','ଶୁଦ୍ଧ','ମିନେରାଲ୍','ସଫା']},
@@ -839,7 +841,7 @@ const CHAT_DATA=[
       hi:"20L जार के लिए Weekly Home Refill plan और ऑफिस व बड़े खरीदारों के लिए custom recurring schedules उपलब्ध हैं।",
       or:"20L ଜାର ପାଇଁ Weekly Home Refill plan ଏବଂ ଅଫିସ୍ ଓ ବଡ଼ କ୍ରେତାଙ୍କ ପାଇଁ custom recurring schedule ମିଳେ।"}},
   {k:{en:['pincode','pin code','minimum order','return jar','weekend'],hi:['पिनकोड','पिन कोड','न्यूनतम ऑर्डर','जार वापस','वीकेंड'],or:['ପିନକୋଡ୍','ପିନ କୋଡ୍','ସର୍ବନିମ୍ନ ଅର୍ଡର','ଜାର ଫେରାଇବା','ସପ୍ତାହାନ୍ତ']},
-   a:{en:"Use the pincode checker in the Order section. The 20L jar is returnable, 250ML boxes have a minimum of 2, and delivery is available on weekends.",
+   a:{en:"Use the pincode checker in the Order section. Minimum orders are 24 bottles for 250ML, 12 bottles for 600ML, 6 bottles for 1L, and 1 jar for 20L.",
       hi:"Order section में pincode checker इस्तेमाल करें। 20L जार returnable है, 250ML बॉक्स के लिए न्यूनतम 2 बॉक्स हैं और weekend delivery उपलब्ध है।",
       or:"Order section ରେ pincode checker ବ୍ୟବହାର କରନ୍ତୁ। 20L ଜାର ଫେରାଇପାରିବେ, 250ML ବକ୍ସର ସର୍ବନିମ୍ନ 2ଟି ଏବଂ weekend delivery ଉପଲବ୍ଧ।"}}
 ];
@@ -863,18 +865,19 @@ function detectChatLanguage(text){
 function parseOrderRequest(text){
   const t=String(text||'').toLowerCase();
   let product=null;
-  if(/250\s*ml|250ml|box|boxes|ବକ୍ସ|बॉक्स/.test(t)) product='250ML';
+  if(/250\s*ml|250ml/.test(t)) product='250ML';
+  else if(/600\s*ml|600ml/.test(t)) product='600ML';
   else if(/20\s*l|20l|20\s*litre|20\s*liter|jar|जार|ଜାର/.test(t)) product='20L';
   else if(/1\s*l|1l|1\s*litre|1\s*liter|bottle|बोतल|ବୋତଲ/.test(t)) product='1L';
   const digit=t.match(/(?:^|\D)(\d{1,3})(?:\D|$)/);
   const wordNums={one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,एक:1,दो:2,तीन:3,चार:4,पांच:5,पाँच:5,छह:6,सात:7,आठ:8,नौ:9,दस:10,ଏକ:1,ଦୁଇ:2,ତିନି:3,ଚାରି:4,ପାଞ୍ଚ:5,ଛଅ:6,ସାତ:7,ଆଠ:8,ନଅ:9,ଦଶ:10};
   let qty=digit?Number(digit[1]):null;
   if(!qty){for(const [word,n] of Object.entries(wordNums)){if(t.includes(word)){qty=n;break;}}}
-  if(product==='250ML' && (!qty || qty<2)) qty=qty||2;
+  const minimums={'250ML':24,'600ML':12,'1L':6,'20L':1}; if(product && qty<minimums[product]) qty=minimums[product];
   return {product,qty:qty||null};
 }
 function productLabel(product,lang){
-  const labels={en:{'1L':'1L bottle','20L':'20L jar','250ML':'250ML box'},hi:{'1L':'1L बोतल','20L':'20L जार','250ML':'250ML बॉक्स'},or:{'1L':'1L ବୋତଲ','20L':'20L ଜାର','250ML':'250ML ବକ୍ସ'}};
+  const labels={en:{'250ML':'250ML bottle','600ML':'600ML bottle','1L':'1L bottle','20L':'20L jar'},hi:{'250ML':'250ML बोतल','600ML':'600ML बोतल','1L':'1L बोतल','20L':'20L जार'},or:{'250ML':'250ML ବୋତଲ','600ML':'600ML ବୋତଲ','1L':'1L ବୋତଲ','20L':'20L ଜାର'}};
   return labels[lang]?.[product]||labels.en[product];
 }
 function prepareOrderFromRequest(text){
@@ -1168,9 +1171,9 @@ function getCurrentLanguage(){
 function openWhatsAppOrder(product){
   const lang=getCurrentLanguage();
   const messages={
-    en:{general:"Hi TUSSAR, I'd like to place an order.",'1L':"Hi TUSSAR, I'd like to order 1L bottles.",'20L':"Hi TUSSAR, I'd like to order a 20L jar.",'250ML':"Hi TUSSAR, I'd like to order 250ML boxes."},
-    hi:{general:'नमस्ते TUSSAR, मुझे ऑर्डर करना है।','1L':'नमस्ते TUSSAR, मुझे 1L बोतलें ऑर्डर करनी हैं।','20L':'नमस्ते TUSSAR, मुझे 20L जार ऑर्डर करना है।','250ML':'नमस्ते TUSSAR, मुझे 250ML बॉक्स ऑर्डर करने हैं।'},
-    or:{general:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','1L':'ନମସ୍କାର TUSSAR, ମୁଁ 1L ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','20L':'ନମସ୍କାର TUSSAR, ମୁଁ 20L ଜାର ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','250ML':'ନମସ୍କାର TUSSAR, ମୁଁ 250ML ବକ୍ସ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।'}
+    en:{general:"Hi TUSSAR, I'd like to place an order.",'1L':"Hi TUSSAR, I'd like to order 1L bottles.",'20L':"Hi TUSSAR, I'd like to order a 20L jar.",'250ML':"Hi TUSSAR, I'd like to order 250ML bottles (minimum 24 bottles, ₹200 per 24)."},
+    hi:{general:'नमस्ते TUSSAR, मुझे ऑर्डर करना है।','1L':'नमस्ते TUSSAR, मुझे 1L बोतलें ऑर्डर करनी हैं।','20L':'नमस्ते TUSSAR, मुझे 20L जार ऑर्डर करना है।','250ML':'नमस्ते TUSSAR, मुझे 250ML बोतलें ऑर्डर करनी हैं (न्यूनतम 24 बोतलें)।'},
+    or:{general:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','1L':'ନମସ୍କାର TUSSAR, ମୁଁ 1L ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','20L':'ନମସ୍କାର TUSSAR, ମୁଁ 20L ଜାର ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','250ML':'ନମସ୍କାର TUSSAR, ମୁଁ 250ML ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି (ସର୍ବନିମ୍ନ 24 ବୋତଲ)।'}
   };
   const text=messages[lang][product||'general'];
   window.open('https://wa.me/919348585599?text='+encodeURIComponent(text),'_blank');
