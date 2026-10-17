@@ -644,6 +644,11 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
             <button type="button" id="pcQtyPlus" aria-label="Increase quantity">+</button>
           </div>
         </div>
+        <div class="pc-delivery-settings" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.85rem;margin:1rem 0;padding:1rem;border:1px solid rgba(198,161,91,.4);border-radius:12px;background:rgba(255,255,255,.04)">
+          <div><label for="pcDistance" class="pc-label">5. Approx. distance from factory</label><select id="pcDistance" style="width:100%;padding:.7rem;border:1px solid #cfd9d5;background:#fff;color:#163d32;font:inherit;border-radius:6px"><option value="0-5">0–5 km</option><option value="5-10">5–10 km</option><option value="10-20">10–20 km</option><option value="20-plus">More than 20 km</option></select></div>
+          <div><label for="pcFulfilment" class="pc-label">6. Fulfilment method</label><select id="pcFulfilment" style="width:100%;padding:.7rem;border:1px solid #cfd9d5;background:#fff;color:#163d32;font:inherit;border-radius:6px"><option value="delivery">Delivery / planned route</option><option value="pickup">Collect from factory</option></select></div>
+          <p id="pcDeliveryNote" role="status" aria-live="polite" style="grid-column:1/-1;margin:0;font-size:.82rem;line-height:1.5;color:inherit">Nearby orders use the standard minimum. Delivery timing is confirmed after checking the route.</p>
+        </div>
         <div class="pc-total">
           <div><small id="pcPriceEach">₹20 per bottle</small><small id="pcMinimumNote">Minimum order: 6 bottles</small></div>
           <div style="text-align:right"><small>Estimated total</small><strong id="pcTotal" aria-live="polite">₹120</strong></div>
@@ -800,13 +805,18 @@ try {
     green:{name:'Bottle green',hex:'#064b3b',text:'#ffffff'},
     white:{name:'Ivory / white',hex:'#f4f5ed',text:'#123d2a'}
   };
-  let product='1L',colour='green',wrapStyle='full',qty=1;
+  let product='1L',colour='green',wrapStyle='full',qty=1,distanceZone='0-5',fulfilment='delivery';
   const qtyOut=root.querySelector('#pcQty'),totalOut=root.querySelector('#pcTotal');
   const priceEach=root.querySelector('#pcPriceEach'),unitText=root.querySelector('#pcUnitText');
   const minNote=root.querySelector('#pcMinimumNote'),caption=root.querySelector('#pcPreviewCaption');
   const bottle=root.querySelector('#pcBottle'),labelShape=root.querySelector('#pcLabelShape'),logoText=root.querySelector('#pcLogoText');
   const feedback=root.querySelector('#pcFeedback');
   const money=n=>'₹'+Number(n).toLocaleString('en-IN');
+  function effectiveMinimum(item){
+    if(fulfilment==='pickup')return item.min;
+    const multiplier=distanceZone==='5-10'?2:distanceZone==='10-20'?3:distanceZone==='20-plus'?5:1;
+    return item.min*multiplier;
+  }
   function renderShape(){
     const item=catalog[product];
     bottle.className='pc-bottle'+(item.shape==='jug'?' jug':(product==='250ML'||product==='600ML')?' small-bottle':'');
@@ -855,18 +865,27 @@ try {
 
   function update(){
     const item=catalog[product],shade=colours[colour];
-    qty=Math.max(item.min,Math.floor(Number(qty)||item.min));
+    const minQty=effectiveMinimum(item);
+    qty=Math.max(minQty,Math.floor(Number(qty)||minQty));
     qtyOut.textContent=qty;
     totalOut.textContent=item.price==null?'Confirm price':money(item.price*qty);
     priceEach.textContent=item.price==null?'Price to be confirmed':(product==='250ML'?'₹8.33 per bottle':money(item.price)+' per '+(product==='20L'?'jar':'bottle'));
     unitText.textContent='('+item.unit+')';
-    minNote.textContent='Minimum order: '+item.min+' '+item.unit;
+    minNote.textContent='Minimum order: '+minQty+' '+item.unit+(fulfilment==='pickup'?' (factory pickup)':'');
+    const note=root.querySelector('#pcDeliveryNote');
+    if(note){
+      if(fulfilment==='pickup')note.textContent='Factory pickup selected: standard minimums apply regardless of distance. We will share collection timing after order confirmation.';
+      else if(distanceZone==='0-5')note.textContent='0–5 km: standard minimums apply. Delivery timing is confirmed by TUSSAR.';
+      else if(distanceZone==='5-10')note.textContent='5–10 km: minimum quantity doubles. Delivery depends on order size and route availability.';
+      else if(distanceZone==='10-20')note.textContent='10–20 km: minimum quantity triples. Prefer a planned bulk-delivery route; TUSSAR will confirm the day.';
+      else note.textContent='Over 20 km: minimum quantity is five times the local minimum. Delivery is only by confirmed bulk route; otherwise choose factory pickup.';
+    }
     caption.textContent='TUSSAR · '+item.caption+' · '+shade.name+' · '+(wrapStyle==='full'?'Full wrap':'Half wrap');
     root.querySelectorAll('[data-pc-product]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.pcProduct===product)));
     root.querySelectorAll('[data-pc-color]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.pcColor===colour)));
     root.querySelectorAll('[data-pc-wrap]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.pcWrap===wrapStyle)));
-    root.querySelector('#pcQtyMinus').disabled=qty<=item.min;
-    root.querySelector('#pcQtyMinus').style.opacity=qty<=item.min?'.4':'1';
+    root.querySelector('#pcQtyMinus').disabled=qty<=minQty;
+    root.querySelector('#pcQtyMinus').style.opacity=qty<=minQty?'.4':'1';
     renderShape();
     const labelShape=bottle.querySelector('.pc-label-shape');
     if(labelShape){
@@ -880,13 +899,15 @@ try {
   }
   root.querySelectorAll('[data-pc-wrap]').forEach(b=>b.addEventListener('click',()=>{wrapStyle=b.dataset.pcWrap;feedback.textContent='';update();}));
   root.querySelectorAll('[data-pc-product]').forEach(b=>b.addEventListener('click',()=>{
-    product=b.dataset.pcProduct;qty=catalog[product].min;feedback.textContent='';update();
+    product=b.dataset.pcProduct;qty=effectiveMinimum(catalog[product]);feedback.textContent='';update();
   }));
   root.querySelectorAll('[data-pc-color]').forEach(b=>b.addEventListener('click',()=>{
     colour=b.dataset.pcColor;feedback.textContent='';update();
   }));
-  root.querySelector('#pcQtyMinus').addEventListener('click',()=>{qty=Math.max(catalog[product].min,qty-1);update();});
+  root.querySelector('#pcQtyMinus').addEventListener('click',()=>{qty=Math.max(effectiveMinimum(catalog[product]),qty-1);update();});
   root.querySelector('#pcQtyPlus').addEventListener('click',()=>{qty+=1;update();});
+  root.querySelector('#pcDistance').addEventListener('change',e=>{distanceZone=e.target.value;qty=effectiveMinimum(catalog[product]);feedback.textContent='';update();});
+  root.querySelector('#pcFulfilment').addEventListener('change',e=>{fulfilment=e.target.value;qty=effectiveMinimum(catalog[product]);feedback.textContent='';update();});
   root.querySelector('#pcOrderBtn').addEventListener('click',()=>{
     const item=catalog[product],shade=colours[colour];
     const message=[
@@ -894,10 +915,13 @@ try {
       'Product: '+item.name,
       'Label colour preference: '+shade.name,
       'Quantity: '+qty+' '+item.unit,
+      'Estimated distance from factory: '+({'0-5':'0–5 km','5-10':'5–10 km','10-20':'10–20 km','20-plus':'More than 20 km'}[distanceZone]),
+      'Fulfilment preference: '+(fulfilment==='pickup'?'Factory pickup':'Delivery / planned route'),
+      'Delivery policy: '+(fulfilment==='pickup'?'Standard minimum quantity; collection timing to be confirmed.':distanceZone==='0-5'?'Standard local minimum; timing to be confirmed.':distanceZone==='5-10'?'Double minimum quantity; route availability to be confirmed.':distanceZone==='10-20'?'Triple minimum quantity; planned bulk route required.':'Five times local minimum; bulk route confirmation required; otherwise factory pickup.'),
       'Label format: '+(wrapStyle==='full'?'Full wrap':'Half wrap'),
       'Estimated product total: '+(item.price==null?'Price to be confirmed':money(item.price*qty)),
       'Design: '+(colour==='green'?'Bottle green':'Ivory / white')+' TUSSAR concept',
-      'Please confirm delivery availability and any delivery charges.'
+      'Please confirm route day, delivery availability and any delivery charges before processing.'
     ].join('\n');
     feedback.textContent='Opening WhatsApp with your selection…';
     window.open('https://wa.me/919348585599?text='+encodeURIComponent(message),'_blank','noopener');
