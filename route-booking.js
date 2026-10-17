@@ -29,7 +29,7 @@
       address: String(order.address || '').trim().slice(0,1000)
     };
     try {
-      const {data,error} = await client.from('route_requests').insert(payload).select('order_code').single();
+      const {data,error} = await client.from('route_requests').insert(payload);
       if (error) throw error;
       return {saved:true, data};
     } catch (error) {
