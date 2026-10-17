@@ -1457,9 +1457,9 @@ function getCurrentLanguage(){
 function openWhatsAppOrder(product){
   const lang=getCurrentLanguage();
   const messages={
-    en:{general:"Hi TUSSAR, I'd like to place an order.",'1L':"Hi TUSSAR, I'd like to order 1L bottles.",'600ML':"Hi TUSSAR, I'd like to know the price and availability of 600ML bottles.",'20L':"Hi TUSSAR, I'd like to order a 20L jar.",'250ML':"Hi TUSSAR, I'd like to order 250ML boxes."},
-    hi:{general:'नमस्ते TUSSAR, मुझे ऑर्डर करना है।','1L':'नमस्ते TUSSAR, मुझे 1L बोतलें ऑर्डर करनी हैं।','600ML':'नमस्ते TUSSAR, मुझे 600ML बोतलों की कीमत और उपलब्धता जाननी है।','20L':'नमस्ते TUSSAR, मुझे 20L जार ऑर्डर करना है।','250ML':'नमस्ते TUSSAR, मुझे 250ML बॉक्स ऑर्डर करने हैं।'},
-    or:{general:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','1L':'ନମସ୍କାର TUSSAR, ମୁଁ 1L ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','600ML':'ନମସ୍କାର TUSSAR, 600ML ବୋତଲର ମୂଲ୍ୟ ଓ ଉପଲବ୍ଧତା ଜାଣିବାକୁ ଚାହୁଁଛି।','20L':'ନମସ୍କାର TUSSAR, ମୁଁ 20L ଜାର ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','250ML':'ନମସ୍କାର TUSSAR, ମୁଁ 250ML ବକ୍ସ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।'}
+    en:{general:"Hi TUSSAR, I'd like to place an order.",'1L':"Hi TUSSAR, I'd like to order 1L bottles.",'600ML':"Hi TUSSAR, I'd like to order 600ML bottles at ₹15 each.",'20L':"Hi TUSSAR, I'd like to order a 20L jar.",'250ML':"Hi TUSSAR, I'd like to order 250ML boxes."},
+    hi:{general:'नमस्ते TUSSAR, मुझे ऑर्डर करना है।','1L':'नमस्ते TUSSAR, मुझे 1L बोतलें ऑर्डर करनी हैं।','600ML':'नमस्ते TUSSAR, मुझे ₹15 प्रति बोतल की दर से 600ML बोतलें ऑर्डर करनी हैं।','20L':'नमस्ते TUSSAR, मुझे 20L जार ऑर्डर करना है।','250ML':'नमस्ते TUSSAR, मुझे 250ML बॉक्स ऑर्डर करने हैं।'},
+    or:{general:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','1L':'ନମସ୍କାର TUSSAR, ମୁଁ 1L ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','600ML':'ନମସ୍କାର TUSSAR, ପ୍ରତି ବୋତଲ ₹15 ଦରରେ 600ML ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','20L':'ନମସ୍କାର TUSSAR, ମୁଁ 20L ଜାର ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','250ML':'ନମସ୍କାର TUSSAR, ମୁଁ 250ML ବକ୍ସ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।'}
   };
   const text=messages[lang][product||'general'];
   window.open('https://wa.me/919348585599?text='+encodeURIComponent(text),'_blank');
