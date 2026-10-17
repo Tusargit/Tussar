@@ -78,7 +78,7 @@ header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backgroun
 .ring-art{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
 
 /* PRODUCTS */
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;margin-top:2.6rem}
+.grid3{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.25rem;margin-top:2.6rem}
 .card{background:var(--paper);border:1px solid #dfe6e2;padding:2rem 1.6rem;position:relative}
 .card .icon{width:64px;height:64px;margin-bottom:1.2rem}
 .card h3{font-size:1.15rem}
@@ -631,6 +631,18 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
           <li>Doorstep delivery available</li>
         </ul>
         <a class="btn" href="https://wa.me/919348585599" target="_blank" rel="noopener" onclick="openWhatsAppOrder('1L'); return false;">Order now</a>
+      </div>
+
+      <div class="card tint-green">
+        <svg class="icon" viewBox="0 0 64 64"><path d="M24 8h16v10l6 6v28a4 4 0 0 1-4 4H22a4 4 0 0 1-4-4V24l6-6V8z" fill="none" stroke="#124953" stroke-width="2"/><path d="M20 30h24" stroke="#C6A15B" stroke-width="2"/></svg>
+        <h3>600ML Bottle</h3>
+        <div class="price">Price to confirm</div>
+        <ul>
+          <li>Compact everyday hydration</li>
+          <li>Green or ivory label concept</li>
+          <li>Confirm price and availability on WhatsApp</li>
+        </ul>
+        <a class="btn" href="https://wa.me/919348585599" target="_blank" rel="noopener" onclick="openWhatsAppOrder('600ML'); return false;">Confirm price</a>
       </div>
 
       <div class="card tint-gold">
@@ -1387,9 +1399,9 @@ function getCurrentLanguage(){
 function openWhatsAppOrder(product){
   const lang=getCurrentLanguage();
   const messages={
-    en:{general:"Hi TUSSAR, I'd like to place an order.",'1L':"Hi TUSSAR, I'd like to order 1L bottles.",'20L':"Hi TUSSAR, I'd like to order a 20L jar.",'250ML':"Hi TUSSAR, I'd like to order 250ML boxes."},
-    hi:{general:'नमस्ते TUSSAR, मुझे ऑर्डर करना है।','1L':'नमस्ते TUSSAR, मुझे 1L बोतलें ऑर्डर करनी हैं।','20L':'नमस्ते TUSSAR, मुझे 20L जार ऑर्डर करना है।','250ML':'नमस्ते TUSSAR, मुझे 250ML बॉक्स ऑर्डर करने हैं।'},
-    or:{general:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','1L':'ନମସ୍କାର TUSSAR, ମୁଁ 1L ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','20L':'ନମସ୍କାର TUSSAR, ମୁଁ 20L ଜାର ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','250ML':'ନମସ୍କାର TUSSAR, ମୁଁ 250ML ବକ୍ସ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।'}
+    en:{general:"Hi TUSSAR, I'd like to place an order.",'1L':"Hi TUSSAR, I'd like to order 1L bottles.",'600ML':"Hi TUSSAR, I'd like to know the price and availability of 600ML bottles.",'20L':"Hi TUSSAR, I'd like to order a 20L jar.",'250ML':"Hi TUSSAR, I'd like to order 250ML boxes."},
+    hi:{general:'नमस्ते TUSSAR, मुझे ऑर्डर करना है।','1L':'नमस्ते TUSSAR, मुझे 1L बोतलें ऑर्डर करनी हैं।','600ML':'नमस्ते TUSSAR, मुझे 600ML बोतलों की कीमत और उपलब्धता जाननी है।','20L':'नमस्ते TUSSAR, मुझे 20L जार ऑर्डर करना है।','250ML':'नमस्ते TUSSAR, मुझे 250ML बॉक्स ऑर्डर करने हैं।'},
+    or:{general:'ନମସ୍କାର TUSSAR, ମୁଁ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','1L':'ନମସ୍କାର TUSSAR, ମୁଁ 1L ବୋତଲ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','600ML':'ନମସ୍କାର TUSSAR, 600ML ବୋତଲର ମୂଲ୍ୟ ଓ ଉପଲବ୍ଧତା ଜାଣିବାକୁ ଚାହୁଁଛି।','20L':'ନମସ୍କାର TUSSAR, ମୁଁ 20L ଜାର ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।','250ML':'ନମସ୍କାର TUSSAR, ମୁଁ 250ML ବକ୍ସ ଅର୍ଡର କରିବାକୁ ଚାହୁଁଛି।'}
   };
   const text=messages[lang][product||'general'];
   window.open('https://wa.me/919348585599?text='+encodeURIComponent(text),'_blank');
