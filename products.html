@@ -647,6 +647,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
         <div class="pc-delivery-settings" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.85rem;margin:1rem 0;padding:1rem;border:1px solid rgba(198,161,91,.4);border-radius:12px;background:rgba(255,255,255,.04)">
           <div><label for="pcDistance" class="pc-label">5. Approx. distance from factory</label><select id="pcDistance" style="width:100%;padding:.7rem;border:1px solid #cfd9d5;background:#fff;color:#163d32;font:inherit;border-radius:6px"><option value="0-5">0–5 km</option><option value="5-10">5–10 km</option><option value="10-20">10–20 km</option><option value="20-plus">More than 20 km</option></select></div>
           <div><label for="pcFulfilment" class="pc-label">6. Fulfilment method</label><select id="pcFulfilment" style="width:100%;padding:.7rem;border:1px solid #cfd9d5;background:#fff;color:#163d32;font:inherit;border-radius:6px"><option value="delivery">Delivery / planned route</option><option value="pickup">Collect from factory</option></select></div>
+          <div style="grid-column:1/-1"><label for="pcRouteDay" class="pc-label">Preferred route day (optional)</label><select id="pcRouteDay" style="width:100%;padding:.7rem;border:1px solid #cfd9d5;background:#fff;color:#163d32;font:inherit;border-radius:6px"><option value="">No preferred day</option><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option></select></div>
           <p id="pcDeliveryNote" role="status" aria-live="polite" style="grid-column:1/-1;margin:0;font-size:.82rem;line-height:1.5;color:inherit">Nearby orders use the standard minimum. Delivery timing is confirmed after checking the route.</p>
         </div>
         <div class="pc-total">
@@ -917,6 +918,7 @@ try {
       'Quantity: '+qty+' '+item.unit,
       'Estimated distance from factory: '+({'0-5':'0–5 km','5-10':'5–10 km','10-20':'10–20 km','20-plus':'More than 20 km'}[distanceZone]),
       'Fulfilment preference: '+(fulfilment==='pickup'?'Factory pickup':'Delivery / planned route'),
+      'Preferred route day: '+(root.querySelector('#pcRouteDay').value||'No preference — please advise the next planned route'),
       'Delivery policy: '+(fulfilment==='pickup'?'Standard minimum quantity; collection timing to be confirmed.':distanceZone==='0-5'?'Standard local minimum; timing to be confirmed.':distanceZone==='5-10'?'Double minimum quantity; route availability to be confirmed.':distanceZone==='10-20'?'Triple minimum quantity; planned bulk route required.':'Five times local minimum; bulk route confirmation required; otherwise factory pickup.'),
       'Label format: '+(wrapStyle==='full'?'Full wrap':'Half wrap'),
       'Estimated product total: '+(item.price==null?'Price to be confirmed':money(item.price*qty)),
@@ -1445,7 +1447,7 @@ function checkPincode(){
   if(eta)eta.classList.remove('show');
   if(!/^\d{6}$/.test(val)){out.textContent='Enter a valid 6-digit pincode.';return;}
   if(DELIVERY_PINCODES.includes(val)){
-    out.textContent='Good news — we deliver to your area. Place your order above.';
+    out.textContent='Your pincode is in our current coverage list. Delivery still depends on distance, minimum quantity and a planned route; TUSSAR will confirm the route day and any charge.';
     showDeliveryEta(val);
   }else{
     out.textContent="We're not listed there yet — message us on WhatsApp and we'll confirm.";
