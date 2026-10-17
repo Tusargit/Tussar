@@ -786,6 +786,7 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
 <script>
 
 /* Interactive product preview, price and quantity selector */
+try {
 (function initTussarConfigurator(){
   const root=document.getElementById('tussarConfigurator');
   if(!root)return;
@@ -903,6 +904,9 @@ body{opacity:0;transform:translateY(8px);transition:opacity .42s ease,transform 
   });
   update();
 })();
+} catch(error) {
+  console.error('TUSSAR configurator initialization failed:',error);
+}
 
 // mobile nav
 const menuBtn=document.getElementById('menuBtn');
@@ -1361,9 +1365,18 @@ function initChat(){
   });
   pushMsg(CHAT_TEXT[chatLanguage].welcome,'bot',chatLanguage);
 }
-initChat();
-
-
+try {
+  initChat();
+} catch(error) {
+  console.error('TUSSAR chat initialization failed:',error);
+  const body=document.getElementById('chatBody');
+  if(body && !body.children.length){
+    const welcome=document.createElement('div');
+    welcome.className='msg bot';
+    welcome.textContent='Hi! Ask us about TUSSAR products, prices, delivery or orders. You can also contact us on WhatsApp at +91 93485 85599.';
+    body.appendChild(welcome);
+  }
+}
 
 // Order tracking UI — frontend demo until the TUSSAR backend is connected.
 function trackOrder(e){
