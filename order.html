@@ -729,7 +729,7 @@ function sendOrder(e){
   }
   window.open('https://wa.me/919348585599?text='+encodeURIComponent(lines.join('\\n')),'_blank');
   document.getElementById('rcpDate').textContent=new Date().toLocaleString();
-  document.getElementById('rcpBody').innerHTML=`${labels.name}: ${name}<br>${labels.phone}: ${phone}<br>${labels.product}: ${displayProduct}<br>${labels.qty}: ${qty}<br>${labels.total}: ₹${total}<br>Distance: ${({'0-5':'0–5 km','5-10':'5–10 km','10-20':'10–20 km','20-plus':'Over 20 km'}[distance])}<br>Fulfilment: ${fulfilment==='pickup'?'Factory pickup':'Delivery / planned route'}<br>${day?`${labels.day}: ${day}<br>`:''}${labels.address}: ${addr}`;
+  document.getElementById('rcpBody').innerHTML=`${labels.name}: ${name}<br>${labels.phone}: ${phone}<br>${labels.product}: ${displayProduct}<br>${labels.qty}: ${qty}<br>${labels.total}: ₹${total}<br>Delivery area: ${area}<br>Distance: ${({'0-5':'0–5 km','5-10':'5–10 km','10-20':'10–20 km','20-plus':'Over 20 km'}[distance])}<br>Fulfilment: ${fulfilment==='pickup'?'Factory pickup':'Delivery / planned route'}<br>${day?`${labels.day}: ${day}<br>`:''}${labels.address}: ${addr}`;
   return false;
 }
 function repeatOrder(){
@@ -766,9 +766,15 @@ function sendOrderByEmail(){
   const fulfilment=getFulfilment();
   const minimum=getEffectiveMinimumOrder(product);
   const addr=document.getElementById('oAddr').value.trim();
+  const area=document.getElementById('oArea').value.trim();
+  const subtotal=Number(document.getElementById('oSubtotal').textContent)||0;
   const total=document.getElementById('oTotal').textContent;
   const orderId=generateOrderId();
   try{localStorage.setItem('tussar_current_order_id',orderId);}catch(e){}
+  if(typeof window.saveTussarRouteRequest==='function'){
+    window.saveTussarRouteRequest({order_code:orderId,customer_name:name,phone:phone,product:product,quantity:qty,subtotal:subtotal,preferred_day:day,distance_band:distance,fulfilment:fulfilment,area:area,address:addr})
+      .then(function(result){if(!result.saved)console.warn('Email order is not stored in the shared route dashboard.',result.reason);});
+  }
   const productNames={
     en:{'250ML':'250ML Bottle','600ML':'600ML Bottle','1L':'1L Bottle','20L':'20L Jar'},
     hi:{'250ML':'250ML बोतल','600ML':'600ML बोतल','1L':'1L बोतल','20L':'20L जार'},
@@ -789,6 +795,7 @@ function sendOrderByEmail(){
     labels.total+': ₹'+total
   ];
   if(day)lines.push(labels.day+': '+day);
+  lines.push('Delivery area / village: '+area);
   lines.push(labels.address+': '+addr);
   window.location.href='mailto:tusarmohanty741@gmail.com?subject='+encodeURIComponent(labels.subject)+'&body='+encodeURIComponent(lines.join('\n'));
 }
