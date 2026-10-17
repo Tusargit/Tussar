@@ -963,9 +963,9 @@ function botReply(q){
   });
   if(/eta|delivery time|when.*deliver|कब.*डिलीवरी|डिलीवरी.*कब|ଡେଲିଭରି.*କେବେ|କେବେ.*ଡେଲିଭରି/.test(t)){
     return {
-      en:'For a deliverable pincode, the site can show an estimated delivery window. Final ETA is confirmed by TUSSAR after the order is received.',
-      hi:'डिलीवरी वाले पिनकोड के लिए साइट अनुमानित delivery window दिखा सकती है। ऑर्डर मिलने के बाद TUSSAR final ETA confirm करेगा।',
-      or:'ଡେଲିଭରି ଯୋଗ୍ୟ ପିନକୋଡ୍ ପାଇଁ ସାଇଟ୍ ଅନୁମାନିତ delivery window ଦେଖାଇପାରେ। ଅର୍ଡର ମିଳିବା ପରେ TUSSAR final ETA confirm କରିବ।'
+      en:'Delivery depends on distance, minimum quantity and whether a bulk route is planned for that direction. TUSSAR confirms the route day and any delivery charge after reviewing the order. Factory pickup is also available.',
+      hi:'डिलीवरी वाले पिनकोड के लिए साइट अनुमानित delivery window दिखा सकती है। डिलीवरी दूरी, न्यूनतम मात्रा और planned route पर निर्भर है। TUSSAR route day और delivery charge की पुष्टि करेगा।',
+      or:'ଡେଲିଭରି ଦୂରତା, ସର୍ବନିମ୍ନ ପରିମାଣ ଓ ସେହି ଦିଗକୁ bulk route ଯୋଜନା ଉପରେ ନିର୍ଭର କରେ। TUSSAR route day ଓ charge କନଫର୍ମ କରିବ। Factory pickup ମଧ୍ୟ ଉପଲବ୍ଧ।'
     }[lang];
   }
   return best?best.a[lang]||best.a.en:CHAT_TEXT[lang].fallback;
@@ -1137,10 +1137,10 @@ function showDeliveryEta(pincode){
   const eta=document.getElementById('deliveryEta');
   if(!eta)return;
   eta.textContent=chatLanguage==='hi'
-    ? 'Estimated delivery: 24–48 hours after order confirmation. Final ETA will be confirmed by TUSSAR.'
+    ? 'Delivery is arranged according to distance, minimum order quantity and planned route availability. TUSSAR will confirm the route day and any delivery charge after reviewing your order.'
     : chatLanguage==='or'
-    ? 'ଅନୁମାନିତ ଡେଲିଭରି: ଅର୍ଡର କନଫର୍ମ ହେବା ପରେ 24–48 ଘଣ୍ଟା। Final ETA TUSSAR କନଫର୍ମ କରିବ।'
-    : 'Estimated delivery: 24–48 hours after order confirmation. Final ETA will be confirmed by TUSSAR.';
+    ? 'ଦୂରତା, ସର୍ବନିମ୍ନ ଅର୍ଡର ପରିମାଣ ଓ ଯୋଜନାବଦ୍ଧ ରୁଟ୍ ଅନୁସାରେ ଡେଲିଭରି ହେବ। TUSSAR ରୁଟ୍ ଦିନ ଓ ଚାର୍ଜ କନଫର୍ମ କରିବ।'
+    : 'Delivery is arranged according to distance, minimum order quantity and planned route availability. TUSSAR will confirm the route day and any delivery charge after reviewing your order.';
   eta.classList.add('show');
 }
 function checkPincode(){
